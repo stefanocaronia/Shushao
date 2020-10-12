@@ -42,11 +42,9 @@ private:
 #define DEBUG_CORE_INFO(...) ::se::Debug::GetCoreLogger()->info(__VA_ARGS__)
 #define DEBUG_CORE_WARN(...) ::se::Debug::GetCoreLogger()->warn(__VA_ARGS__)
 #define DEBUG_CORE_ERROR(...) ::se::Debug::GetCoreLogger()->error(__VA_ARGS__)
-#define DEBUG_CORE_FATAL(...) ::se::Debug::GetCoreLogger()->fatal(__VA_ARGS__)
 
 // Client log macros
 #define DEBUG_TRACE(...) ::se::Debug::GetClientLogger()->trace(__VA_ARGS__)
 #define DEBUG_INFO(...) ::se::Debug::GetClientLogger()->info(__VA_ARGS__)
 #define DEBUG_WARN(...) ::se::Debug::GetClientLogger()->warn(__VA_ARGS__)
 #define DEBUG_ERROR(...) ::se::Debug::GetClientLogger()->error(__VA_ARGS__)
-#define DEBUG_FATAL(...) ::se::Debug::GetClientLogger()->fatal(__VA_ARGS__)

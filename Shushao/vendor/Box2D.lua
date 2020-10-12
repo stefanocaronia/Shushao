@@ -9,15 +9,26 @@ project 'Box2D'
     files { '%{prj.location}/Box2D/**' }
     includedirs { '%{prj.location}/.' }
 
-    configuration { "gmake2" }
-        targetextension (".a")
+    -- configuration { "gmake2" }
+    --     targetextension (".a")
 
     makesettings [[
         CC = g++
     ]]
 
-    defines { 'NDEBUG' }
-        optimize 'On'
+    configuration "Debug"
+        defines "DEBUG"
+        runtime "Debug"
+        symbols "On"
+        buildoptions "/MTd"
 
-    filter 'system:windows'
-        defines { '_CRT_SECURE_NO_WARNINGS' }
+    configuration "Release"
+        defines "NDEBUG"
+        runtime "Release"
+        optimize "On"
+        buildoptions "/MT"
+
+    filter "system:windows"
+        systemversion "latest"
+        staticruntime "On"
+        defines { '_CRT_SECURE_NO_WARNINGS', '_ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH' }

@@ -9,10 +9,10 @@ void Pancrazio::Awake() {
     sr->sortingLayerID = Config::SortingLayers["Characters"];
 
     rb = AddComponent<Rigidbody2D>();
-    //rb->SetType(RigidbodyType::KINEMATIC);
+    rb->SetType(RigidbodyType::KINEMATIC);
     //rb->setFixedRotation(true);
-    collider = AddComponent<BoxCollider2D>("box");
-    collider->SetShape({0.5f, 0.5f});
+    /*collider = AddComponent<BoxCollider2D>("box");
+    collider->SetShape({0.5f, 0.5f});*/
 
     BoxCollider2D* trigger = AddComponent<BoxCollider2D>("trigger");
     trigger->SetSensor(true);

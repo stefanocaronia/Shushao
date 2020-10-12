@@ -1,5 +1,4 @@
 #include "glm/glm.hpp"
-
 #include "hermite.h"
 
 using namespace se;
@@ -31,7 +30,7 @@ void Hermite::Awake() {
 
     Gradient gradient(color::red, Color(0.5f, 1.0f, 0.0f, 0.4f));
 
-    for (double d = 0.0; d <= 1.0; d += 0.001) {
+    for (float d = 0.0f; d <= 1.0; d += 0.001) {
         Color color = gradient.Evaluate(d);
         gr->AddLine(glm::vec3(d * 6.0f, 0.0f, 0.0f), glm::vec3(d * 6.0f, 2.0f, 0.0f), color);
         //gr->AddLine(glm::vec3(d * 6.0f, 0.0f, 0.0f), glm::vec3(d * 6.0f, 2.0f, 0.0f), color::red);

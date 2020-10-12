@@ -4,7 +4,8 @@ workspace "Shushao"
 
 	configurations {
 		"Debug",
-		"Release"
+		"Release",
+		"Dist"
     }
 
     --[[ rebuildcommands {
@@ -25,6 +26,7 @@ workspace "Shushao"
     include "Shushao/vendor/GLFW.lua"
     include "Shushao/vendor/imgui.lua"
     include "Shushao/vendor/SOIL.lua"
+    include "Shushao/vendor/spdlog.lua"
 
 project "Shushao"
 	location "Shushao"
@@ -51,36 +53,45 @@ project "Shushao"
 		"%{Engine}/vendor/Glad/include",
 		"%{Engine}/vendor/SOIL/include",
         "%{Engine}/vendor/spdlog/include",
+		"%{Engine}/vendor/freetype/include",
 		"%{Engine}/vendor/glm",
 		"%{Engine}/vendor/boost",
-		"%{Engine}/vendor/Box2D",
-		"%{Engine}/vendor/freetype/include"
+		"%{Engine}/vendor/Box2D"
     }
 
 	filter "system:windows"
-		systemversion "latest"
+        systemversion "latest"
 
-		defines {
-			"SE_PLATFORM_WINDOWS",
-			"GLFW_INCLUDE_NONE"
-		}
+        defines {
+            "SE_PLATFORM_WINDOWS",
+            "GLFW_INCLUDE_NONE"
+        }
 
-	filter "configurations:Debug"
+    -- filter { "configurations:Release", "toolset:gcc" }
+    --     buildoptions { "-O2", "-std=c++17" }
+    --     linkoptions { "-s -mwindows"}
+
+    -- filter { "configurations:Debug", "toolset:gcc" }
+    --     buildoptions { "-std=c++17", "-Wall", "-fmax-errors=4", "-Wfatal-errors" }
+
+    configuration "Debug"
 		defines "SE_DEBUG"
 		runtime "Debug"
-        symbols "On"
+		symbols "On"
+        buildoptions "/MTd"
 
-    filter { "configurations:Debug", "toolset:gcc" }
-        buildoptions { "-std=c++17", "-Wall", "-fmax-errors=4", "-Wfatal-errors" }
-
-	filter "configurations:Release"
+    configuration "Release"
 		defines "SE_RELEASE"
 		runtime "Release"
-        optimize "On"
+		optimize "On"
+        buildoptions "/MT"
 
-    filter { "configurations:Release", "toolset:gcc" }
-        buildoptions { "-O2", "-std=c++17" }
-        linkoptions { "-s -mwindows"}
+    configuration "Dist"
+		defines "SE_DIST"
+		runtime "Release"
+		optimize "On"
+        buildoptions "/MT"
+
 
 project "Shushao Resources"
     location "Shushao"
@@ -96,13 +107,18 @@ project "Shushao Resources"
         "Shushao/src/Shushao/Resources/**.rc"
     }
 
+    postbuildcommands {
+        ("{COPY} %{enginebin}/*.dll %{gamebin}")
+    }
+
     linkoptions "/NOENTRY"
 
     configuration "Debug"
         buildoptions "/MDd"
+
     configuration "Release"
         buildoptions "/MD"
-        
+
 project "Game"
 	location "Game"
 	kind "ConsoleApp"
@@ -115,16 +131,17 @@ project "Game"
     objdir ("obj/" .. outputdir .. "/%{prj.name}")
 
 	files {
-		"%{prj.name}/src/main.cpp",
-		-- "%{prj.name}/src/**.h",
-		-- "%{prj.name}/src/**.cpp",
-		-- "%{prj.name}/src/**.rc",
+		"%{prj.name}/src/**.h",
+		"%{prj.name}/src/**.cpp",
+		"%{prj.name}/src/**.rc",
 	}
 
 	includedirs {
         "%{Engine}/src",
 		"%{Engine}/vendor/glm",
         "%{Engine}/vendor/spdlog/include",
+		"%{Engine}/vendor/freetype/include",
+		"%{Engine}/vendor/SOIL/include",
 		"%{Engine}/vendor/boost"
     }
 
@@ -134,7 +151,8 @@ project "Game"
 		"%{Engine}/vendor/SOIL/lib",
 		"%{Engine}/vendor/GLFW/lib",
 		"%{Engine}/vendor/Glad/lib",
-		"%{Engine}/vendor/boost/stage/lib"
+		"%{Engine}/vendor/spdlog/lib",
+        "%{Engine}/vendor/boost/stage/lib"
     }
 
     links {
@@ -144,6 +162,7 @@ project "Game"
         "SOIL2",
         "Box2D",
         "freetype",
+        "spdlog",
         "opengl32",
         "libboost_context-vc142-mt-sgd-x64-1_71.lib",
         "libboost_coroutine-vc142-mt-sgd-x64-1_71.lib"
@@ -154,31 +173,37 @@ project "Game"
         ("{COPY} %{enginebin}/*.dll %{gamebin}")
     }
 
-	filter "system:windows"
+    -- filter { "configurations:Debug", "toolset:gcc" }
+    --     buildoptions { "-std=c++17", "-Wall", "-fmax-errors=4", "-Wfatal-errors" }
+
+    -- filter { "configurations:Release", "toolset:gcc" }
+    --     buildoptions { "-O2", "-std=c++17" }
+    --     linkoptions { "-s -mwindows"}
+    --     links { "mingw32" }
+
+    filter "system:windows"
 		systemversion "latest"
 		defines {
 			"SE_PLATFORM_WINDOWS"
 		}
 
-	filter "configurations:Debug"
-		defines "SE_DEBUG"
-		runtime "Debug"
-        symbols "on"
+    configuration "Debug"
+        defines "SE_DEBUG"
+        runtime "Debug"
+        symbols "On"
+        -- buildoptions "/MTd"
 
-    filter { "configurations:Debug", "toolset:gcc" }
-        buildoptions { "-std=c++17", "-Wall", "-fmax-errors=4", "-Wfatal-errors" }
+    configuration "Release"
+        defines "SE_RELEASE"
+        runtime "Release"
+        optimize "On"
+        -- buildoptions "/MT"
 
-	filter "configurations:Release"
-		defines "SE_RELEASE"
-		runtime "Release"
-        optimize "on"
-
-    filter { "configurations:Release", "toolset:gcc" }
-        buildoptions { "-O2", "-std=c++17" }
-        linkoptions { "-s -mwindows"}
-        links { "mingw32" }
-
+    configuration "Dist"
+        defines "SE_DIST"
+        runtime "Release"
+        optimize "On"
+        -- buildoptions "/MT"
 
 
-               
 

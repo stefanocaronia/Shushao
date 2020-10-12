@@ -24,5 +24,17 @@ project "ImGui"
         cppdialect "C++17"
         staticruntime "On"
 
-    filter { "system:windows", "configurations:Release" }
+    -- filter { "system:windows", "configurations:Release" }
+    --     buildoptions "/MT"
+
+    configuration "Debug"
+        defines "DEBUG"
+        runtime "Debug"
+        symbols "On"
+        buildoptions "/MTd"
+
+    configuration "Release"
+        defines "NDEBUG"
+        runtime "Release"
+        optimize "On"
         buildoptions "/MT"

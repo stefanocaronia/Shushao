@@ -7,10 +7,10 @@ namespace se {
 
 	void Debug::Init() {
 		spdlog::set_pattern("%^[%T] %n: %v%$");
-		coreLogger = spdlog::stdout_color_mt("SHUSHAO");
+		coreLogger = spdlog::stdout_color_mt("ENGINE");
 		coreLogger->set_level(spdlog::level::trace);
 
-		clientLogger = spdlog::stdout_color_mt("APP");
+		clientLogger = spdlog::stdout_color_mt("GAME");
 		clientLogger->set_level(spdlog::level::trace);
 	}
 

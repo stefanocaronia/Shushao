@@ -62,6 +62,7 @@ bool LoadUserConfig() {
     }
 
     if (!processConfigData<std::ifstream>(cfile)) {
+        se::Debug::Log(se::ERROR) << "Can't process config data" << std::endl;
         cfile.close();
         return false;
     }
@@ -84,22 +85,27 @@ bool LoadEngineConfig() {
 
     if (engine_config == "") {
         se::Debug::Log(se::ERROR) << "Can't load engine config" << std::endl;
+        DEBUG_CORE_ERROR("Can't load engine config");
         return false;
     }
 
     std::istringstream cstring(engine_config);
 
     if (!processConfigData<std::istringstream>(cstring)) {
+        se::Debug::Log(se::ERROR) << "Can't process config data" << std::endl;
+        DEBUG_CORE_ERROR("Can't process config data");
         return false;
     }
 
     if (!parseUserConfig()) {
         se::Debug::Log(se::ERROR) << "Can't parse user config" << std::endl;
+        DEBUG_CORE_ERROR("Can't parse user config");
         return false;
     }
 
     if (!parseEngineConfig()) {
         se::Debug::Log(se::ERROR) << "Can't parse engine config" << std::endl;
+        DEBUG_CORE_ERROR("Can't parse engine config");
         return false;
     }
 

@@ -23,3 +23,4 @@ private:
     se::SpriteRenderer* sr = nullptr;
     se::Rigidbody2D* rb = nullptr;
 };
+

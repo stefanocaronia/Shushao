@@ -11,12 +11,14 @@ project "SOIL2"
 
     files { "%{prj.location}/src/SOIL2/*.c" }
 
-    configuration "debug"
+    configuration "Debug"
         defines "DEBUG"
         runtime "Debug"
         symbols "On"
+        buildoptions "/MTd"
 
-    configuration "release"
+    configuration "Release"
         defines "NDEBUG"
         runtime "Release"
         optimize "On"
+        buildoptions "/MT"

@@ -105,8 +105,9 @@ namespace se {
 	void VertexBuffer::BufferSubData(unsigned int target, signed long long int offset, signed long long int size, const void* data) {
 		glBufferSubData(target, offset, size, data);
 	}
+
 	void VertexBuffer::BufferData(unsigned int target, signed long long int size, const void* data, int usage) {
-		BufferData(target, size, data, usage);
+		glBufferData(target, size, data, usage);
 	}
 
 }  // namespace se

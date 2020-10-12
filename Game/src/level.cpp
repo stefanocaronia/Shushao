@@ -1,5 +1,5 @@
 #include "level.h"
-#include "coroutinetest.h"
+//#include "coroutinetest.h"
 #include "globals.h"
 #include "hermite.h"
 #include "meshtest.h"
@@ -37,11 +37,12 @@ void Level::testMesh() {
 }
 
 void Level::testCoroutines() {
-    Entity* test = AddEntity("Test Coroutines");
-    test->AddComponent<CoroutineTest>();
+    /*Entity* test = AddEntity("Test Coroutines");
+    test->AddComponent<CoroutineTest>();*/
 }
 
 void Level::testSprites() {
+#if 0
     Entity* ground = AddEntity("Ground");
 
     ground->transform->SetLocalPosition({0.0f, -4.0f, 0.0f});
@@ -91,9 +92,11 @@ void Level::testSprites() {
     backgroundRenderer->sprite = new Sprite("Background", Resources::Get<Texture>("night"));
     backgroundRenderer->sprite->SetPixelPerUnit(64);
     backgroundRenderer->sprite->Build();
+#endif
 }
 
 void Level::testCanvas() {
+#if 0
     Font* f = Resources::Get<Font>("modenine");
 
     Entity* label = AddEntity("Label");
@@ -237,4 +240,6 @@ void Level::testCanvas() {
     imagesl->transform->rectTransform->RegisterPositionLRTB(1.0f, 1.0f, 1.0f, 1.0f);
     imagesl->sortingLayerID = Config::SortingLayers["UI"];
     imagesl->SetPreserveAspect(false)->SetImageType(Image::Type::TILED)->SetBorder({40, 40, 40, 40})->SetFillCenter(false);
+
+#endif
 }

@@ -13,7 +13,13 @@ std::vector<char> Resources::GetEmbeddedData(int IDRES, std::string library, LPW
     HMODULE module;
 
     if (library != "") {
-        module = LoadLibrary((LPCWSTR)library.c_str());
+        module = LoadLibraryA(library.c_str());
+
+        if (module == NULL) {
+            unsigned int err = GetLastError();
+            DEBUG_CORE_ERROR("Can't load dll '" + (library != "" ? library : "") + "' - Err. " + std::to_string(err));
+            ::exit(5);
+        }
     } else {
         module = GetModuleHandle(NULL);
     }
@@ -33,7 +39,7 @@ std::vector<char> Resources::GetEmbeddedData(int IDRES, std::string library, LPW
             }
         }
     } else {
-        Debug::Log(WARNING) << "Cant load Resource " << IDRES << (library != "" ? " from " + library : "") << std::endl;
+        DEBUG_CORE_WARN("Can't load Resource " + std::to_string(IDRES) + (library != "" ? " from " + library : ""));
         return std::vector<char>();
     }
 
@@ -48,7 +54,8 @@ std::string Resources::GetEmbeddedText(int IDRES, std::string library) {
 void Resources::Clear() {
     for (auto& asset : Assets) {
         if (asset.second != nullptr) {
-            Debug::Log << "Cancello " << asset.second->name << " (" + util::classtitle(typeid(*asset.second).name()) + ")" << std::endl;
+            //Debug::Log << "Cancello " << asset.second->name << " (" + util::classtitle(typeid(*asset.second).name()) + ")" << std::endl;
+            DEBUG_CORE_INFO("Cancello " + asset.second->name + " (" + util::classtitle(typeid(*asset.second).name()) + ")");
             delete (asset.second);
             asset.second = nullptr;
         }

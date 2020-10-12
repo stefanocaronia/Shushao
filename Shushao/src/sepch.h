@@ -1,5 +1,4 @@
-#ifndef SE_GCH
-#define SE_GCH
+#pragma once
 
 // std
 #include <stdlib.h>
@@ -41,5 +40,3 @@
 #include <glm/gtx/quaternion.hpp>
 #include <glm/gtx/spline.hpp>
 #include <glm/gtx/transform.hpp>
-
-#endif

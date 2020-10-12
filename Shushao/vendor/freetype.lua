@@ -9,3 +9,16 @@ project 'Freetype'
 
     configuration { "vs2019" }
         prebuildcommands { path.translate("../../../vendor/ftjam/jam -sJAM_TOOLSET=VISUALC") }
+
+
+    configuration "Debug"
+        defines "DEBUG"
+        runtime "Debug"
+        symbols "On"
+        buildoptions "/MTd"
+
+    configuration "Release"
+        defines "NDEBUG"
+        runtime "Release"
+        optimize "On"
+        buildoptions "/MT"

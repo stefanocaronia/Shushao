@@ -56,6 +56,11 @@ namespace se {
 	VertexArray* VertexArray::Leave() {
 		glBindVertexArray(0);
 		DisablePointers();
+		for (auto& it : buffers) {
+			if (it.second != nullptr && !it.second->ready) {
+				(VertexBuffer*)it.second->Unbind();
+			}
+		}
 		inUse = false;
 		return this;
 	}
@@ -89,4 +94,5 @@ namespace se {
 		ready = (Id > 0);
 		return this;
 	}
+
 }  // namespace se

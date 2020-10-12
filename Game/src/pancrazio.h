@@ -11,5 +11,4 @@ class Pancrazio : public se::Entity {
 		se::BoxCollider2D* collider;
 		se::CircleCollider2D* circlec;
 		se::Animation* animation;
-
 };
