@@ -32,8 +32,7 @@ namespace se {
 	}
 
 	Entity::~Entity() {
-		Debug::Log << "Entity Destructor: " << name << std::endl;
-
+		DEBUG_CORE_INFO("Entity Destructor: {0}", name);
 		// distruggo tutti i components
 		for (Component* pCO : Components) {
 			scene->UnregisterActiveComponent(pCO);

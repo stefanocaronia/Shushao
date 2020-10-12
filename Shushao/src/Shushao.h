@@ -1,10 +1,6 @@
 #pragma once
 
 #include "Shushao/Application.h"
-
-// Entry Point
-//#include "Shushao/Main.h"
-
 #include "Shushao/Debug.h"
 #include "Shushao/SceneManager.h"
 #include "Shushao/Transform.h"
@@ -19,6 +15,13 @@
 #include "Shushao/GeometryRenderer.h"
 #include "Shushao/Font.h"
 #include "Shushao/Coroutine.h"
+#include "Shushao/Textfile.h"
+//#include "Shushao/Shaders/Shader.h"
+#include "Shushao/Image.h"
+
+#include "Shushao/UI/CanvasUI.h"
+#include "Shushao/UI/TextUI.h"
+#include "Shushao/UI/ImageUI.h"
 
 #include "Shushao/Physics/Collider2d.h"
 #include "Shushao/Physics/RigidBody2d.h"

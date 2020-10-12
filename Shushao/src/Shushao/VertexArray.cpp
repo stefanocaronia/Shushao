@@ -14,7 +14,9 @@ namespace se {
 	VertexArray::~VertexArray() {
 		for (auto& it : buffers) {
 			if (it.second != nullptr) {
-				Debug::Log << "Cancello buffer" << it.second->name << std::endl;  //<< " (" + util::classtitle(typeid(*it.second).name()) +")"
+				//Debug::Log << "Cancello buffer" << it.second->name << std::endl;  //<< " (" + util::classtitle(typeid(*it.second).name()) +")"
+
+				DEBUG_CORE_INFO("Cancello buffer {0}", it.second->name);
 				delete (it.second);
 				it.second = nullptr;
 			}

@@ -63,7 +63,7 @@ namespace se {
 
 	void Image::Awake() {
 		if (sprite == nullptr) {
-			Debug::Log(ERROR) << "Sprite undefined" << std::endl;
+			DEBUG_CORE_ERROR("Sprite is undefined");
 			return;
 		}
 

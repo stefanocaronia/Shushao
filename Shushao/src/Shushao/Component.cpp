@@ -17,7 +17,7 @@ namespace se {
 using ComponentSet = std::multiset<Component*, CompareComponent>;
 
 Component::Component() {
-    name = getTitle();
+    name = util::classtitle(typeid(*this).name());
     enabled = true;
     GameData::RegisterComponent(this);
 }

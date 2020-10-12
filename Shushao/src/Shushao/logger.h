@@ -1,10 +1,15 @@
 #pragma once
 
 #include "Core.h"
-#include "sepch.h"
 
 #undef ERROR
 #undef InvokeMethod
+
+#ifdef CONSOLE_COLORS_ENABLED
+#include <windows.h>
+#undef ERROR
+#undef SendMessage
+#endif
 
 #include "Utility.h"
 #include "Time.h"

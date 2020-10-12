@@ -1,8 +1,9 @@
 #include <Shushao.h>
+#include "level.h"
 
 using namespace se;
 
-class Game : public se::Application {
+class Game : public Application {
 
     bool perspectiveTest = false;
 
@@ -11,35 +12,35 @@ class Game : public se::Application {
     }
 
     bool InitResources() override {
-        //Resources::Load<Textfile>("assets/cube.obj", "textcube");
-        //Resources::Load<Texture>("avatar", IMG_AVATAR, LIB_SHUSHAO);
-        //Resources::Load<Texture>("assets/particlestar.png");
-        //Resources::Load<Texture>("assets/pancrazio.png");
-        //Resources::Load<Texture>("assets/dialog.png");
-        //Resources::Load<Texture>("assets/night.jpg");
-        //Resources::Load<Texture>("assets/eye.jpg");
-        //Resources::Load<Texture>("assets/pancsmile.png");
-        //Resources::Load<TextureAtlas>("assets/walking.png")->AddGrid(glm::vec2(16, 16), Align::BOTTOM);
-        //Resources::Add<Sprite>("pancrazio_sprite")->SetTexture(Resources::Get<Texture>("pancrazio"))->SetPixelPerUnit(16)->Build();
-        //Resources::Add<Sprite>("eye_sprite")->SetTexture(Resources::Get<Texture>("eye"))->SetPixelPerUnit(200)->Build();
+        Resources::Load<Textfile>("assets/cube.obj", "textcube");
+        Resources::Load<Texture>("avatar", IMG_AVATAR, LIB_SHUSHAO);
+        Resources::Load<Texture>("assets/particlestar.png");
+        Resources::Load<Texture>("assets/pancrazio.png");
+        Resources::Load<Texture>("assets/dialog.png");
+        Resources::Load<Texture>("assets/night.jpg");
+        Resources::Load<Texture>("assets/eye.jpg");
+        Resources::Load<Texture>("assets/pancsmile.png");
+        Resources::Load<TextureAtlas>("assets/walking.png")->AddGrid(glm::vec2(16, 16), Align::BOTTOM);
+        Resources::Add<Sprite>("pancrazio_sprite")->SetTexture(Resources::Get<Texture>("pancrazio"))->SetPixelPerUnit(16)->Build();
+        Resources::Add<Sprite>("eye_sprite")->SetTexture(Resources::Get<Texture>("eye"))->SetPixelPerUnit(200)->Build();
 
-        //Resources::Load<Mesh>("assets/cube.obj");
-        //Resources::Load<Texture>("assets/cube_diffuse.png");
-        //Resources::Load<Texture>("assets/cube_diffuse_brutto.png");
-        //Resources::Load<Texture>("assets/cube_specular.png");
-        //Resources::Load<Texture>("assets/tap.jpg");
+        Resources::Load<Mesh>("assets/cube.obj");
+        Resources::Load<Texture>("assets/cube_diffuse.png");
+        Resources::Load<Texture>("assets/cube_diffuse_brutto.png");
+        Resources::Load<Texture>("assets/cube_specular.png");
+        Resources::Load<Texture>("assets/tap.jpg");
 
-        //Resources::Add<Sprite>("dialog_sprite")->SetTexture(Resources::Get<Texture>("dialog"))->SetPixelPerUnit(200)->SetBorder({ 10, 10, 10, 10 })->Build();
+        Resources::Add<Sprite>("dialog_sprite")->SetTexture(Resources::Get<Texture>("dialog"))->SetPixelPerUnit(200)->SetBorder({ 10, 10, 10, 10 })->Build();
 
-        //Resources::Load<Music>("assets/fizz.mp3");
-        //Resources::Load<Effect>("assets/hit.wav");
-        //Resources::Load<Effect>("assets/shoot.wav")->setVolume(40);
+        Resources::Load<Music>("assets/fizz.mp3");
+        Resources::Load<Effect>("assets/hit.wav");
+        Resources::Load<Effect>("assets/shoot.wav")->setVolume(40);
 
-        //// Resources::Add<SpriteSheet>("walking")->Load(Resources::Get<TextureAtlas>("walking"));
+        // Resources::Add<SpriteSheet>("walking")->Load(Resources::Get<TextureAtlas>("walking"));
 
-        //Resources::Load<Font>("assets/modenine.ttf", "modenine");
-        //Resources::Load<Font>("assets/consres.ttf", "consolas_res");
-        //Resources::Load<Font>("assets/pixelperfect.ttf", "Pixel Perfect");
+        Resources::Load<Font>("assets/modenine.ttf", "modenine");
+        Resources::Load<Font>("assets/consres.ttf", "consolas_res");
+        Resources::Load<Font>("assets/pixelperfect.ttf", "Pixel Perfect");
 
         return true;
     }
@@ -48,32 +49,32 @@ class Game : public se::Application {
 
         perspectiveTest = false;
 
-        se::Debug::debugGridMode = perspectiveTest ? se::GridMode::PERSPECTIVE : se::GridMode::ORTHOGRAFIC;
+        Debug::debugGridMode = perspectiveTest ? GridMode::PERSPECTIVE : GridMode::ORTHOGRAFIC;
 
         return true;
     }
 
     bool InitScene() override {
-        /*se::SceneManager::LoadScene<Level>("Level 1");
+        SceneManager::LoadScene<Level>("Level 1");
 
-        se::Camera* camera = se::SceneManager::activeScene->activeCamera;
+        Camera* camera = SceneManager::activeScene->activeCamera;
         camera->backgroundColor = { 0.05f, 0.05f, 0.2f, 1.0f };
 
         if (perspectiveTest) {
             camera->setOrthographic(false);
             camera->setFarClipPlane(20.0f);
             camera->transform->localPosition = { 1.0f, 3.0f, 6.0f };
-            camera->transform->localRotation = se::Transform::QUATERNION_IDENTITY;
-            se::Debug::debugGridMode = se::GridMode::PERSPECTIVE;
+            camera->transform->localRotation = Transform::QUATERNION_IDENTITY;
+            Debug::debugGridMode = GridMode::PERSPECTIVE;
         } else {
             camera->setOrthographic(true);
             camera->setNearClipPlane(12.0f);
             camera->setFarClipPlane(1.0f);
             camera->setOrthographicSize(5.0f);
             camera->transform->localPosition = { 0.0f, 0.0f, 10.0f };
-            camera->transform->localRotation = se::Transform::QUATERNION_IDENTITY;
+            camera->transform->localRotation = Transform::QUATERNION_IDENTITY;
         }
-    */
+
         return true;
     }
 

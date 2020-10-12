@@ -1,5 +1,5 @@
 #include "level.h"
-//#include "coroutinetest.h"
+#include "coroutinetest.h"
 #include "globals.h"
 #include "hermite.h"
 #include "meshtest.h"
@@ -11,10 +11,11 @@
 using namespace se;
 
 Level::Level() {
-    testParticles();
+    //testParticles();
     testSprites();
-    testCoroutines();
-    testCanvas();
+    //testCoroutines();
+    //testCanvas();
+    //testMesh();
 }
 
 void Level::testParticles() {
@@ -33,15 +34,25 @@ void Level::testParticles() {
 }
 
 void Level::testMesh() {
-    // AddEntity<Meshtest>();
+     AddEntity<Meshtest>();
 }
 
 void Level::testCoroutines() {
-    /*Entity* test = AddEntity("Test Coroutines");
-    test->AddComponent<CoroutineTest>();*/
+    Entity* test = AddEntity("Test Coroutines");
+    test->AddComponent<CoroutineTest>();
 }
 
 void Level::testSprites() {
+
+    Entity* bkg = AddEntity("Background");
+    //bkg->transform->SetLocalPosition({0.0f, 0.0f, -0.5f});
+    SpriteRenderer* backgroundRenderer = bkg->AddComponent<SpriteRenderer>();
+    backgroundRenderer->name = "Background Renderer";
+    backgroundRenderer->sortingLayerID = Config::SortingLayers["Background"];
+    backgroundRenderer->sprite = new Sprite("Background", Resources::Get<Texture>("night"));
+    backgroundRenderer->sprite->SetPixelPerUnit(64);
+    backgroundRenderer->sprite->Build();
+
 #if 0
     Entity* ground = AddEntity("Ground");
 
@@ -49,13 +60,14 @@ void Level::testSprites() {
     Rigidbody2D* groundrb = ground->AddComponent<Rigidbody2D>();
     groundrb->SetType(RigidbodyType::STATIC);
     BoxCollider2D* ec = ground->AddComponent<BoxCollider2D>();
-    ec->SetShape({6, 0.5f});
+    //ec->SetShape({6, 0.5f});
 
     Entity* door = AddEntity("Door");
     door->transform->SetLocalPosition({4.0f, -4.0f, 0.0f});
     Rigidbody2D* doorrb = door->AddComponent<Rigidbody2D>();
     doorrb->SetType(RigidbodyType::STATIC);
     BoxCollider2D* dc = door->AddComponent<BoxCollider2D>();
+
     dc->SetSensor(true);
     dc->SetShape({0.1, 4.0f});
 
@@ -82,21 +94,10 @@ void Level::testSprites() {
     sonOfPancrazio->GetComponent<BoxCollider2D>("trigger")->ResetShape();  // <---- collegare al transform addirittura? fare dei callback transformChanged
     //sonOfPancrazio->GetComponent<CircleCollider2D>()->ResetShape(); // <---- collegare al transform addirittura? fare dei callback transformChanged
     //sonOfPancrazio->transform->setLocalRotation({0,0,20});
-
-    Entity* bkg = AddEntity("Background");
-    //bkg->transform->SetLocalPosition({0.0f, 0.0f, -0.5f});
-    SpriteRenderer* backgroundRenderer = bkg->AddComponent<SpriteRenderer>();
-    // backgroundRenderer->shader = Resources::Get<Shader>("standard");
-    backgroundRenderer->name = "Background Renderer";
-    backgroundRenderer->sortingLayerID = Config::SortingLayers["Background"];
-    backgroundRenderer->sprite = new Sprite("Background", Resources::Get<Texture>("night"));
-    backgroundRenderer->sprite->SetPixelPerUnit(64);
-    backgroundRenderer->sprite->Build();
 #endif
 }
 
 void Level::testCanvas() {
-#if 0
     Font* f = Resources::Get<Font>("modenine");
 
     Entity* label = AddEntity("Label");
@@ -241,5 +242,4 @@ void Level::testCanvas() {
     imagesl->sortingLayerID = Config::SortingLayers["UI"];
     imagesl->SetPreserveAspect(false)->SetImageType(Image::Type::TILED)->SetBorder({40, 40, 40, 40})->SetFillCenter(false);
 
-#endif
 }

@@ -19,6 +19,7 @@ public:
     int height;
     int width;
     glm::vec2 size;
+    int textureFormat;
 
     bool Load(std::string);
     bool LoadEmbedded(int IDRES, std::string library = "");

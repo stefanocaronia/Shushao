@@ -2,6 +2,9 @@
 
 #include "sepch.h"
 
+#define _USE_MATH_DEFINES
+#define CONSOLE_COLORS_ENABLED
+
 #ifdef SE_DEBUG
     #define SE_ENABLE_ASSERTS
 #endif
@@ -27,8 +30,6 @@
 #endif
 
 #define BIT(x) (1 << x)
-
-#define _USE_MATH_DEFINES
 
 #ifndef M_PI
     #define M_PI 3.14159265358979323846

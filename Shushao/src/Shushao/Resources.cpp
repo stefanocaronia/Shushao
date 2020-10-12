@@ -55,7 +55,7 @@ void Resources::Clear() {
     for (auto& asset : Assets) {
         if (asset.second != nullptr) {
             //Debug::Log << "Cancello " << asset.second->name << " (" + util::classtitle(typeid(*asset.second).name()) + ")" << std::endl;
-            DEBUG_CORE_INFO("Cancello " + asset.second->name + " (" + util::classtitle(typeid(*asset.second).name()) + ")");
+            DEBUG_CORE_INFO("Cancello {0}", asset.second->name + " (" + util::classtitle(typeid(*asset.second).name()) + ")");
             delete (asset.second);
             asset.second = nullptr;
         }

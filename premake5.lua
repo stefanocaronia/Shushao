@@ -67,12 +67,12 @@ project "Shushao"
             "GLFW_INCLUDE_NONE"
         }
 
-    -- filter { "configurations:Release", "toolset:gcc" }
-    --     buildoptions { "-O2", "-std=c++17" }
-    --     linkoptions { "-s -mwindows"}
+    filter { "configurations:Release", "toolset:gcc" }
+        buildoptions { "-O2", "-std=c++17" }
+        linkoptions { "-s -mwindows"}
 
-    -- filter { "configurations:Debug", "toolset:gcc" }
-    --     buildoptions { "-std=c++17", "-Wall", "-fmax-errors=4", "-Wfatal-errors" }
+    filter { "configurations:Debug", "toolset:gcc" }
+        buildoptions { "-std=c++17", "-Wall", "-fmax-errors=4", "-Wfatal-errors" }
 
     configuration "Debug"
 		defines "SE_DEBUG"
@@ -173,13 +173,13 @@ project "Game"
         ("{COPY} %{enginebin}/*.dll %{gamebin}")
     }
 
-    -- filter { "configurations:Debug", "toolset:gcc" }
-    --     buildoptions { "-std=c++17", "-Wall", "-fmax-errors=4", "-Wfatal-errors" }
+    filter { "configurations:Debug", "toolset:gcc" }
+        buildoptions { "-std=c++17", "-Wall", "-fmax-errors=4", "-Wfatal-errors" }
 
-    -- filter { "configurations:Release", "toolset:gcc" }
-    --     buildoptions { "-O2", "-std=c++17" }
-    --     linkoptions { "-s -mwindows"}
-    --     links { "mingw32" }
+    filter { "configurations:Release", "toolset:gcc" }
+        buildoptions { "-O2", "-std=c++17" }
+        linkoptions { "-s -mwindows"}
+        links { "mingw32" }
 
     filter "system:windows"
 		systemversion "latest"

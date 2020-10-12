@@ -74,7 +74,7 @@ namespace se {
 	}
 
 	void Logger::setColor(ConsoleColor color) {
-#ifdef CONSOLE_COLORS
+#ifdef CONSOLE_COLORS_ENABLED
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
 #endif
 	}

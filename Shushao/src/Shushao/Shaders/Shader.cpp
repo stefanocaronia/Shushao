@@ -205,8 +205,7 @@ namespace se {
 	}
 
 	Shader::~Shader() {
-		Debug::Log << "Destructor di Shader " << name << std::endl;
-
+		DEBUG_CORE_INFO("Destructor di Shader: {0}", name);
 		uniforms.clear();
 		Leave();
 
