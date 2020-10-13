@@ -144,4 +144,5 @@ void Animation::Update() {
         lastFrameTime = Time::GetTime();
     }
 }
+
 }  // namespace se

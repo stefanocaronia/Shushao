@@ -44,7 +44,9 @@ project "Shushao"
 
     files {
 		"%{prj.name}/src/**.h",
-        "%{prj.name}/src/**.cpp"
+        "%{prj.name}/src/**.cpp",
+        "%{prj.name}/src/**.frag",
+        "%{prj.name}/src/**.vert"
 	}
 
     includedirs {

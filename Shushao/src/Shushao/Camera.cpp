@@ -3,9 +3,9 @@
 #include "Config.h"
 #include "Core.h"
 #include "Debug.h"
-#include "GLmanager.h"
 #include "Transform.h"
 #include "Camera.h"
+#include "GameData.h"
 
 namespace se {
 
@@ -28,12 +28,15 @@ void Camera::setup() {
 }
 
 glm::mat4 Camera::getProjectionMatrix() {
-    if (aspect != GLManager::ASPECT ||
+    Window* window = GameData::Window;
+
+    if (window != nullptr && aspect != window->GetAspect() ||
         orthographicSize != last_orthographicSize ||
         nearClipPlane != last_nearClipPlane ||
         farClipPlane != last_farClipPlane ||
         fieldOfView != last_fieldOfView) {
-        aspect = GLManager::ASPECT;
+
+        aspect = window->GetAspect();
         last_orthographicSize = orthographicSize;
         last_nearClipPlane = nearClipPlane;
         last_farClipPlane = farClipPlane;
@@ -47,7 +50,7 @@ glm::mat4 Camera::getProjectionMatrix() {
                 orthographicSize,
                 nearClipPlane,
                 farClipPlane);
-            viewportSize = {orthographicSize * aspect * 2, orthographicSize * 2};
+            viewportSize = { orthographicSize * aspect * 2, orthographicSize * 2 };
         } else {
             Projection = glm::perspective(fieldOfView, aspect, nearClipPlane, farClipPlane);
         }
@@ -129,23 +132,23 @@ void Camera::print() {
     std::cout << " Camera " << name << std::endl;
 
     std::cout << "  - "
-              << "backgroundColor: " << backgroundColor.r << " " << backgroundColor.g << " " << backgroundColor.b << " " << backgroundColor.a << std::endl;
+        << "backgroundColor: " << backgroundColor.r << " " << backgroundColor.g << " " << backgroundColor.b << " " << backgroundColor.a << std::endl;
     std::cout << "  - "
-              << "aspect: " << aspect << std::endl;
+        << "aspect: " << aspect << std::endl;
     std::cout << "  - "
-              << "orthographic: " << (orthographic ? "true" : "false") << std::endl;
+        << "orthographic: " << (orthographic ? "true" : "false") << std::endl;
     std::cout << "  - "
-              << "orthographicSize: " << orthographicSize << std::endl;
+        << "orthographicSize: " << orthographicSize << std::endl;
     std::cout << "  - "
-              << "depth: " << depth << std::endl;
+        << "depth: " << depth << std::endl;
     std::cout << "  - "
-              << "fieldOfView: " << fieldOfView << std::endl;
+        << "fieldOfView: " << fieldOfView << std::endl;
     std::cout << "  - "
-              << "farClipPlane: " << farClipPlane << std::endl;
+        << "farClipPlane: " << farClipPlane << std::endl;
     std::cout << "  - "
-              << "nearClipPlane: " << nearClipPlane << std::endl;
+        << "nearClipPlane: " << nearClipPlane << std::endl;
     std::cout << "  - "
-              << "rect: " << rect.x << " " << rect.y << " " << rect.width << " " << rect.height << std::endl;
+        << "rect: " << rect.x << " " << rect.y << " " << rect.width << " " << rect.height << std::endl;
 
     Logger::setColor(ConsoleColor::LIGHTGREY);
 }

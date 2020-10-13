@@ -5,9 +5,9 @@
 #include "Shushao/Core.h"
 #include "Color.h"
 #include "GeometryRenderer.h"
-#include "GLManager.h"
 #include "Shaders/WireframeShader.h"
 #include "Transform.h"
+#include "GameData.h"
 
 namespace se {
 
@@ -89,7 +89,8 @@ namespace se {
 		if (renderMode == RenderMode::SCREEN) {
 			shader->SetM(transform->uM());
 			shader->Enable("viewport");
-			shader->SetVector("viewport", GLManager::VIEWPORT);
+			glm::vec2 viewport = GameData::Window->GetViewport();
+			shader->SetVector("viewport", viewport);
 		}
 
 		VAO->GetBuffer(VertexBuffer::VERTICES)->Bind();
@@ -103,7 +104,7 @@ namespace se {
 		}
 
 		VAO->Leave();
-		shader->Use();
+		shader->Leave();
 	}
 
 	void GeometryRenderer::OnDestroy() {

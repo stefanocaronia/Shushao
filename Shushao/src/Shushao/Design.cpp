@@ -4,15 +4,14 @@
 
 #include "Core.h"
 #include "Design.h"
-#include "GLManager.h"
 #include "SceneManager.h"
+#include "GameData.h"
 #include "Shaders/BaseShader.h"
 
 namespace se {
 
 	bool Design::Init() {
 		if (ready) return true;
-		if (!GLManager::ready) return false;
 
 		shader = new BaseShader();
 		shader->awake();
@@ -47,7 +46,7 @@ namespace se {
 
 		if (renderMode == RenderMode::SCREEN) {
 			shader->Enable("viewport");
-			shader->SetVector("viewport", GLManager::VIEWPORT);
+			shader->SetVector("viewport", GameData::Window->GetViewport());
 		}
 
 		shader->SetMVP(&mvp[0][0]);
@@ -86,7 +85,7 @@ namespace se {
 
 		if (renderMode == RenderMode::SCREEN) {
 			shader->Enable("viewport");
-			shader->SetVector("viewport", GLManager::VIEWPORT);
+			shader->SetVector("viewport", GameData::Window->GetViewport());
 		}
 
 		shader->SetMVP(&mvp[0][0]);
@@ -134,7 +133,7 @@ namespace se {
 
 		if (renderMode == RenderMode::SCREEN) {
 			shader->Enable("viewport");
-			shader->SetVector("viewport", GLManager::VIEWPORT);
+			shader->SetVector("viewport", GameData::Window->GetViewport());
 		}
 
 		glEnablei(GL_BLEND, VAO->GetBuffer(VertexBuffer::VERTICES)->Id);
@@ -166,7 +165,7 @@ namespace se {
 
 		if (renderMode == RenderMode::SCREEN) {
 			shader->Enable("viewport");
-			shader->SetVector("viewport", GLManager::VIEWPORT);
+			shader->SetVector("viewport", GameData::Window->GetViewport());
 		}
 
 		shader->SetMVP(&mvp[0][0]);
@@ -203,7 +202,7 @@ namespace se {
 
 		if (renderMode == RenderMode::SCREEN) {
 			shader->Enable("viewport");
-			shader->SetVector("viewport", GLManager::VIEWPORT);
+			shader->SetVector("viewport", GameData::Window->GetViewport());
 		}
 
 		VAO->GetBuffer(VertexBuffer::VERTICES)->Bind();
@@ -261,7 +260,7 @@ namespace se {
 
 		if (renderMode == RenderMode::SCREEN) {
 			shader->Enable("viewport");
-			shader->SetVector("viewport", GLManager::VIEWPORT);
+			shader->SetVector("viewport", GameData::Window->GetViewport());
 		}
 
 		glEnablei(GL_BLEND, VAO->GetBuffer(VertexBuffer::VERTICES)->Id);

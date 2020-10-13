@@ -48,7 +48,6 @@ class Game : public Application {
     bool InitConfig() override {
 
         perspectiveTest = false;
-
         Debug::debugGridMode = perspectiveTest ? GridMode::PERSPECTIVE : GridMode::ORTHOGRAFIC;
 
         return true;
@@ -58,7 +57,7 @@ class Game : public Application {
         SceneManager::LoadScene<Level>("Level 1");
 
         Camera* camera = SceneManager::activeScene->activeCamera;
-        camera->backgroundColor = { 0.05f, 0.05f, 0.2f, 1.0f };
+        camera->backgroundColor = { 0.1f, 0.1f, 0.1f, 1 };
 
         if (perspectiveTest) {
             camera->setOrthographic(false);

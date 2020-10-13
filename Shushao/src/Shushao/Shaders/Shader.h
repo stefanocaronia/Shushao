@@ -29,7 +29,8 @@ public:
         LIGHT
     };
 
-    Uniform(std::string name_, std::string var_, Uniform::Type type_, unsigned int location_, bool locked_ = false) : name(name_), var(var_), type(type_), location(location_), locked(locked_) {}
+    Uniform(std::string name_, std::string var_, Uniform::Type type_, unsigned int location_, bool locked_ = false) : 
+        name(name_), var(var_), type(type_), location(location_), locked(locked_) {}
 
     std::string name;
     std::string var;
@@ -38,7 +39,7 @@ public:
     bool locked = false;
 
     // values
-    unsigned int texture;
+    unsigned int texture = 0;
 
     void SetFloat(float&);
     void SetInteger(int&);

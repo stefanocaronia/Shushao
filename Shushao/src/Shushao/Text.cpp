@@ -6,13 +6,13 @@
 #include "Design.h"
 #include "Entity.h"
 #include "Font.h"
-#include "GLManager.h"
 #include "Rect.h"
 #include "Shaders/fontShader.h"
 #include "Shaders/Shader.h"
 #include "Text.h"
 #include "Transform.h"
 #include "VertexArray.h"
+#include "GameData.h"
 
 namespace se {
 
@@ -40,7 +40,7 @@ void Text::Awake() {
 
     if (entity->canvas != nullptr && entity->canvas->renderMode == RenderMode::SCREEN) {
         shader->Use();
-        shader->SetVector("viewport", GLManager::VIEWPORT);
+        shader->SetVector("viewport", GameData::Window->GetViewport());
         shader->Enable("viewport");
         shader->Leave();
     }

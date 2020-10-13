@@ -4,7 +4,6 @@
 #include <glad/glad.h>
 
 #include "Debug.h"
-#include "GLManager.h"
 #include "Mesh.h"
 #include "Shaders/phongShader.h"
 #include "Transform.h"

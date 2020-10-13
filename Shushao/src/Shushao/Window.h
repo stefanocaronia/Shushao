@@ -1,5 +1,4 @@
-#ifndef SE_WINDOW
-#define SE_WINDOW
+#pragma once
 
 #include "Core.h"
 #include "Events/Event.h"
@@ -23,10 +22,20 @@ public:
 
     virtual ~Window() {}
 
-    virtual void OnUpdate() = 0;
+    virtual void Update() = 0;
 
     virtual unsigned int GetWidth() const = 0;
     virtual unsigned int GetHeight() const = 0;
+
+    virtual float GetAspect() const = 0;
+    virtual glm::vec2 GetViewport() const = 0;
+
+    virtual unsigned int GetDesktopWidth() const {
+        return _desktopWidth;
+    }
+    virtual unsigned int GetDesktopHeight() const {
+        return _desktopHeight;
+    }
 
     // Window attributes
     virtual void SetEventCallback(const EventCallbackFn& callback) = 0;
@@ -45,8 +54,10 @@ public:
     static Window* Create(const WindowProps& props = WindowProps());
 
     bool fullscreen;
+
+protected:
+    unsigned int _desktopWidth;
+    unsigned int _desktopHeight;
 };
 
 }  // namespace se
-
-#endif

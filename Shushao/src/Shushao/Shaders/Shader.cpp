@@ -11,20 +11,20 @@ namespace se {
 
 	//{ #region uniform
 
-	void Uniform::SetFloat(GLfloat& value) {
+	void Uniform::SetFloat(float& value) {
 		glUniform1f(location, value);
 	}
 
-	void Uniform::SetInteger(GLint& value) {
+	void Uniform::SetInteger(int& value) {
 		glUniform1i(location, value);
 	}
 
-	void Uniform::SetTextureIndex(GLint& value) {
+	void Uniform::SetTextureIndex(int& value) {
 		glUniform1i(location, (GLint)value);
 		texture = value;
 	}
 
-	void Uniform::SetMatrix(GLfloat* value) {
+	void Uniform::SetMatrix(float* value) {
 		glUniformMatrix4fv(location, 1, GL_FALSE, value);
 	}
 
@@ -44,11 +44,22 @@ namespace se {
 		glUniform4f(location, value.r, value.g, value.b, value.a);
 	}
 
+	void Uniform::SetLight(UniformLight& value) {
+		glUniform3f(location, value.position[0], value.position[1], value.position[2]);
+		glUniform3f(location, value.direction[0], value.direction[1], value.direction[2]);
+		glUniform3f(location, value.ambient[0], value.ambient[1], value.ambient[2]);
+		glUniform3f(location, value.diffuse[0], value.diffuse[1], value.diffuse[2]);
+		glUniform3f(location, value.specular[0], value.specular[1], value.specular[2]);
+		glUniform1f(location, value.linear);
+		glUniform1f(location, value.quadratic);
+		glUniform1f(location, value.cutoff);
+	}
+
 	//}
 
 	//{ #region uniform setter
 
-	void Shader::SetFloat(std::string var_, GLfloat value) {
+	void Shader::SetFloat(std::string var_, float value) {
 		auto it = uniforms.find(var_);
 		if (it != uniforms.end()) {
 			it->second.SetFloat(value);
@@ -58,7 +69,7 @@ namespace se {
 		}
 	}
 
-	void Shader::SetInteger(std::string var_, GLint value) {
+	void Shader::SetInteger(std::string var_, int value) {
 		auto it = uniforms.find(var_);
 		if (it != uniforms.end()) {
 			it->second.SetInteger(value);
@@ -68,7 +79,7 @@ namespace se {
 		}
 	}
 
-	void Shader::SetTextureIndex(std::string var_, GLint value) {
+	void Shader::SetTextureIndex(std::string var_, int value) {
 		auto it = uniforms.find(var_);
 		if (it != uniforms.end()) {
 			it->second.SetTextureIndex(value);
@@ -89,7 +100,7 @@ namespace se {
 		glUniform1f(glGetUniformLocation(programID, (var_ + ".cutoff").c_str()), value.cutoff);
 	}
 
-	void Shader::SetMatrix(std::string var_, GLfloat* value) {
+	void Shader::SetMatrix(std::string var_, float* value) {
 		auto it = uniforms.find(var_);
 		if (it != uniforms.end()) {
 			it->second.SetMatrix(value);
@@ -145,27 +156,27 @@ namespace se {
 		return 0;
 	}
 
-	void Shader::SetMVP(GLfloat* value) {
+	void Shader::SetMVP(float* value) {
 		SetMatrix("MVP", value);
 	}
 
-	void Shader::SetMV(GLfloat* value) {
+	void Shader::SetMV(float* value) {
 		SetMatrix("MV", value);
 	}
 
-	void Shader::SetVP(GLfloat* value) {
+	void Shader::SetVP(float* value) {
 		SetMatrix("VP", value);
 	}
 
-	void Shader::SetM(GLfloat* value) {
+	void Shader::SetM(float* value) {
 		SetMatrix("M", value);
 	}
 
-	void Shader::SetP(GLfloat* value) {
+	void Shader::SetP(float* value) {
 		SetMatrix("P", value);
 	}
 
-	void Shader::SetV(GLfloat* value) {
+	void Shader::SetV(float* value) {
 		SetMatrix("V", value);
 	}
 
@@ -238,19 +249,19 @@ namespace se {
 		return true;
 	}
 
-	void Shader::AddUniform(std::string name_, std::string var_, Uniform::Type type_, GLuint location_) {
+	void Shader::AddUniform(std::string name_, std::string var_, Uniform::Type type_, unsigned int location_) {
 		uniforms.insert(std::pair<std::string, Uniform>(var_, { name_, var_, type_, location_, false }));
 	}
 
-	void Shader::AddUniform(std::string var_, Uniform::Type type_, GLuint location_) {
+	void Shader::AddUniform(std::string var_, Uniform::Type type_, unsigned int location_) {
 		uniforms.insert(std::pair<std::string, Uniform>(var_, { var_, var_, type_, location_, false }));
 	}
 
-	void Shader::AddShaderUniform(std::string var_, Uniform::Type type_, GLuint location_) {
+	void Shader::AddShaderUniform(std::string var_, Uniform::Type type_, unsigned int location_) {
 		uniforms.insert(std::pair<std::string, Uniform>(var_, { var_, var_, type_, location_, true }));
 	}
 
-	void Shader::AddShaderUniform(std::string name_, std::string var_, Uniform::Type type_, GLuint location_) {
+	void Shader::AddShaderUniform(std::string name_, std::string var_, Uniform::Type type_, unsigned int location_) {
 		uniforms.insert(std::pair<std::string, Uniform>(var_, { name_, var_, type_, location_, true }));
 	}
 
@@ -404,7 +415,7 @@ namespace se {
 		return true;
 	}
 
-	bool Shader::shaderCompilationLog(const GLuint& shader) {
+	bool Shader::shaderCompilationLog(const unsigned int& shader) {
 		GLint status;
 		std::string script;
 		if (shader == VertexShaderID)
@@ -425,7 +436,7 @@ namespace se {
 		return true;
 	}
 
-	bool Shader::programCompilationLog(const GLuint& program) {
+	bool Shader::programCompilationLog(const unsigned int& program) {
 		GLint status;
 		glGetProgramiv(program, GL_LINK_STATUS, &status);
 		if (status == GL_FALSE) {

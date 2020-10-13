@@ -3,6 +3,7 @@
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
 
+#include "Shushao/Config.h"
 #include "Shushao/Window.h"
 
 namespace se {
@@ -12,17 +13,20 @@ public:
     WindowsWindow(const WindowProps& props);
     virtual ~WindowsWindow();
 
-    void OnUpdate() override;
+    void Update() override;
 
-    inline unsigned int GetWidth() const override { return wData.Width; }
-    inline unsigned int GetHeight() const override { return wData.Height; }
+    inline unsigned int GetWidth() const override { return data.Width; }
+    inline unsigned int GetHeight() const override { return data.Height; }
+
+    inline float GetAspect() const override { return (float)data.Width / (float)data.Height; }
+    inline glm::vec2 GetViewport() const { return { (float)data.Width / (Config::pixelPerUnit / 2), (float)data.Height / (Config::pixelPerUnit / 2) }; }
 
     // Window attributes
-    inline void SetEventCallback(const EventCallbackFn& callback) override { wData.EventCallback = callback; }
+    inline void SetEventCallback(const EventCallbackFn& callback) override { data.EventCallback = callback; }
     void SetVSync(bool enabled) override;
     bool IsVSync() const override;
 
-    inline virtual void* GetNativeWindow() const { return m_Window; }
+    inline virtual void* GetNativeWindow() const { return window; }
 
     virtual void Clear() const override;
     virtual void Clear(float, float, float, float, float) const override;
@@ -35,8 +39,7 @@ private:
     virtual void Init(const WindowProps& props);
     virtual void Shutdown();
 
-private:
-    GLFWwindow* m_Window;
+    GLFWwindow* window;
 
     struct WindowData {
         std::string Title;
@@ -47,7 +50,7 @@ private:
         EventCallbackFn EventCallback;
     };
 
-    WindowData wData;
+    WindowData data;
 };
 
 }  // namespace se

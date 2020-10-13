@@ -1,10 +1,10 @@
 #include "sepch.h"
 
 #include "Entity.h"
-#include "GLManager.h"
 #include "SceneManager.h"
 #include "Transform.h"
 #include "Canvas.h"
+#include "GameData.h"
 
 namespace se {
 
@@ -40,7 +40,7 @@ namespace se {
 		case RenderMode::SCREEN:
 			transform->SetLocalPosition({ 0.0f, 0.0f, 0.0f });
 			transform->SetPivot(PivotPosition::BOTTOMLEFT);
-			transform->rectTransform->SetRectSize(GLManager::VIEWPORT);
+			transform->rectTransform->SetRectSize(GameData::Window->GetViewport());
 			break;
 		case RenderMode::CAMERA:
 			transform->SetLocalPosition({ 0.0f, 0.0f, 1.0f });

@@ -5,7 +5,6 @@
 
 #include "Shushao/Debug.h"
 #include "Shushao/Design.h"
-#include "Shushao/GLManager.h"
 #include "Shushao/SceneManager.h"
 #include "Shushao/shaders/BaseShader.h"
 #include "PhysicsDebugDraw.h"
@@ -13,7 +12,7 @@
 namespace se {
 
 	bool PhysicsDebugDraw::Init() {
-		if (!GLManager::ready || !Config::Physics::debug) return false;
+		if (!Config::Physics::debug) return false;
 		if (ready) return true;
 
 		shader = new BaseShader();

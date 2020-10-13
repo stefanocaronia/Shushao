@@ -2,7 +2,6 @@
 
 #include "Color.h"
 #include "Debug.h"
-#include "GLManager.h"
 #include "GeometryRenderer.h"
 #include "SceneManager.h"
 

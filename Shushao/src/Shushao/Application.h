@@ -34,13 +34,13 @@ public:
     void OnEvent(Event& e);
 
 protected:
-    virtual void Awake(){};
-    virtual void Start(){};
-    virtual void GetInput(){};
-    virtual void Update(){};
-    virtual void FixedUpdate(){};
-    virtual void Render(){};
-    virtual void End(){};
+    virtual void Awake() {};
+    virtual void Start() {};
+    virtual void GetInput() {};
+    virtual void Update() {};
+    virtual void FixedUpdate() {};
+    virtual void Render() {};
+    virtual void End() {};
 
     virtual bool InitResources() = 0;  // resources loading
     virtual bool InitConfig() = 0;  // config override
@@ -61,10 +61,9 @@ private:
 
     bool OnWindowClose(WindowCloseEvent& e);
 
-    std::unique_ptr<Window> window;
+    Window* window;
 };
 
 // To be defined in CLIENT
 Application* CreateApplication();
-
 }  // namespace se

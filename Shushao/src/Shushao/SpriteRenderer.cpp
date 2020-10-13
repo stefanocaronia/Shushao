@@ -3,7 +3,6 @@
 #include <glad/glad.h>
 
 #include "Debug.h"
-#include "GLManager.h"
 #include "Shaders/StandardShader.h"
 #include "Sprite.h"
 #include "SpriteRenderer.h"

@@ -3,10 +3,15 @@
 #define BOOST_ALL_NO_LIB
 #include <boost/variant.hpp>
 
+#include <ft2build.h>
+#include FT_FREETYPE_H
+
 #include "Core.h"
 #include "sepch.h"
 #include "Camera.h"
 #include "Component.h"
+#include "Application.h"
+#include "Window.h"
 
 namespace se {
 
@@ -15,9 +20,12 @@ using Multitype = boost::variant<int, float, double, std::string>;
 class GameData {
 public:
     static Camera* activeCamera;
+    static Application* Application;
+    static Window* Window;
     static Scene* scene;
     static std::vector<Object*> Objects;
     static std::vector<Component*> Components;
+    static FT_Library freetypeLibrary;
 
     static int GenerateObjectID();
     static int RegisterObject(Object*);

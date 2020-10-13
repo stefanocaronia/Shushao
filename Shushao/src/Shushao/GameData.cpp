@@ -56,15 +56,12 @@ namespace se {
 
 	Scene* GameData::scene;
 	Camera* GameData::activeCamera;
+	Application* GameData::Application;
+	Window* GameData::Window = nullptr;
+	FT_Library GameData::freetypeLibrary = nullptr;
 
 	// FORSE DA ELIMINARE, SONO GESTITI NELLE SCENE
 	std::vector<Object*> GameData::Objects;
 	std::vector<Component*> GameData::Components;
-
-	//
-	//for (int i = 1; i < 31; i++) {
-	//	GameData::Layers[i] = "";
-	//}
-	//GameData::SortingLayers[0] = "Default";
 
 }  // namespace se

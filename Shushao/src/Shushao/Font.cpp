@@ -6,7 +6,7 @@
 #include "Core.h"
 #include "Utility.h"
 #include "Font.h"
-#include "GLManager.h"
+#include "GameData.h"
 
 namespace se {
 
@@ -29,7 +29,7 @@ namespace se {
 	}
 
 	bool Font::Load(std::string filename) {
-		if (FT_New_Face(GLManager::lFreetype, filename.c_str(), 0, &face)) {
+		if (FT_New_Face(GameData::freetypeLibrary, filename.c_str(), 0, &face)) {
 			Debug::Log(ERROR) << "Could not load font: " << filename << std::endl;
 			return false;
 		}
@@ -39,11 +39,10 @@ namespace se {
 
 	bool Font::LoadEmbedded(int IDRES, std::string library) {
 		std::vector<char> data = Resources::GetEmbeddedData(IDRES, library, RT_FONT);
-		//bytes = (FT_Byte*)(data.data());
 		if (bytes != nullptr) delete (bytes);
 		bytes = new FT_Byte[data.size()];
 		std::copy(data.begin(), data.end(), bytes);
-		FT_Error r = FT_New_Memory_Face(GLManager::lFreetype, bytes, data.size() * sizeof(char), 0, &face);
+		FT_Error r = FT_New_Memory_Face(GameData::freetypeLibrary, bytes, data.size() * sizeof(char), 0, &face);
 		if (r == 0) init();
 		return r == 0;
 	}
@@ -56,9 +55,6 @@ namespace se {
 	}
 
 	bool Font::LoadCharTexture(const wchar_t p) {
-		/* if (FT_Load_Char(font->face, *p, FT_LOAD_RENDER)) {
-				return false
-			} */
 		unsigned long c = FT_Get_Char_Index(face, p);
 		if (FT_Load_Glyph(face, c, FT_LOAD_RENDER)) {
 			return false;

@@ -6,7 +6,6 @@
 
 #include "Application.h"
 #include "Debug.h"
-#include "GLManager.h"
 #include "input.h"
 #include "Time.h"
 #include "system.h"

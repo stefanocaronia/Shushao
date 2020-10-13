@@ -11,7 +11,7 @@ namespace se {
 		name = "Main Camera";
 
 		camera->enabled = true;
-		camera->backgroundColor = { 0.0f, 0.0f, 0.0f, 1.0f };
+		camera->backgroundColor = { 0.1f, 0.1f, 0.1f, 1.0f };
 		transform->localPosition = { 0.0f, 0.0f, 10.0f };
 	}
 }  // namespace se

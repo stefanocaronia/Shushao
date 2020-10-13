@@ -2,6 +2,9 @@
 
 #include "sepch.h"
 
+#include <ft2build.h>
+#include FT_FREETYPE_H
+
 #define _USE_MATH_DEFINES
 #define CONSOLE_COLORS_ENABLED
 
