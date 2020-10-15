@@ -1,5 +1,7 @@
 #include "sepch.h"
 
+#include <glad/glad.h>
+
 #include "FontShader.h"
 #include "Shushao/Resources.h"
 
@@ -19,6 +21,6 @@ void FontShader::Awake() {
     AddShaderUniform("viewport", Uniform::Type::VECTOR);
     AddShaderUniform("enabled_viewport", Uniform::Type::INTEGER);
 
-    SetTextureIndex("diffuse_map", 0);
+    SetTextureIndex("diffuse_map", GL_TEXTURE0);
 }
 }  // namespace se

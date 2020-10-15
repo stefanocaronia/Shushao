@@ -7,14 +7,11 @@
 #include "Shushao/Events/ApplicationEvent.h"
 #include "Shushao/Events/KeyEvent.h"
 #include "Shushao/Events/MouseEvent.h"
+#include "Shushao/OpenGLCore.h"
 
 namespace se {
 
 static bool GLFWInitialized = false;
-
-static void GLFWErrorCallback(int error, const char* description) {
-    DEBUG_CORE_ERROR("GLFW Error ({0}): {1}", error, description);
-}
 
 Window* Window::Create(const WindowProps& props) {
     return new WindowsWindow(props);
@@ -120,7 +117,6 @@ void WindowsWindow::Init(const WindowProps& props) {
 
     glfwSetCharCallback(window, [](GLFWwindow* window, unsigned int keycode) {
         WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
-
         KeyTypedEvent event(keycode);
         data.EventCallback(event);
     });
@@ -185,11 +181,13 @@ bool WindowsWindow::IsVSync() const {
 void WindowsWindow::Clear() const {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glClearDepth(1.0f);
+    GLClearError();
 }
 
 void WindowsWindow::Clear(float r, float g, float b, float a, float depth = 1.0f) const {
     glClearColor(r, g, b, a);
     glClearDepth(depth);
+    GLClearError();
 }
 
 void WindowsWindow::SetFullscreen(bool fs) {

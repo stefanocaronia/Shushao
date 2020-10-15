@@ -1,5 +1,7 @@
 #include "sepch.h"
 
+#include <glad/glad.h>
+
 #include "ParticlesShader.h"
 #include "Shushao/Resources.h"
 
@@ -25,6 +27,6 @@ namespace se {
 		AddShaderUniform("enabled_worldspace", Uniform::Type::INTEGER);
 
 		// valorizzazione
-		SetTextureIndex("diffuse_map", 0);
+		SetTextureIndex("diffuse_map", GL_TEXTURE0);
 	}
 }  // namespace se

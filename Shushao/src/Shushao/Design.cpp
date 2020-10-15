@@ -3,6 +3,7 @@
 #include <glad/glad.h>
 
 #include "Core.h"
+#include "OpenGLCore.h"
 #include "Design.h"
 #include "SceneManager.h"
 #include "GameData.h"
@@ -54,11 +55,11 @@ namespace se {
 
 		VAO->GetBuffer(VertexBuffer::VERTICES)->Bind();
 
-		glEnablei(GL_BLEND, VAO->GetBuffer(VertexBuffer::VERTICES)->Id);
-		glPointSize(tickness);
-		glDrawArrays(GL_POINTS, 0, 1);
-		glPointSize(1);
-		glDisablei(GL_BLEND, VAO->GetBuffer(VertexBuffer::VERTICES)->Id);
+		GL_CALL(glEnable(GL_BLEND));
+		GL_CALL(glPointSize(tickness));
+		GL_CALL(glDrawArrays(GL_POINTS, 0, 1));
+		GL_CALL(glPointSize(1));
+		GL_CALL(glDisable(GL_BLEND));
 
 		VAO->GetBuffer(VertexBuffer::VERTICES)->Unbind();
 
@@ -91,11 +92,11 @@ namespace se {
 		shader->SetMVP(&mvp[0][0]);
 		shader->SetRenderColor(color);
 
-		glEnablei(GL_BLEND, VAO->GetBuffer(VertexBuffer::VERTICES)->Id);
-		glLineWidth(tickness);
-		glDrawArrays(GL_LINES, 0, vertices.size());
-		glLineWidth(1);
-		glDisablei(GL_BLEND, VAO->GetBuffer(VertexBuffer::VERTICES)->Id);
+		GL_CALL(glEnable(GL_BLEND));
+		GL_CALL(glLineWidth(tickness));
+		GL_CALL(glDrawArrays(GL_LINES, 0, vertices.size()));
+		GL_CALL(glLineWidth(1));
+		GL_CALL(glDisable(GL_BLEND));
 
 		if (renderMode == RenderMode::SCREEN) {
 			shader->Disable("viewport");
@@ -136,11 +137,11 @@ namespace se {
 			shader->SetVector("viewport", GameData::Window->GetViewport());
 		}
 
-		glEnablei(GL_BLEND, VAO->GetBuffer(VertexBuffer::VERTICES)->Id);
-		glLineWidth(tickness);
-		glDrawArrays(GL_LINE_LOOP, 0, vertices.size());
-		glLineWidth(1);
-		glDisablei(GL_BLEND, VAO->GetBuffer(VertexBuffer::VERTICES)->Id);
+		GL_CALL(glEnable(GL_BLEND));
+		GL_CALL(glLineWidth(tickness));
+		GL_CALL(glDrawArrays(GL_LINE_LOOP, 0, vertices.size()));
+		GL_CALL(glLineWidth(1));
+		GL_CALL(glDisable(GL_BLEND));
 
 		if (renderMode == RenderMode::SCREEN) {
 			shader->Disable("viewport");
@@ -171,11 +172,11 @@ namespace se {
 		shader->SetMVP(&mvp[0][0]);
 		shader->SetRenderColor(color);
 
-		glEnablei(GL_BLEND, VAO->GetBuffer(VertexBuffer::VERTICES)->Id);
-		glLineWidth(tickness);
-		glDrawArrays(GL_LINES, 0, vertices.size());
-		glLineWidth(1);
-		glDisablei(GL_BLEND, VAO->GetBuffer(VertexBuffer::VERTICES)->Id);
+		GL_CALL(glEnable(GL_BLEND));
+		GL_CALL(glLineWidth(tickness));
+		GL_CALL(glDrawArrays(GL_LINES, 0, vertices.size()));
+		GL_CALL(glLineWidth(1));
+		GL_CALL(glDisable(GL_BLEND));
 
 		if (renderMode == RenderMode::SCREEN) {
 			shader->Disable("viewport");
@@ -206,23 +207,23 @@ namespace se {
 		}
 
 		VAO->GetBuffer(VertexBuffer::VERTICES)->Bind();
-		glEnablei(GL_BLEND, VAO->GetBuffer(VertexBuffer::VERTICES)->Id);
-		glLineWidth(tickness);
+		GL_CALL(glEnable(GL_BLEND));
+		GL_CALL(glLineWidth(tickness));
 
 		if (mode == DrawMode::BORDERED)
 			shader->SetRenderColor({ color.r, color.g, color.b, color.a / 2 });
 		else
 			shader->SetRenderColor(color);
 
-		glDrawArrays((mode != DrawMode::HOLLOW ? GL_TRIANGLE_FAN : GL_LINE_LOOP), 0, vertices.size());
+		GL_CALL(glDrawArrays((mode != DrawMode::HOLLOW ? GL_TRIANGLE_FAN : GL_LINE_LOOP), 0, vertices.size()));
 
 		if (mode == DrawMode::BORDERED) {
 			shader->SetRenderColor(color);
-			glDrawArrays(GL_LINE_LOOP, 0, vertices.size());
+			GL_CALL(glDrawArrays(GL_LINE_LOOP, 0, vertices.size()));
 		}
 
-		glDisablei(GL_BLEND, VAO->GetBuffer(VertexBuffer::VERTICES)->Id);
-		glLineWidth(1);
+		GL_CALL(glDisable(GL_BLEND));
+		GL_CALL(glLineWidth(1));
 		VAO->GetBuffer(VertexBuffer::VERTICES)->Unbind();
 
 		if (renderMode == RenderMode::SCREEN) {
@@ -263,11 +264,11 @@ namespace se {
 			shader->SetVector("viewport", GameData::Window->GetViewport());
 		}
 
-		glEnablei(GL_BLEND, VAO->GetBuffer(VertexBuffer::VERTICES)->Id);
-		glLineWidth(tickness);
-		glDrawArrays((mode == DrawMode::FULL ? GL_TRIANGLE_STRIP : GL_LINE_LOOP), 0, vertices.size());
-		glLineWidth(1);
-		glDisablei(GL_BLEND, VAO->GetBuffer(VertexBuffer::VERTICES)->Id);
+		GL_CALL(glEnable(GL_BLEND));
+		GL_CALL(glLineWidth(tickness));
+		GL_CALL(glDrawArrays((mode == DrawMode::FULL ? GL_TRIANGLE_STRIP : GL_LINE_LOOP), 0, vertices.size()));
+		GL_CALL(glLineWidth(1));
+		GL_CALL(glDisable(GL_BLEND));
 
 		if (renderMode == RenderMode::SCREEN) {
 			shader->Disable("viewport");

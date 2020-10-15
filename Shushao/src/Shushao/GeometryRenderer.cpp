@@ -8,6 +8,7 @@
 #include "Shaders/WireframeShader.h"
 #include "Transform.h"
 #include "GameData.h"
+#include "OpenGLCore.h"
 
 namespace se {
 
@@ -94,9 +95,9 @@ namespace se {
 		}
 
 		VAO->GetBuffer(VertexBuffer::VERTICES)->Bind();
-		glEnablei(GL_BLEND, VAO->GetBuffer(VertexBuffer::VERTICES)->Id);
-		glDrawArrays(GL_LINES, 0, vertices.size());
-		glDisablei(GL_BLEND, VAO->GetBuffer(VertexBuffer::VERTICES)->Id);
+		GL_CALL(glEnable(GL_BLEND));
+		GL_CALL(glDrawArrays(GL_LINES, 0, vertices.size()));
+		GL_CALL(glDisable(GL_BLEND));
 		VAO->GetBuffer(VertexBuffer::VERTICES)->Unbind();
 
 		if (renderMode == RenderMode::SCREEN) {

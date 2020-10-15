@@ -4,6 +4,7 @@
 #include <glad/glad.h>
 
 #include "Debug.h"
+#include "OpenGLCore.h"
 #include "Mesh.h"
 #include "Shaders/phongShader.h"
 #include "Transform.h"
@@ -54,11 +55,11 @@ namespace se {
 		material->update();
 
 		mesh->VAO->GetBuffer(VertexBuffer::VERTICES)->Bind();
-		glDrawArrays(GL_TRIANGLES, 0, mesh->VAO->GetBuffer(VertexBuffer::VERTICES)->size);
+		GL_CALL(glDrawArrays(GL_TRIANGLES, 0, mesh->VAO->GetBuffer(VertexBuffer::VERTICES)->size));
 		mesh->VAO->GetBuffer(VertexBuffer::VERTICES)->Unbind();
 
 		/* mesh->VAO->GetBuffer(VertexBuffer::INDEXES)->Bind();
-			glDrawElements(GL_TRIANGLES, mesh->VAO->GetBuffer(VertexBuffer::INDEXES)->size, GL_UNSIGNED_SHORT, 0);
+			GL_CALL(glDrawElements(GL_TRIANGLES, mesh->VAO->GetBuffer(VertexBuffer::INDEXES)->size, GL_UNSIGNED_SHORT, 0));
 			mesh->VAO->GetBuffer(VertexBuffer::INDEXES)->Unbind();*/
 
 		material->shader->Leave();

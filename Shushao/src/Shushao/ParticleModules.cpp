@@ -3,6 +3,7 @@
 #include <glad/glad.h>
 
 #include "Core.h"
+#include "OpenGLCore.h"
 #include "Entity.h"
 #include "ParticleSystem.h"
 #include "Physics/Rigidbody2d.h"
@@ -373,9 +374,9 @@ namespace se {
 		material->update();
 
 		VAO->GetBuffer("positions")->Bind();
-		glEnablei(GL_BLEND, VAO->GetBuffer("positions")->Id);
-		glDrawArrays(GL_POINTS, 0, VAO->GetBuffer("positions")->size);
-		glDisablei(GL_BLEND, VAO->GetBuffer("positions")->Id);
+		GL_CALL(glEnable(GL_BLEND));
+		GL_CALL(glDrawArrays(GL_POINTS, 0, VAO->GetBuffer("positions")->size));
+		GL_CALL(glDisable(GL_BLEND));
 		VAO->GetBuffer("positions")->Unbind();
 
 		material->shader->Leave();

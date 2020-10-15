@@ -4,6 +4,7 @@
 #include <glad/glad.h>
 
 #include "Shushao/Debug.h"
+#include "Shushao/OpenGlCore.h"
 #include "Shushao/Design.h"
 #include "Shushao/SceneManager.h"
 #include "Shushao/shaders/BaseShader.h"
@@ -48,7 +49,7 @@ namespace se {
 		shader->SetRenderColor({ 0.0f, 1.0f, 0.0f, alpha });
 
 		VAO->GetBuffer(VertexBuffer::VERTICES)->Bind();
-		glDrawArrays(GL_LINE_LOOP, 0, vertices.size());
+		GL_CALL(glDrawArrays(GL_LINE_LOOP, 0, vertices.size()));
 		VAO->GetBuffer(VertexBuffer::VERTICES)->Unbind();
 
 		VAO->Leave();
@@ -74,12 +75,12 @@ namespace se {
 		shader->SetMVP(&MVP[0][0]);
 
 		VAO->GetBuffer(VertexBuffer::VERTICES)->Bind();
-		glEnablei(GL_BLEND, VAO->GetBuffer(VertexBuffer::VERTICES)->Id);
+		GL_CALL(glEnable(GL_BLEND));
 		shader->SetRenderColor({ color.r, color.g, color.b, color.a * alpha });
-		glDrawArrays(GL_TRIANGLE_FAN, 0, vertices.size());
+		GL_CALL(glDrawArrays(GL_TRIANGLE_FAN, 0, vertices.size()));
 		shader->SetRenderColor({ 0.0f, 1.0f, 0.0f, alpha });
-		glDrawArrays(GL_LINE_LOOP, 0, vertices.size());
-		glDisablei(GL_BLEND, VAO->GetBuffer(VertexBuffer::VERTICES)->Id);
+		GL_CALL(glDrawArrays(GL_LINE_LOOP, 0, vertices.size()));
+		GL_CALL(glDisable(GL_BLEND));
 		VAO->GetBuffer(VertexBuffer::VERTICES)->Unbind();
 
 		VAO->Leave();
@@ -106,10 +107,10 @@ namespace se {
 		shader->SetMVP(&MVP[0][0]);
 
 		VAO->GetBuffer(VertexBuffer::VERTICES)->Bind();
-		glLineWidth(2);
+		GL_CALL(glLineWidth(2));
 		shader->SetRenderColor({ color.r, color.g, color.b, alpha });
-		glDrawArrays(GL_LINE_LOOP, 0, vertices.size());
-		glLineWidth(1);
+		GL_CALL(glDrawArrays(GL_LINE_LOOP, 0, vertices.size()));
+		GL_CALL(glLineWidth(1));
 		VAO->GetBuffer(VertexBuffer::VERTICES)->Unbind();
 
 		VAO->Leave();
@@ -137,10 +138,10 @@ namespace se {
 		shader->SetMVP(&MVP[0][0]);
 
 		VAO->GetBuffer(VertexBuffer::VERTICES)->Bind();
-		glLineWidth(2);
+		GL_CALL(glLineWidth(2));
 		shader->SetRenderColor({ color.r, color.g, color.b, alpha });
-		glDrawArrays(GL_TRIANGLE_STRIP, 0, vertices.size());
-		glLineWidth(1);
+		GL_CALL(glDrawArrays(GL_TRIANGLE_STRIP, 0, vertices.size()));
+		GL_CALL(glLineWidth(1));
 		VAO->GetBuffer(VertexBuffer::VERTICES)->Unbind();
 
 		VAO->Leave();
@@ -167,10 +168,10 @@ namespace se {
 
 		VAO->GetBuffer(VertexBuffer::VERTICES)->Bind();
 		shader->SetRenderColor({ color.r, color.g, color.b, color.a * alpha });
-		glDrawArrays(GL_TRIANGLE_FAN, 0, vertices.size());
+		GL_CALL(glDrawArrays(GL_TRIANGLE_FAN, 0, vertices.size()));
 
 		shader->SetRenderColor({ color.r, color.g, color.b, alpha });
-		glDrawArrays(GL_LINE, 0, vertices.size());
+		GL_CALL(glDrawArrays(GL_LINE, 0, vertices.size()));
 		VAO->GetBuffer(VertexBuffer::VERTICES)->Unbind();
 
 		VAO->Leave();
@@ -202,14 +203,14 @@ namespace se {
 		shader->SetMVP(&MVP[0][0]);
 
 		VAO->GetBuffer(VertexBuffer::VERTICES)->Bind();
-		glEnablei(GL_BLEND, VAO->GetBuffer(VertexBuffer::VERTICES)->Id);
-		glLineWidth(2);
+		GL_CALL(glEnable(GL_BLEND));
+		GL_CALL(glLineWidth(2));
 		shader->SetRenderColor({ 1.0f, 0.0f, 0.0f, alpha });
-		glDrawArrays(GL_LINE_STRIP, 0, 2);
+		GL_CALL(glDrawArrays(GL_LINE_STRIP, 0, 2));
 		shader->SetRenderColor({ 0.0f, 1.0f, 0.0f, alpha });
-		glDrawArrays(GL_LINE_STRIP, 1, 2);
-		glLineWidth(1);
-		glDisablei(GL_BLEND, VAO->GetBuffer(VertexBuffer::VERTICES)->Id);
+		GL_CALL(glDrawArrays(GL_LINE_STRIP, 1, 2));
+		GL_CALL(glLineWidth(1));
+		GL_CALL(glDisable(GL_BLEND));
 		VAO->GetBuffer(VertexBuffer::VERTICES)->Unbind();
 
 		VAO->Leave();

@@ -11,7 +11,7 @@
 using namespace se;
 
 Level::Level() {
-    testParticles();
+    //testParticles();
     testSprites();
     //testCoroutines();
     testCanvas();

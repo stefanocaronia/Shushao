@@ -1,5 +1,7 @@
 #include "sepch.h"
 
+#include <glad/glad.h>
+
 #include "StandardShader.h"
 #include "Shushao/Resources.h"
 
@@ -26,6 +28,6 @@ namespace se {
 		AddShaderUniform("sliced_fill", Uniform::Type::INTEGER);
 
 		// valorizzazione
-		SetTextureIndex("diffuse_map", 0);
+		SetTextureIndex("diffuse_map", GL_TEXTURE0);
 	}
 }  // namespace se

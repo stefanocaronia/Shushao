@@ -2,6 +2,7 @@
 
 #include <glad/glad.h>
 
+#include "OpenGLCore.h"
 #include "Debug.h"
 #include "Design.h"
 #include "Entity.h"
@@ -90,14 +91,14 @@ void Text::renderText() {
 
     // genero la texture
     GLuint tex;
-    glGenTextures(1, &tex);
-    glActiveTexture(shader->GetTextureIndex("diffuse_map"));
-    glBindTexture(GL_TEXTURE_2D, tex);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+    GL_CALL(glGenTextures(1, &tex));
+    GL_CALL(glActiveTexture(shader->GetTextureIndex("diffuse_map")));
+    GL_CALL(glBindTexture(GL_TEXTURE_2D, tex));
+    GL_CALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
+    GL_CALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
+    GL_CALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
+    GL_CALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
+    GL_CALL(glPixelStorei(GL_UNPACK_ALIGNMENT, 1));
 
     // estraggo tutte le words di una linea - solo se il testo è cambiato
     if (wordWrap && text != lastText) {
@@ -251,7 +252,7 @@ void Text::renderText() {
 
             VAO->Load<glm::vec4>(VertexBuffer::VERTICES, box);
             VAO->GetBuffer(VertexBuffer::VERTICES)->Bind();
-            glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+            GL_CALL(glDrawArrays(GL_TRIANGLE_STRIP, 0, 4));
             VAO->GetBuffer(VertexBuffer::VERTICES)->Unbind();
         }
 
@@ -297,7 +298,7 @@ void Text::renderText() {
     }
 
     lastText = text;
-    glDeleteTextures(1, &tex);
+    GL_CALL(glDeleteTextures(1, &tex));
 }
 
 void Text::Render() {

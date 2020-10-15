@@ -2,7 +2,8 @@
 
 #include <glad/glad.h>
 
-#include "Shushao/Core.h"
+#include "Core.h"
+#include "OpenGLCore.h"
 #include "Debug.h"
 #include "Entity.h"
 #include "Shaders/StandardShader.h"
@@ -155,7 +156,7 @@ namespace se {
 		material->update();
 
 		sprite->VAO->GetBuffer(VertexBuffer::INDEXES)->Bind();
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
+		GL_CALL(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0));
 		sprite->VAO->GetBuffer(VertexBuffer::INDEXES)->Unbind();
 
 		material->shader->Leave();
