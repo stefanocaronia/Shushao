@@ -89,10 +89,14 @@ void Scene::ScanActiveComponents() {
             ActiveLights.insert((Light*)component);
         }
     }
-    invalid = false;
+    Invalid = false;
 }
 
 void Scene::ScanEntities() {
+    if (this == nullptr) {
+        return;
+    }
+
     // ottengo tutte le entities, anche child
     std::set<Entity*> entities_ = root->transform->GetEntitiesInChildren();
 
@@ -104,7 +108,7 @@ void Scene::ScanEntities() {
             RegisterEntity(entity);
         }
     }
-    invalid = false;
+    Invalid = false;
 }
 
 void Scene::PrintActiveComponentsInScene() {
@@ -151,7 +155,7 @@ void Scene::PrintActiveRenderersInScene() {
     Logger::setColor(ConsoleColor::LIGHTGREY);
 }
 
-void Scene::init() {
+void Scene::Init() {
     for (Component* component : ActiveComponents) {
         if (component != nullptr && !component->awaken) component->init();
     }

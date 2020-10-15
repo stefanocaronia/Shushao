@@ -1,6 +1,6 @@
 workspace "Shushao"
 	architecture "x64"
-    startproject "Game"
+    startproject "Sandbox"
 
 	configurations {
 		"Debug",
@@ -14,9 +14,9 @@ workspace "Shushao"
 
     --outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
     outputdir = "%{cfg.buildcfg}"
-    Game = "Game"
+    Sandbox = "Sandbox"
     Engine = "Shushao"
-    gamebin = "../bin/" .. outputdir .. "/%{Game}/"
+    gamebin = "../bin/" .. outputdir .. "/%{Sandbox}/"
     enginebin = "../bin/" .. outputdir .. "/%{Engine}/"
 
     include "Shushao/vendor/Box2D.lua"
@@ -121,8 +121,8 @@ project "Shushao Resources"
     configuration "Release"
         buildoptions "/MD"
 
-project "Game"
-	location "Game"
+project "Sandbox"
+	location "Sandbox"
 	kind "ConsoleApp"
     language "C++"
     cppdialect "C++17"

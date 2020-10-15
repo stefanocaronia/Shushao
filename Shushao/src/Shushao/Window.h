@@ -22,33 +22,24 @@ public:
 
     virtual ~Window() {}
 
-    virtual void Update() = 0;
-
     virtual unsigned int GetWidth() const = 0;
     virtual unsigned int GetHeight() const = 0;
-
     virtual float GetAspect() const = 0;
     virtual glm::vec2 GetViewport() const = 0;
 
-    virtual unsigned int GetDesktopWidth() const {
-        return _desktopWidth;
-    }
-    virtual unsigned int GetDesktopHeight() const {
-        return _desktopHeight;
-    }
+    inline unsigned int GetDesktopWidth() const { return desktopWidth; }
+    inline unsigned int GetDesktopHeight() const { return desktopHeight; }
 
-    // Window attributes
     virtual void SetEventCallback(const EventCallbackFn& callback) = 0;
     virtual void SetVSync(bool enabled) = 0;
     virtual bool IsVSync() const = 0;
-
     virtual void Clear() const = 0;
     virtual void Clear(float, float, float, float, float) const = 0;
     virtual void SetFullscreen(bool) = 0;
     virtual void ToggleFullscreen() = 0;
     virtual void Swap() const = 0;
     virtual void Reset() const = 0;
-
+    virtual void Update() const = 0;
     virtual void* GetNativeWindow() const = 0;
 
     static Window* Create(const WindowProps& props = WindowProps());
@@ -56,8 +47,11 @@ public:
     bool fullscreen;
 
 protected:
-    unsigned int _desktopWidth;
-    unsigned int _desktopHeight;
+    virtual void initialize(const WindowProps& props) = 0;
+    virtual void shutdown() const = 0;
+
+    unsigned int desktopWidth;
+    unsigned int desktopHeight;
 };
 
 }  // namespace se

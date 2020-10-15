@@ -28,8 +28,8 @@ public:
 
     std::string name = "";
     int BuildIndex;
-    bool isLoaded = false;
-    bool invalid = true;
+    bool Loaded = false;
+    bool Invalid = true;
 
     Entity* root = nullptr;
     Camera* activeCamera = nullptr;
@@ -43,7 +43,7 @@ public:
     void renderOverlay();
 
     void Invalidate() {
-        invalid = true;
+        Invalid = true;
     }
 
     std::multiset<Entity*> GetRootEntitys();
@@ -93,7 +93,7 @@ public:
     void UnregisterActiveComponent(Component* component);
 
 private:
-    void init();
+    void Init();
     void update();
     void fixed();
     void render();

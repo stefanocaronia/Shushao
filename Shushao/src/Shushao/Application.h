@@ -24,7 +24,7 @@ public:
 
     std::string name;
 
-    bool Init();
+    void Initialize();
     void Run();
     void Stop();
 
@@ -34,7 +34,8 @@ public:
     void OnEvent(Event& e);
 
 protected:
-    virtual void Awake() {};
+    virtual void Configure() = 0;
+    virtual void Awake() = 0;
     virtual void Start() {};
     virtual void GetInput() {};
     virtual void Update() {};
@@ -42,26 +43,29 @@ protected:
     virtual void Render() {};
     virtual void End() {};
 
-    virtual bool InitResources() = 0;  // resources loading
-    virtual bool InitConfig() = 0;  // config override
-    virtual bool InitMapping() = 0;  // input mapping
-    virtual bool InitScene() = 0;  // scene load
-
     bool RUNNING = true;
     bool READY = false;
 
     bool keys[350];
 
 private:
-    void InitScan();
+    Window* window;
+
+    void scan();
     void update();
     void render();
     void fixed();
     void exit();
 
-    bool OnWindowClose(WindowCloseEvent& e);
+    void initializePhysics();
+    void loadConfiguration();
+    void initializeWindow();
+    void initializeTime();
+    void initializeInput();
+    void loadEngineResources();
+    void initializeScene();
 
-    Window* window;
+    bool onWindowClose(WindowCloseEvent& e);
 };
 
 // To be defined in CLIENT

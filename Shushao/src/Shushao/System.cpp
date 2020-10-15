@@ -5,7 +5,7 @@
 
 namespace se {
 
-	void System::init() {
+	void System::Init() {
 		for (Service* s : Services) {
 			s->Init();
 		}

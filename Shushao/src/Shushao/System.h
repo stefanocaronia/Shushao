@@ -9,7 +9,7 @@ namespace se {
 
 class System {
 public:
-    static void init();
+    static void Init();
     static void update();
     static void exit();
 

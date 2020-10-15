@@ -7,7 +7,7 @@ extern se::Application* se::CreateApplication();
 
 int main(int argc, char** argv) {
     auto app = se::CreateApplication();
-    app->Init();
+    app->Initialize();
     app->Run();
     delete app;
 }

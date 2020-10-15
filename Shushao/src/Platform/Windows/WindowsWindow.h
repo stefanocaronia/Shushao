@@ -13,8 +13,6 @@ public:
     WindowsWindow(const WindowProps& props);
     virtual ~WindowsWindow();
 
-    void Update() override;
-
     inline unsigned int GetWidth() const override { return data.Width; }
     inline unsigned int GetHeight() const override { return data.Height; }
 
@@ -36,8 +34,11 @@ public:
     virtual void Reset() const override;
 
 private:
-    virtual void Init(const WindowProps& props);
-    virtual void Shutdown();
+    virtual void initialize(const WindowProps& props);
+    virtual void shutdown() const override;
+    virtual void Update() const override;
+
+    void setGlfwCallbacks();
 
     GLFWwindow* window;
 
