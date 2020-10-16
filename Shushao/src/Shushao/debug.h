@@ -16,7 +16,7 @@ enum class GridMode {
 
 class Debug {
 public:
-    static void Init();
+    static void Initialize();
 
     static bool enabled;
     static bool infoEnabled;

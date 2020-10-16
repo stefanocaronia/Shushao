@@ -9,8 +9,15 @@ project 'Box2D'
     files { '%{prj.location}/Box2D/**' }
     includedirs { '%{prj.location}/.' }
 
-    -- configuration { "gmake2" }
-    --     targetextension (".a")
+    configuration { "gmake2" }
+        targetextension (".a")
+
+    filter { "configurations:Release", "toolset:gcc" }
+        buildoptions { "-O2", "-std=c++17" }
+        linkoptions { "-s -mwindows"}
+
+    filter { "configurations:Debug", "toolset:gcc" }
+        buildoptions { "-std=c++17", "-Wall", "-fmax-errors=4", "-Wfatal-errors" }
 
     makesettings [[
         CC = g++

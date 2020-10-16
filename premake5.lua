@@ -193,19 +193,19 @@ project "Sandbox"
         defines "SE_DEBUG"
         runtime "Debug"
         symbols "On"
-        -- buildoptions "/MTd"
+        buildoptions "/MTd"
 
     configuration "Release"
         defines "SE_RELEASE"
         runtime "Release"
         optimize "On"
-        -- buildoptions "/MT"
+        buildoptions "/MT"
 
     configuration "Dist"
         defines "SE_DIST"
         runtime "Release"
         optimize "On"
-        -- buildoptions "/MT"
+        buildoptions "/MT"
 
 
 

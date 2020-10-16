@@ -15,7 +15,7 @@
 #include "System.h"
 #include "Time.h"
 
-#define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
+#define BIND_EVENT_FUNCTION(x) std::bind(&Application::x, this, std::placeholders::_1)
 
 namespace se {
 
@@ -29,13 +29,13 @@ namespace se {
     void Application::Initialize()
     {
         GameData::Application = this;
-        Debug::Init();
+        Debug::Initialize();
 
         loadConfiguration();
 
         Configure(); // (derived) ovverride configuration
 
-        FT_Init_FreeType(&GameData::freetypeLibrary);
+        initializeLibraries();
         initializeWindow();
         initializeTime();
         initializePhysics();
@@ -58,10 +58,15 @@ namespace se {
         SE_CORE_ASSERT(Config::LoadUserConfig(), "Error Initializing User Configuration");
     }
 
+    void Application::initializeLibraries()
+    {
+        FT_Init_FreeType(&GameData::freetypeLibrary);
+    }
+
     void Application::initializeWindow()
     {
         window = Window::Create({ Config::title, Config::displayWidth, Config::displayHeight, Config::fullscreen });
-        window->SetEventCallback(BIND_EVENT_FN(OnEvent));
+        window->SetEventCallback(BIND_EVENT_FUNCTION(OnEvent));
         GameData::Window = window;
     }
 
@@ -108,7 +113,6 @@ namespace se {
             Config::Layers.toString("Layers");
             Config::SortingLayers.toString("SortingLayers");
         }
-
     }
 
     void Application::initializePhysics()
@@ -228,7 +232,7 @@ namespace se {
     void Application::OnEvent(Event& e)
     {
         EventDispatcher dispatcher(e);
-        dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(onWindowClose));
+        dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FUNCTION(onWindowClose));
     }
 
     bool Application::onWindowClose(WindowCloseEvent& e)

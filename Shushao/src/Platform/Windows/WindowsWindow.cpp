@@ -13,16 +13,20 @@ namespace se {
 
     static bool GLFWInitialized = false;
 
-    Window* Window::Create(const WindowProps& props)
+    Window* Window::Create(const WindowProperties& props)
     {
         return new WindowsWindow(props);
     }
 
-    WindowsWindow::WindowsWindow(const WindowProps& props)
+    WindowsWindow::WindowsWindow(const WindowProperties& props)
     {
         initialize(props);
-        Clear();
+        inizializeGLFW();
+        retrieveDesktopSize();
+        initializeGlad();
+        initializeOpenGL();
         setGlfwCallbacks();
+        Clear();
     }
 
     WindowsWindow::~WindowsWindow()
@@ -30,14 +34,34 @@ namespace se {
         shutdown();
     }
 
-    void WindowsWindow::initialize(const WindowProps& props)
+    void WindowsWindow::initialize(const WindowProperties& windowProperties)
     {
-        data.Title = props.Title;
-        data.Width = props.Width;
-        data.Height = props.Height;
-        data.Fullscreen = props.Fullscreen;
+        title = windowProperties.Title;
+        width = windowProperties.Width;
+        height = windowProperties.Height;
+        fullscreen = windowProperties.Fullscreen;
 
-        DEBUG_CORE_INFO("Creating window {0} ({1}, {2})", props.Title, props.Width, props.Height);
+    }
+
+    void WindowsWindow::initializeOpenGL()
+    {
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glClearDepth(1.0f);
+        glEnable(GL_DEPTH_TEST);
+        glDepthFunc(GL_ALWAYS);  // questo per il 2d
+        glViewport(0, 0, GetWidth(), GetHeight());
+    }
+
+    void WindowsWindow::initializeGlad()
+    {
+        int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+        SE_CORE_ASSERT(status, "Failed to initialize Glad!");
+    }
+
+    void WindowsWindow::inizializeGLFW()
+    {
+        DEBUG_CORE_INFO("Creating window {0} ({1}, {2})", title, width, height);
 
         if (!GLFWInitialized) {
             int success = glfwInit();
@@ -49,115 +73,103 @@ namespace se {
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 
-        window = glfwCreateWindow(
-            (int)props.Width,
-            (int)props.Height,
-            data.Title.c_str(),
-            (data.Fullscreen ? glfwGetPrimaryMonitor() : nullptr),
-            nullptr  //
-        );
+        monitor = glfwGetPrimaryMonitor();
+
+        window = glfwCreateWindow((int)width, (int)height, title.c_str(), (fullscreen ? monitor : nullptr), nullptr);
 
         glfwMakeContextCurrent(window);
 
-        // init Glad
-        int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-        SE_CORE_ASSERT(status, "Failed to initialize Glad!");
-
-        glfwSetWindowUserPointer(window, &data);
+        glfwSetWindowUserPointer(window, this);
         SetVSync(true);
+    }
 
-        const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+    void WindowsWindow::retrieveDesktopSize()
+    {
+        const GLFWvidmode* mode = glfwGetVideoMode(monitor);
         desktopWidth = mode->width;
         desktopHeight = mode->height;
-
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        glClearDepth(1.0f);
-        glEnable(GL_DEPTH_TEST);
-        glDepthFunc(GL_ALWAYS);  // questo per il 2d
-        glViewport(0, 0, GetWidth(), GetHeight());
     }
 
     void WindowsWindow::setGlfwCallbacks()
     {
         // Set GLFW callbacks
         glfwSetWindowSizeCallback(window, [](GLFWwindow* window, int width, int height) {
-            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
-            data.Width = width;
-            data.Height = height;
+            Window& windowObject = *(Window*)glfwGetWindowUserPointer(window);
+            windowObject.SetWidth(width);
+            windowObject.SetHeight(height);
 
             WindowResizeEvent event(width, height);
-            data.EventCallback(event);
+            windowObject.Callback(event);
         });
 
         glfwSetWindowCloseCallback(window, [](GLFWwindow* window) {
-            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+            Window& windowObject = *(Window*)glfwGetWindowUserPointer(window);
             WindowCloseEvent event;
-            data.EventCallback(event);
+            windowObject.Callback(event);
         });
 
         glfwSetKeyCallback(window, [](GLFWwindow* window, int key, int scancode, int action, int mods) {
-            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+            Window& windowObject = *(Window*)glfwGetWindowUserPointer(window);
 
             switch (action) {
                 case GLFW_PRESS:
                 {
                     KeyPressedEvent event(key, 0);
-                    data.EventCallback(event);
+                    windowObject.Callback(event);
                     break;
                 }
                 case GLFW_RELEASE:
                 {
                     KeyReleasedEvent event(key);
-                    data.EventCallback(event);
+                    windowObject.Callback(event);
                     break;
                 }
                 case GLFW_REPEAT:
                 {
                     KeyPressedEvent event(key, 1);
-                    data.EventCallback(event);
+                    windowObject.Callback(event);
                     break;
                 }
             }
         });
 
         glfwSetCharCallback(window, [](GLFWwindow* window, unsigned int keycode) {
-            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+            Window& windowObject = *(Window*)glfwGetWindowUserPointer(window);
             KeyTypedEvent event(keycode);
-            data.EventCallback(event);
+            windowObject.Callback(event);
         });
 
         glfwSetMouseButtonCallback(window, [](GLFWwindow* window, int button, int action, int mods) {
-            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+            Window& windowObject = *(Window*)glfwGetWindowUserPointer(window);
 
             switch (action) {
                 case GLFW_PRESS:
                 {
                     MouseButtonPressedEvent event(button);
-                    data.EventCallback(event);
+                    windowObject.Callback(event);
                     break;
                 }
                 case GLFW_RELEASE:
                 {
                     MouseButtonReleasedEvent event(button);
-                    data.EventCallback(event);
+                    windowObject.Callback(event);
                     break;
                 }
             }
         });
 
         glfwSetScrollCallback(window, [](GLFWwindow* window, double xOffset, double yOffset) {
-            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+            Window& windowObject = *(Window*)glfwGetWindowUserPointer(window);
 
             MouseScrolledEvent event((float)xOffset, (float)yOffset);
-            data.EventCallback(event);
+            windowObject.Callback(event);
         });
 
         glfwSetCursorPosCallback(window, [](GLFWwindow* window, double xPos, double yPos) {
-            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+            Window& windowObject = *(Window*)glfwGetWindowUserPointer(window);
 
             MouseMovedEvent event((float)xPos, (float)yPos);
-            data.EventCallback(event);
+            windowObject.Callback(event);
         });
     }
 
@@ -167,12 +179,6 @@ namespace se {
         glfwTerminate();
     }
 
-    void WindowsWindow::Update() const
-    {
-        glfwPollEvents();
-        glfwSwapBuffers(window);
-    }
-
     void WindowsWindow::SetVSync(bool enabled)
     {
         if (enabled)
@@ -180,12 +186,12 @@ namespace se {
         else
             glfwSwapInterval(0);
 
-        data.VSync = enabled;
+        vSync = enabled;
     }
 
     bool WindowsWindow::IsVSync() const
     {
-        return data.VSync;
+        return vSync;
     }
 
     void WindowsWindow::Clear() const
@@ -215,13 +221,19 @@ namespace se {
             SDL_SetWindowFullscreen(gWindow, SDL_FALSE);
             SDL_GetWindowSize(gWindow, (int*)&WIDTH, (int*)&HEIGHT);
             glViewport(0, 0, WIDTH, HEIGHT);
-        }
-    #endif
     }
+    #endif
+}
 
     void WindowsWindow::ToggleFullscreen()
     {
         SetFullscreen(!fullscreen);
+    }
+
+    void WindowsWindow::Update() const
+    {
+        glfwPollEvents();
+        glfwSwapBuffers(window);
     }
 
     void WindowsWindow::Swap() const
@@ -233,4 +245,5 @@ namespace se {
     {
         Clear();
     }
+
 }  // namespace se

@@ -31,7 +31,7 @@ static bool GLLogCall(const char* function, const char* file, int line)
             case GL_CONTEXT_LOST: msg = "OpenGL context has been lostt"; break;
         }
         std::stringstream stream;
-        stream << "0x" << (GLenum*)error;
+        stream << "0x" << error;
 
         DEBUG_CORE_ERROR("OpenGL Error {0} ({1}) executing {2}", stream.str(), msg, function);
         DEBUG_CORE_ERROR("OpenGL Error location: {1}:{2}", function, file, line);

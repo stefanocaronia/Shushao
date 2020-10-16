@@ -5,32 +5,36 @@
 
 namespace se {
 
-struct WindowProps {
+struct WindowProperties {
     std::string Title;
     unsigned int Width;
     unsigned int Height;
     bool Fullscreen;
 
-    WindowProps(const std::string& title = "Shushao Engine", unsigned int width = 1280, unsigned int height = 720, bool fullscreen = true)
+    WindowProperties(const std::string& title = "Shushao Engine", unsigned int width = 1280, unsigned int height = 720, bool fullscreen = true)
         : Title(title), Width(width), Height(height), Fullscreen(fullscreen) {}
 };
 
-// Interface representing a desktop system based Window
+// Interface
 class Window {
 public:
-    using EventCallbackFn = std::function<void(Event&)>;
+    using CallbackFunction = std::function<void(Event&)>;
 
+    static Window* Create(const WindowProperties& props = WindowProperties());
     virtual ~Window() {}
 
+    virtual std::string GetTitle() const = 0;
     virtual unsigned int GetWidth() const = 0;
     virtual unsigned int GetHeight() const = 0;
+    virtual void SetWidth(unsigned int _width) = 0;
+    virtual void SetHeight(unsigned int _height) = 0;
     virtual float GetAspect() const = 0;
     virtual glm::vec2 GetViewport() const = 0;
 
-    inline unsigned int GetDesktopWidth() const { return desktopWidth; }
-    inline unsigned int GetDesktopHeight() const { return desktopHeight; }
+    virtual int GetDesktopWidth() const = 0;
+    virtual int GetDesktopHeight() const = 0;
 
-    virtual void SetEventCallback(const EventCallbackFn& callback) = 0;
+    virtual void SetEventCallback(const CallbackFunction& Callback) = 0;
     virtual void SetVSync(bool enabled) = 0;
     virtual bool IsVSync() const = 0;
     virtual void Clear() const = 0;
@@ -42,16 +46,20 @@ public:
     virtual void Update() const = 0;
     virtual void* GetNativeWindow() const = 0;
 
-    static Window* Create(const WindowProps& props = WindowProps());
+    CallbackFunction Callback;
 
-    bool fullscreen;
-
+    unsigned int width;
+    unsigned int height;
 protected:
-    virtual void initialize(const WindowProps& props) = 0;
+    virtual void initialize(const WindowProperties& props) = 0;
     virtual void shutdown() const = 0;
 
     unsigned int desktopWidth;
     unsigned int desktopHeight;
+
+    std::string title;
+    bool vSync;
+    bool fullscreen;
 };
 
 }  // namespace se

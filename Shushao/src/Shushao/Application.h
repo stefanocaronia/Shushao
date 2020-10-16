@@ -64,6 +64,7 @@ private:
     void initializeInput();
     void loadEngineResources();
     void initializeScene();
+    void initializeLibraries();
 
     bool onWindowClose(WindowCloseEvent& e);
 };
