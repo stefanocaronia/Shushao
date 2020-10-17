@@ -1,9 +1,7 @@
 #pragma once
 
 #include "Color.h"
-#include "Core.h"
 #include "gradient.h"
-#include "sepch.h"
 #include "Variation.h"
 
 namespace se {

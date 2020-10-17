@@ -1,7 +1,5 @@
-#include "sepch.h"
+#include "Precompiled.h"
 
-#include "Debug.h"
-#include "Utility.h"
 
 namespace se {
 

@@ -1,8 +1,5 @@
 #pragma once
 
-#include "Shushao/Core.h"
-#include "sepch.h"
-
 #include "Include/spimpl/spimpl.h"
 
 namespace se {

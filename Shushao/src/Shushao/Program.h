@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Core.h"
 #include "Component.h"
 
 namespace se {

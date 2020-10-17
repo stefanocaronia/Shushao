@@ -1,8 +1,4 @@
-#ifndef SE_TEXTUREATLAS
-#define SE_TEXTUREATLAS
-
-#include "Core.h"
-#include "sepch.h"
+#pragma once
 
 #include "Rect.h"
 #include "Sprite.h"
@@ -28,5 +24,3 @@ public:
 };
 
 }  // namespace se
-
-#endif

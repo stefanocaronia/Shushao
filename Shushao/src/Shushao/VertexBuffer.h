@@ -1,8 +1,4 @@
-#ifndef SE_VBO
-#define SE_VBO
-
-#include "Core.h"
-#include "sepch.h"
+#pragma once
 
 #include "Object.h"
 
@@ -95,4 +91,3 @@ public:
 
 }  // namespace se
 
-#endif

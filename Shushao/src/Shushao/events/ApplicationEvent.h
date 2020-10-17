@@ -23,7 +23,7 @@ public:
     //virtual const char* GetName() const override { return "WindowResize"; }
 
     EVENT_CLASS_TYPE(WindowResize)
-    EVENT_CLASS_CATEGORY(EventCategoryApplication)
+    EVENT_CLASS_CATEGORY(EventCategory::Application)
 private:
     unsigned int m_Width, m_Height;
 };
@@ -33,7 +33,7 @@ public:
     WindowCloseEvent() {}
 
     EVENT_CLASS_TYPE(WindowClose)
-    EVENT_CLASS_CATEGORY(EventCategoryApplication)
+    EVENT_CLASS_CATEGORY(EventCategory::Application)
 };
 
 }  // namespace se

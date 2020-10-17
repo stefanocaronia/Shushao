@@ -1,12 +1,10 @@
-#include "sepch.h"
 
-#include <Box2D/Box2D.h>
+#include "Precompiled.h"
 
 #include "Physics.h"
 #include "PhysicsContactFilter.h"
 #include "PhysicsContactListener.h"
 #include "PhysicsDebugDraw.h"
-#include "Shushao/Config.h"
 #include "Shushao/SceneManager.h"
 
 namespace se {

@@ -1,8 +1,6 @@
-#ifndef SE_SYSTEM
-#define SE_SYSTEM
+#pragma once
 
-#include "Core.h"
-#include "sepch.h"
+#include "Precompiled.h"
 #include "service.h"
 
 namespace se {
@@ -42,5 +40,3 @@ private:
 };
 
 }  // namespace se
-
-#endif

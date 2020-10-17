@@ -1,8 +1,7 @@
-#include "sepch.h"
 
-#include <glad/glad.h>
+#include "Precompiled.h"
 
-#include "Debug.h"
+
 #include "Material.h"
 
 namespace se {

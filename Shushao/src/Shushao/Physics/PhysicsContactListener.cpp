@@ -1,6 +1,4 @@
-#include "sepch.h"
-
-#include <Box2D/Box2D.h>
+#include "Precompiled.h"
 
 #include "Collider2d.h"
 #include "Collision2d.h"

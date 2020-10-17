@@ -1,4 +1,5 @@
-#include "sepch.h"
+
+#include "Precompiled.h"
 
 #include "Light.h"
 #include "Design.h"

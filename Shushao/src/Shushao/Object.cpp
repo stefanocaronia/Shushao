@@ -1,7 +1,6 @@
-#include "sepch.h"
 
-#include "Debug.h"
-#include "Utility.h"
+#include "Precompiled.h"
+
 #include "Component.h"
 #include "GameData.h"
 #include "SceneManager.h"

@@ -1,8 +1,5 @@
-#include "sepch.h"
-#include <glad/glad.h>
+#include "Precompiled.h"
 
-#include "OpenGLCore.h"
-#include "Debug.h"
 #include "Shaders/StandardShader.h"
 #include "SpriteRenderer.h"
 #include "Transform.h"

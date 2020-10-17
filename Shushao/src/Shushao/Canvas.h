@@ -1,11 +1,7 @@
-#ifndef SE_CANVAS
-#define SE_CANVAS
+#pragma once
 
-#include "sepch.h"
-
-#include "Core.h"
 #include "Camera.h"
-#include "Config.h"
+#include "Core/Config.h"
 #include "Rect.h"
 #include "Renderer.h"
 
@@ -38,5 +34,3 @@ namespace se {
 	};
 
 }  // namespace se
-
-#endif

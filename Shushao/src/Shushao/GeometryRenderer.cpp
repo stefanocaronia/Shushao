@@ -1,14 +1,9 @@
-#include "sepch.h"
-
-#include <glad/glad.h>
-
-#include "Shushao/Core.h"
+#include "Precompiled.h"
 #include "Color.h"
 #include "GeometryRenderer.h"
 #include "Shaders/WireframeShader.h"
 #include "Transform.h"
 #include "GameData.h"
-#include "OpenGLCore.h"
 
 namespace se {
 

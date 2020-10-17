@@ -1,11 +1,7 @@
-#include "sepch.h"
-
-#include <glad/glad.h>
+#include "Precompiled.h"
 
 #include "Shader.h"
-#include "Shushao/Debug.h"
 #include "Shushao/Light.h"
-#include "Shushao/utility.h"
 
 namespace se {
 

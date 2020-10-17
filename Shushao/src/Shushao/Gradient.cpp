@@ -1,7 +1,7 @@
-#include "sepch.h"
+
+#include "Precompiled.h"
 
 #include "Gradient.h"
-#include "Debug.h"
 
 namespace se {
 

@@ -1,7 +1,6 @@
-#include "sepch.h"
+#include "Precompiled.h"
 
 #include "Color.h"
-#include "Debug.h"
 #include "GeometryRenderer.h"
 #include "SceneManager.h"
 

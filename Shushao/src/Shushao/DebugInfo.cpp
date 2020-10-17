@@ -1,8 +1,7 @@
-#include "sepch.h"
+#include "Precompiled.h"
 
 #include "DebugInfo.h"
 #include "Resources.h"
-#include "Utility.h"
 #include "Color.h"
 #include "UI/TextUI.h"
 

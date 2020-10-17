@@ -1,15 +1,16 @@
 {
     "files.exclude": {
-        // "**/bin": true,
-        // "**/obj": true,
-        // "**/lib": true,
-        // "**/include": true,
-        // "**/.makefiles": true,
-        // "**/.vscode": true,
-        // ".gitignore": true,
-        // "makefile": true,
-        // "Makefile": true,
-        // "*.bat": true
+        "**/bin": true,
+        "**/obj": true,
+        "**/lib": true,
+        "**/include": true,
+        "**/.makefiles": true,
+        "**/.vscode": true,
+        "**/.vs": true,
+        ".gitignore": true,
+        "makefile": true,
+        "Makefile": true,
+        "*.bat": true
     },
     // WINDOWS CMD
     // "terminal.integrated.shell.windows": "C:\\WINDOWS\\System32\\cmd.exe",

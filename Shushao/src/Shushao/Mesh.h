@@ -1,8 +1,5 @@
 #pragma once
 
-#include "Core.h"
-#include "sepch.h"
-
 #include "Object.h"
 #include "Texture.h"
 #include "VertexArray.h"

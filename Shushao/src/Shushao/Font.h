@@ -1,11 +1,5 @@
 #pragma once
 
-#include <ft2build.h>
-#include FT_FREETYPE_H
-
-#include "Core.h"
-#include "sepch.h"
-
 #include "Object.h"
 #include "Resource.h"
 

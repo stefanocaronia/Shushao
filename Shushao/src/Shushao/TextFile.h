@@ -1,8 +1,4 @@
-#ifndef SE_TEXTFILE
-#define SE_TEXTFILE
-
-#include "Core.h"
-#include "sepch.h"
+#pragma once
 
 #include "Object.h"
 #include "Resource.h"
@@ -23,5 +19,3 @@ public:
 };
 
 }  // namespace se
-
-#endif

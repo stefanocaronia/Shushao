@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Shushao/Core.h"
 #include "Shushao/Entity.h"
 #include "Shushao/transform.h"
 

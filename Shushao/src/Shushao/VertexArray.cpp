@@ -1,8 +1,5 @@
-#include "sepch.h"
+#include "Precompiled.h"
 
-#include <glad/glad.h>
-
-#include "Debug.h"
 #include "VertexArray.h"
 
 namespace se {

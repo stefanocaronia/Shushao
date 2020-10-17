@@ -1,8 +1,5 @@
 #pragma once
 
-#include "Core.h"
-#include "sepch.h"
-
 #include "Color.h"
 #include "Curve.h"
 #include "Material.h"

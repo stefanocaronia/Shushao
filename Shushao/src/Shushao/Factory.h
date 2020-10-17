@@ -1,8 +1,5 @@
 #pragma once
 
-#include "Shushao/Core.h"
-#include "sepch.h"
-
 #include "Component.h"
 #include "Entity.h"
 #include "Scene.h"

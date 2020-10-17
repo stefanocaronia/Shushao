@@ -1,7 +1,5 @@
 #pragma once
 
-#include <Box2D/Box2D.h>
-
 namespace se {
 
 class PhysicsContactFilter : public b2ContactFilter {

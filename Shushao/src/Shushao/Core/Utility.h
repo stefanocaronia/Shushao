@@ -1,8 +1,4 @@
-#ifndef SE_UTILITY
-#define SE_UTILITY
-
-#include "Core.h"
-#include "sepch.h"
+#pragma once
 
 #define ts(str) util::toString(str)
 
@@ -71,5 +67,3 @@ namespace util {
 };  // namespace util
 
 }  // namespace se
-
-#endif

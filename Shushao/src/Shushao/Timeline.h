@@ -1,8 +1,4 @@
-#ifndef SE_TIMELINE
-#define SE_TIMELINE
-
-#include "Core.h"
-#include "sepch.h"
+#pragma once
 
 #include "Object.h"
 #include "Sprite.h"
@@ -115,5 +111,3 @@ private:
 };
 
 }  // namespace se
-
-#endif

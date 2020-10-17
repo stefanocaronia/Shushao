@@ -1,13 +1,5 @@
 #pragma once
 
-#define BOOST_ALL_NO_LIB
-#include <boost/variant.hpp>
-
-#include <ft2build.h>
-#include FT_FREETYPE_H
-
-#include "Core.h"
-#include "sepch.h"
 #include "Camera.h"
 #include "Component.h"
 #include "Application.h"

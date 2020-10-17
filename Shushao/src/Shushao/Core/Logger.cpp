@@ -1,11 +1,6 @@
+#include "Precompiled.h"
 
-#include "sepch.h"
-
-#include "Shushao/Core.h"
-#include "Debug.h"
-#include "Utility.h"
 #include "Config.h"
-#include "Logger.h"
 
 namespace se {
 

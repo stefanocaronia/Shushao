@@ -1,10 +1,8 @@
 #pragma once
 
 #include "Color.h"
-#include "Core.h"
 #include "Object.h"
 #include "Shaders/Shader.h"
-#include "sepch.h"
 #include "Texture.h"
 
 namespace se {

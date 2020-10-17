@@ -1,8 +1,5 @@
-#ifndef SE_SERVICE
-#define SE_SERVICE
+#pragma once
 
-
-#include "Core.h"
 #include "Object.h"
 
 namespace se {
@@ -23,5 +20,3 @@ private:
 };
 
 }  // namespace se
-
-#endif

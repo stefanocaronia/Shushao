@@ -1,4 +1,4 @@
-#include "sepch.h"
+#include "Precompiled.h"
 
 #include "TextUI.h"
 #include "Shushao/Text.h"

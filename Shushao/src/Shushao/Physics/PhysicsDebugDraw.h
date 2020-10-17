@@ -1,10 +1,5 @@
 #pragma once
 
-#include <Box2D/Box2D.h>
-
-#include "Shushao/Core.h"
-#include "sepch.h"
-
 #include "Shushao/VertexArray.h"
 #include "Shushao/shaders/Shader.h"
 

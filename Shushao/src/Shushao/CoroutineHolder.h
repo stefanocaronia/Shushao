@@ -4,9 +4,6 @@
     Credits: https://github.com/exawon/CoroBehaviour
 */
 
-#include "Shushao/Core.h"
-#include "sepch.h"
-
 #include "Coroutine.h"
 
 namespace se {

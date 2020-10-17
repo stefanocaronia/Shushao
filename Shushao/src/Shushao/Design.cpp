@@ -1,9 +1,7 @@
-#include "sepch.h"
 
-#include <glad/glad.h>
+#include "Precompiled.h"
+#include "Core/OpenGL.h"
 
-#include "Core.h"
-#include "OpenGLCore.h"
 #include "Design.h"
 #include "SceneManager.h"
 #include "GameData.h"

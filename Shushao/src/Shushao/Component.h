@@ -1,9 +1,7 @@
 #pragma once
 
-#include "Core.h"
 #include "CoroutineHolder.h"
 #include "Object.h"
-#include "sepch.h"
 
 namespace se {
 
@@ -73,14 +71,14 @@ public:
     //T* AddComponent(std::string _name = "");  // Adds a component to the entity
 
 protected:
-    virtual void Awake(); 
-    virtual void Start(); 
+    virtual void Awake();
+    virtual void Start();
     virtual void Update();
     virtual void Render();
-    virtual void FixedUpdate(); 
-    virtual void LateUpdate();  
-    virtual void OnPostRender(); 
-    virtual void OnEnable(); 
+    virtual void FixedUpdate();
+    virtual void LateUpdate();
+    virtual void OnPostRender();
+    virtual void OnEnable();
     virtual void OnDestroy();
     virtual void OnDisable();
 

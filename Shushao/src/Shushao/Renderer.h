@@ -1,8 +1,6 @@
 #pragma once
 
-#include "Core.h"
 #include "Component.h"
-#include "sepch.h"
 
 namespace se {
 

@@ -1,9 +1,8 @@
-#include "sepch.h"
 
-#include <glad/glad.h>
+#include "Precompiled.h"
 
-#include "Core.h"
-#include "Utility.h"
+
+#include "Precompiled.h"
 #include "Mesh.h"
 
 namespace se {

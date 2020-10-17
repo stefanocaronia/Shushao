@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Shushao/Core.h"
 #include "Shushao/Color.h"
 #include "Shushao/Light.h"
 #include "Shushao/Object.h"
@@ -29,7 +28,7 @@ public:
         LIGHT
     };
 
-    Uniform(std::string name_, std::string var_, Uniform::Type type_, unsigned int location_, bool locked_ = false) : 
+    Uniform(std::string name_, std::string var_, Uniform::Type type_, unsigned int location_, bool locked_ = false) :
         name(name_), var(var_), type(type_), location(location_), locked(locked_) {}
 
     std::string name;

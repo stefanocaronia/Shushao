@@ -1,8 +1,7 @@
-#include "sepch.h"
+#include "Precompiled.h"
 
 #include "SpriteSheet.h"
 #include "Resources.h"
-#include "Utility.h"
 #include "Rect.h"
 #include "TextureAtlas.h"
 

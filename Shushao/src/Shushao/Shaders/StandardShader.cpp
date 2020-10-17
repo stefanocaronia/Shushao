@@ -1,6 +1,5 @@
-#include "sepch.h"
+#include "Precompiled.h"
 
-#include <glad/glad.h>
 
 #include "StandardShader.h"
 #include "Shushao/Resources.h"

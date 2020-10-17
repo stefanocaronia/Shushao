@@ -23,9 +23,15 @@
 #include <vector>
 #include <cmath>
 
+// freetype
+#include <ft2build.h>
+#include FT_FREETYPE_H
+
 // boost
 #define BOOST_ALL_NO_LIB
 #include <boost/predef.h>
+#include <boost/coroutine2/all.hpp>
+#include <boost/variant.hpp>
 
 #if BOOST_COMP_GNUC
 #include <dirent.h>
@@ -40,3 +46,34 @@
 #include <glm/gtx/quaternion.hpp>
 #include <glm/gtx/spline.hpp>
 #include <glm/gtx/transform.hpp>
+
+// OpenGL
+#include <glad/glad.h>
+
+// GLFW
+#include <GLFW/glfw3.h>
+
+// windows
+#ifdef SE_PLATFORM_WINDOWS
+    #include <windows.h>
+#endif
+
+// spdlog
+#include <spdlog/fmt/ostr.h>
+#include <spdlog/spdlog.h>
+#include <spdlog/sinks/stdout_color_sinks.h>
+
+// Box2D
+#include <Box2D/Box2D.h>
+
+// Includes
+#include "Include/spimpl/spimpl.h"
+
+// Shushao
+#include "Shushao/Core/Debug.h"
+#include "Shushao/Core/Logger.h"
+#include "Shushao/Core/Time.h"
+#include "Shushao/Core/Utility.h"
+#include "Shushao/Core/OpenGL.h"
+#include "Shushao/Core/Core.h"
+#include "Shushao/Core/Globals.h"

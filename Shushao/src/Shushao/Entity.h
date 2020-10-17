@@ -1,12 +1,9 @@
 #pragma once
 
 #include "Component.h"
-#include "Core.h"
 #include "Object.h"
 #include "Renderer.h"
-#include "Utility.h"
 #include "canvas.h"
-#include "sepch.h"
 
 namespace se {
 

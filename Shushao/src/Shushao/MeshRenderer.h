@@ -1,12 +1,10 @@
 #pragma once
 
 #include "Color.h"
-#include "Core.h"
 #include "Material.h"
 #include "Mesh.h"
 #include "Renderer.h"
 #include "Shaders/Shader.h"
-#include "sepch.h"
 
 namespace se {
 

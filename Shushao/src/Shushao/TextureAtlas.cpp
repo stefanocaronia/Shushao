@@ -1,6 +1,5 @@
-#include "sepch.h"
+#include "Precompiled.h"
 
-#include "Debug.h"
 #include "TextureAtlas.h"
 
 namespace se {

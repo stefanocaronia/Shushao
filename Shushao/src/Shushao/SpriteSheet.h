@@ -1,9 +1,6 @@
-#ifndef SE_SPRITESHEET
-#define SE_SPRITESHEET
+#pragma once
 
-#include "Core.h"
 #include "Object.h"
-#include "sepch.h"
 #include "Sprite.h"
 #include "TextureAtlas.h"
 
@@ -31,5 +28,3 @@ private:
 };
 
 }  // namespace se
-
-#endif

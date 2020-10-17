@@ -8,7 +8,7 @@
             "intelliSenseMode": "gcc-x64",
             "includePath": [
                 "C:/bin/mingw64/mingw64/**",
-                "${workspaceFolder}/Game/src/*",
+                "${workspaceFolder}/Sandbox/src/*",
                 "${workspaceFolder}/Shushao/src/*",
                 "${workspaceFolder}/Shushao/vendor/GLFW/include/*",
                 "${workspaceFolder}/Shushao/vendor/Glad/include/*",

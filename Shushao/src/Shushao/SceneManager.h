@@ -1,10 +1,5 @@
-#ifndef SE_SCENEMANAGER
-#define SE_SCENEMANAGER
+#pragma once
 
-#include "Core.h"
-#include "sepch.h"
-
-#include "Utility.h"
 #include "GameData.h"
 #include "Scene.h"
 
@@ -52,5 +47,3 @@ protected:
 };
 
 }  // namespace se
-
-#endif

@@ -1,8 +1,7 @@
-#include "sepch.h"
+#include "Precompiled.h"
 
 #include "Component.h"
 #include "Application.h"
-#include "Debug.h"
 #include "Entity.h"
 #include "Gamedata.h"
 #include "Physics/Collider2d.h"
@@ -10,7 +9,6 @@
 #include "Renderer.h"
 #include "Scene.h"
 #include "Transform.h"
-#include "Utility.h"
 
 namespace se {
 

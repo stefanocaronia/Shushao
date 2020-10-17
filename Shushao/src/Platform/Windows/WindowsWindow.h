@@ -1,9 +1,5 @@
 #pragma once
 
-#include <GLFW/glfw3.h>
-#include <glad/glad.h>
-
-#include "Shushao/Config.h"
 #include "Shushao/Window.h"
 
 namespace se {

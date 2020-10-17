@@ -1,8 +1,6 @@
-#include "sepch.h"
+#include "Precompiled.h"
 
-#include "Config.h"
-#include "Core.h"
-#include "Debug.h"
+#include "Core/Config.h"
 #include "Transform.h"
 #include "Camera.h"
 #include "GameData.h"

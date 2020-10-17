@@ -1,8 +1,4 @@
-#ifndef SE_VARIATION
-#define SE_VARIATION
-
-#include "Core.h"
-#include "sepch.h"
+#pragma once
 
 #include "curve.h"
 
@@ -50,5 +46,3 @@ private:
 };
 
 }  // namespace se
-
-#endif

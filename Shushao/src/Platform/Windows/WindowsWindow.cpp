@@ -1,13 +1,9 @@
-#include "sepch.h"
+#include "Precompiled.h"
 
 #include "WindowsWindow.h"
-#include "Shushao/Core.h"
-#include "Shushao/Config.h"
-#include "Shushao/Debug.h"
 #include "Shushao/Events/ApplicationEvent.h"
 #include "Shushao/Events/KeyEvent.h"
 #include "Shushao/Events/MouseEvent.h"
-#include "Shushao/OpenGLCore.h"
 
 namespace se {
 

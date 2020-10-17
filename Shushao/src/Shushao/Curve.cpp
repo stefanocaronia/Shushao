@@ -1,8 +1,6 @@
-
-#include "sepch.h"
+#include "Precompiled.h"
 
 #include "Curve.h"
-#include "Debug.h"
 
 namespace se {
 

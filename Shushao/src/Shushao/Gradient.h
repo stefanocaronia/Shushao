@@ -1,9 +1,7 @@
 #pragma once
 
-#include "Shushao/Core.h"
 #include "Color.h"
 #include "curve.h"
-#include "sepch.h"
 
 namespace se {
 

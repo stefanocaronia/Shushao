@@ -1,6 +1,5 @@
-#include "sepch.h"
+#include "Precompiled.h"
 
-#include "Utility.h"
 #include "canvas.h"
 #include "Color.h"
 #include "Design.h"

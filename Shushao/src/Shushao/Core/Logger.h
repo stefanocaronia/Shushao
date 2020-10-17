@@ -1,18 +1,9 @@
 #pragma once
 
-#include "Core.h"
+#include "Time.h"
 
 #undef ERROR
 #undef InvokeMethod
-
-#ifdef CONSOLE_COLORS_ENABLED
-#include <windows.h>
-#undef ERROR
-#undef SendMessage
-#endif
-
-#include "Utility.h"
-#include "Time.h"
 
 #define SOURCE util::basename(__FILE__) + "::" + __FUNCTION__ + ":" + util::toString(__LINE__) + ""
 #define LOG(MESSAGE) Debug::Log(SOURCE) << MESSAGE << std::endl;

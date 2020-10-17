@@ -1,7 +1,6 @@
-#include "sepch.h"
+#include "Precompiled.h"
 
 #include "Resources.h"
-#include "Utility.h"
 #include "textfile.h"
 
 namespace se {

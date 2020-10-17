@@ -1,7 +1,7 @@
-#include "sepch.h"
+
+#include "Precompiled.h"
 
 #include "canvas.h"
-#include "Debug.h"
 #include "Design.h"
 #include "Entity.h"
 #include "Transform.h"

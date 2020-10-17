@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Component.h"
-#include "Core.h"
 #include "DebugGrid.h"
 #include "Entity.h"
 #include "GameData.h"
@@ -9,9 +8,7 @@
 #include "MainCamera.h"
 #include "Renderer.h"
 #include "Transform.h"
-#include "Utility.h"
 #include "debuginfo.h"
-#include "sepch.h"
 
 namespace se {
 

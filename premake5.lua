@@ -19,6 +19,16 @@ workspace "Shushao"
     gamebin = "../bin/" .. outputdir .. "/%{Sandbox}/"
     enginebin = "../bin/" .. outputdir .. "/%{Engine}/"
 
+    IncludeDir = {}
+    IncludeDir["GLFW"] = "%{Engine}/vendor/GLFW/include";
+    IncludeDir["Glad"] = "%{Engine}/vendor/Glad/include";
+    IncludeDir["SOIL"] = "%{Engine}/vendor/SOIL/include";
+    IncludeDir["spdlog"] = "%{Engine}/vendor/spdlog/include";
+    IncludeDir["freetype"] = "%{Engine}/vendor/freetype/include";
+    IncludeDir["glm"] = "%{Engine}/vendor/glm";
+    IncludeDir["boost"] = "%{Engine}/vendor/boost";
+    IncludeDir["Box2D"] = "%{Engine}/vendor/Box2D";
+
     include "Shushao/vendor/Box2D.lua"
     include "Shushao/vendor/boost.lua"
     include "Shushao/vendor/freetype.lua"
@@ -39,8 +49,8 @@ project "Shushao"
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("obj/" .. outputdir .. "/%{prj.name}")
 
-	pchheader "sepch.h"
-    pchsource "%{Engine}/src/sepch.cpp"
+	pchheader "Precompiled.h"
+    pchsource "%{Engine}/src/Shushao/Core/Precompiled.cpp"
 
     files {
 		"%{prj.name}/src/**.h",
@@ -51,19 +61,18 @@ project "Shushao"
 
     includedirs {
         "%{prj.name}/src",
-		"%{Engine}/vendor/GLFW/include",
-		"%{Engine}/vendor/Glad/include",
-		"%{Engine}/vendor/SOIL/include",
-        "%{Engine}/vendor/spdlog/include",
-		"%{Engine}/vendor/freetype/include",
-		"%{Engine}/vendor/glm",
-		"%{Engine}/vendor/boost",
-		"%{Engine}/vendor/Box2D"
+        "%{IncludeDir.Glad}",
+        "%{IncludeDir.GLFW}",
+        "%{IncludeDir.SOIL}",
+        "%{IncludeDir.spdlog}",
+        "%{IncludeDir.freetype}",
+        "%{IncludeDir.glm}",
+        "%{IncludeDir.boost}",
+        "%{IncludeDir.Box2D}"
     }
 
 	filter "system:windows"
         systemversion "latest"
-
         defines {
             "SE_PLATFORM_WINDOWS",
             "GLFW_INCLUDE_NONE"
@@ -77,22 +86,22 @@ project "Shushao"
         buildoptions { "-std=c++17", "-Wall", "-fmax-errors=4", "-Wfatal-errors" }
 
     configuration "Debug"
-		defines "SE_DEBUG"
-		runtime "Debug"
-		symbols "On"
-        buildoptions "/MTd"
+        defines "SE_DEBUG"
+        runtime "Debug"
+        symbols "On"
+        buildoptions {"/MTd"}
 
     configuration "Release"
-		defines "SE_RELEASE"
-		runtime "Release"
-		optimize "On"
-        buildoptions "/MT"
+        defines "SE_RELEASE"
+        runtime "Release"
+        optimize "On"
+        buildoptions {"/MT"}
 
     configuration "Dist"
-		defines "SE_DIST"
-		runtime "Release"
-		optimize "On"
-        buildoptions "/MT"
+        defines "SE_DIST"
+        runtime "Release"
+        optimize "On"
+        buildoptions {"/MT"}
 
 
 project "Shushao Resources"
@@ -138,13 +147,17 @@ project "Sandbox"
 		"%{prj.name}/src/**.rc",
 	}
 
-	includedirs {
+    includedirs {
+        "%{prj.name}/src",
         "%{Engine}/src",
-		"%{Engine}/vendor/glm",
-        "%{Engine}/vendor/spdlog/include",
-		"%{Engine}/vendor/freetype/include",
-		"%{Engine}/vendor/SOIL/include",
-		"%{Engine}/vendor/boost"
+        "%{IncludeDir.Glad}",
+        "%{IncludeDir.GLFW}",
+        "%{IncludeDir.SOIL}",
+        "%{IncludeDir.spdlog}",
+        "%{IncludeDir.freetype}",
+        "%{IncludeDir.glm}",
+        "%{IncludeDir.boost}",
+        "%{IncludeDir.Box2D}"
     }
 
     libdirs {
@@ -193,19 +206,19 @@ project "Sandbox"
         defines "SE_DEBUG"
         runtime "Debug"
         symbols "On"
-        buildoptions "/MTd"
+        buildoptions {"/MTd"}
 
     configuration "Release"
         defines "SE_RELEASE"
         runtime "Release"
         optimize "On"
-        buildoptions "/MT"
+        buildoptions {"/MT"}
 
     configuration "Dist"
         defines "SE_DIST"
         runtime "Release"
         optimize "On"
-        buildoptions "/MT"
+        buildoptions {"/MT"}
 
 
 

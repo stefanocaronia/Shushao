@@ -4,7 +4,6 @@
 #include "Material.h"
 #include "Renderer.h"
 #include "Sprite.h"
-#include "sepch.h"
 
 namespace se {
 

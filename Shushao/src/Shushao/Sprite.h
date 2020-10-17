@@ -1,10 +1,6 @@
-#ifndef SE_SPRITE
-#define SE_SPRITE
+#pragma once
 
-#include "Shushao/Core.h"
-#include "sepch.h"
-
-#include "Config.h"
+#include "Core/Config.h"
 #include "Object.h"
 #include "Rect.h"
 #include "Texture.h"
@@ -73,5 +69,3 @@ private:
 };
 
 }  // namespace se
-
-#endif

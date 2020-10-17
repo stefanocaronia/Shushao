@@ -1,9 +1,7 @@
 #pragma once
 
-#include "Core.h"
 #include "Rect.h"
 #include "Transform.h"
-#include "sepch.h"
 
 namespace se {
 

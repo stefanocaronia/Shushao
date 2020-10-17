@@ -1,9 +1,4 @@
-#ifndef SE_TEXTURE
-#define SE_TEXTURE
-
-
-#include "Core.h"
-#include "sepch.h"
+#pragma once
 
 #include "Object.h"
 #include "Resource.h"
@@ -33,5 +28,3 @@ private:
 };
 
 }  // namespace se
-
-#endif

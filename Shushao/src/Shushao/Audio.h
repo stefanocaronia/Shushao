@@ -1,8 +1,4 @@
-#ifndef SE_AUDIO
-#define SE_AUDIO
-
-#include "Shushao/Core.h"
-#include "sepch.h"
+#pragma once
 
 #include "Object.h"
 
@@ -73,5 +69,3 @@ namespace se {
 	};
 
 }  // namespace se
-
-#endif

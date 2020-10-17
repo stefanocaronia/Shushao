@@ -1,4 +1,4 @@
-#include "sepch.h"
+#include "Precompiled.h"
 
 #include "PhongShader.h"
 #include "Shushao/Resources.h"

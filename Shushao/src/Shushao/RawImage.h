@@ -1,8 +1,5 @@
 #pragma once
 
-#include "Shushao/Core.h"
-#include "sepch.h"
-
 #include "Color.h"
 #include "Material.h"
 #include "Renderer.h"

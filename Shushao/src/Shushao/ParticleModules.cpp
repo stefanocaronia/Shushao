@@ -1,15 +1,10 @@
-#include "sepch.h"
+#include "Precompiled.h"
 
-#include <glad/glad.h>
-
-#include "Core.h"
-#include "OpenGLCore.h"
 #include "Entity.h"
 #include "ParticleSystem.h"
 #include "Physics/Rigidbody2d.h"
 #include "Shaders/ParticlesShader.h"
 #include "Transform.h"
-#include "Utility.h"
 
 namespace se {
 

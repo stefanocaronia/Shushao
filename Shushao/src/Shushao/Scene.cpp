@@ -1,8 +1,6 @@
-#include "sepch.h"
+#include "Precompiled.h"
 
 #include "Application.h"
-#include "Core.h"
-#include "Debug.h"
 #include "DebugInfo.h"
 #include "UI/CanvasUI.h"
 #include "Scene.h"

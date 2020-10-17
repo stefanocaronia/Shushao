@@ -1,10 +1,8 @@
-#include "sepch.h"
 
-#include <glad/glad.h>
+#include "Precompiled.h"
 
 #include "Resources.h"
-#include "Core.h"
-#include "Utility.h"
+#include "Precompiled.h"
 #include "Font.h"
 #include "GameData.h"
 

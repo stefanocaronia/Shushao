@@ -1,10 +1,8 @@
-#include "sepch.h"
+#include "Precompiled.h"
 
 #include <SOIL2.h>
-#include <glad/glad.h>
 
 #include "Resources.h"
-#include "Utility.h"
 #include "Texture.h"
 
 #define GL_LUMINANCE                      0x1909

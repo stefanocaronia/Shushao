@@ -1,8 +1,4 @@
-#ifndef SE_TRANSFORM
-#define SE_TRANSFORM
-
-#include "Core.h"
-#include "sepch.h"
+#pragma once
 
 #include "Component.h"
 #include "Rect.h"
@@ -155,5 +151,3 @@ private:
 };
 
 }  // namespace se
-
-#endif

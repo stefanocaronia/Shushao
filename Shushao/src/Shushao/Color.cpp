@@ -1,7 +1,6 @@
-#include "sepch.h"
+#include "Precompiled.h"
 
 #include "Color.h"
-#include "Utility.h"
 
 namespace se {
 

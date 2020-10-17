@@ -2,7 +2,6 @@
 
 #include "Shushao/Entity.h"
 #include "Shushao/transform.h"
-#include "Shushao/Core.h"
 
 namespace se {
 namespace ui {

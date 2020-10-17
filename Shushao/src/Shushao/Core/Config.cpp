@@ -1,12 +1,9 @@
-#include "sepch.h"
+#include "Precompiled.h"
 
-#include "Core.h"
 #include "Config.h"
-#include "Debug.h"
-#include "LevelMap.h"
-#include "Resources.h"
-#include "Time.h"
-#include "Utility.h"
+
+#include "../LevelMap.h"
+#include "../Resources.h"
 
 namespace Config {
 

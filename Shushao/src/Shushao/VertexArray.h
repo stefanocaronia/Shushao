@@ -1,12 +1,6 @@
-#ifndef SE_VAO
-#define SE_VAO
-
-
-#include "Core.h"
-#include "sepch.h"
+#pragma once
 
 #include "Color.h"
-#include "Debug.h"
 #include "Object.h"
 #include "Shaders/Shader.h"
 #include "VertexBuffer.h"
@@ -58,5 +52,3 @@ public:
 };
 
 }  // namespace se
-
-#endif

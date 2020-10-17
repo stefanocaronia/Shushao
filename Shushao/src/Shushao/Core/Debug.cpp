@@ -1,7 +1,5 @@
-#include "sepch.h"
+#include "Precompiled.h"
 
-#include "Debug.h"
-#include "spdlog/sinks/stdout_color_sinks.h"
 
 namespace se {
 

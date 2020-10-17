@@ -1,9 +1,5 @@
-#include "sepch.h"
+#include "Precompiled.h"
 
-#include <glad/glad.h>
-
-#include "OpenGLCore.h"
-#include "Debug.h"
 #include "Design.h"
 #include "Entity.h"
 #include "Font.h"
@@ -106,13 +102,13 @@ void Text::renderText() {
         std::wstring word = L"";
         for (p = ctext, i = 0; i < text.size(); ++p, ++i) {
             if (isspace(*p) || *p == '\0') {
-                words.insert({ i - word.length(), getWidth(word) });
+                words.insert({ static_cast<int>(i - word.length()), static_cast<int>(getWidth(word)) });
                 word = L"";
             } else {
                 word += *p;
             }
         }
-        words.insert({ i - word.length(), getWidth(word) });
+        words.insert({ { static_cast<int>(i - word.length()), static_cast<int>(getWidth(word)) } });
     }
 
     // ciclo tutti i caratteri della linea per calcolare le dimensioni del testo - solo se il testo è cambiato

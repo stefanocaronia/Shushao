@@ -1,10 +1,5 @@
-#include "sepch.h"
+#include "Precompiled.h"
 
-#include <Box2D/Box2D.h>
-#include <glad/glad.h>
-
-#include "Shushao/Debug.h"
-#include "Shushao/OpenGlCore.h"
 #include "Shushao/Design.h"
 #include "Shushao/SceneManager.h"
 #include "Shushao/shaders/BaseShader.h"

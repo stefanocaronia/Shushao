@@ -1,10 +1,8 @@
-#include "sepch.h"
-#include "Core.h"
+#include "Precompiled.h"
 
 #include "GameData.h"
 #include "Application.h"
-#include "Config.h"
-#include "Debug.h"
+#include "Core/Config.h"
 #include "Design.h"
 #include "Events/ApplicationEvent.h"
 #include "Font.h"
