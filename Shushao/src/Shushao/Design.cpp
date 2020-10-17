@@ -1,6 +1,4 @@
-
 #include "Precompiled.h"
-#include "Core/OpenGL.h"
 
 #include "Design.h"
 #include "SceneManager.h"
@@ -30,7 +28,7 @@ namespace se {
 
 	//{ #region draw methods
 
-	void Design::DrawPoint(glm::vec3 position, Color color, int tickness, RenderMode renderMode, glm::mat4 mvp, Expiration expiration) {
+	void Design::DrawPoint(glm::vec3 position, Color color, float tickness, RenderMode renderMode, glm::mat4 mvp, Expiration expiration) {
 		if (!Init()) return;
 		if (isExpired(expiration)) return;
 
@@ -56,7 +54,7 @@ namespace se {
 		GL_CALL(glEnable(GL_BLEND));
 		GL_CALL(glPointSize(tickness));
 		GL_CALL(glDrawArrays(GL_POINTS, 0, 1));
-		GL_CALL(glPointSize(1));
+		GL_CALL(glPointSize(1.0f));
 		GL_CALL(glDisable(GL_BLEND));
 
 		VAO->GetBuffer(VertexBuffer::VERTICES)->Unbind();
@@ -69,7 +67,7 @@ namespace se {
 		shader->Leave();
 	}
 
-	void Design::DrawLine(glm::vec3 start, glm::vec3 end, Color color, int tickness, RenderMode renderMode, glm::mat4 mvp, Expiration expiration) {
+	void Design::DrawLine(glm::vec3 start, glm::vec3 end, Color color, float tickness, RenderMode renderMode, glm::mat4 mvp, Expiration expiration) {
 		if (!Init()) return;
 		if (isExpired(expiration)) return;
 
@@ -93,7 +91,7 @@ namespace se {
 		GL_CALL(glEnable(GL_BLEND));
 		GL_CALL(glLineWidth(tickness));
 		GL_CALL(glDrawArrays(GL_LINES, 0, vertices.size()));
-		GL_CALL(glLineWidth(1));
+		GL_CALL(glLineWidth(1.0f));
 		GL_CALL(glDisable(GL_BLEND));
 
 		if (renderMode == RenderMode::SCREEN) {
@@ -104,7 +102,7 @@ namespace se {
 		shader->Leave();
 	}
 
-	void Design::DrawVector(glm::vec3 start, glm::vec3 end, Color color, int tickness, bool normalized, RenderMode renderMode, glm::mat4 mvp, Expiration expiration) {
+	void Design::DrawVector(glm::vec3 start, glm::vec3 end, Color color, float tickness, bool normalized, RenderMode renderMode, glm::mat4 mvp, Expiration expiration) {
 		if (!Init()) return;
 		if (isExpired(expiration)) return;
 
@@ -138,7 +136,7 @@ namespace se {
 		GL_CALL(glEnable(GL_BLEND));
 		GL_CALL(glLineWidth(tickness));
 		GL_CALL(glDrawArrays(GL_LINE_LOOP, 0, vertices.size()));
-		GL_CALL(glLineWidth(1));
+		GL_CALL(glLineWidth(1.0f));
 		GL_CALL(glDisable(GL_BLEND));
 
 		if (renderMode == RenderMode::SCREEN) {
@@ -149,7 +147,7 @@ namespace se {
 		shader->Leave();
 	}
 
-	void Design::DrawRay(glm::vec3 start, glm::vec3 dir, Color color, int tickness, RenderMode renderMode, glm::mat4 mvp, Expiration expiration) {
+	void Design::DrawRay(glm::vec3 start, glm::vec3 dir, Color color, float tickness, RenderMode renderMode, glm::mat4 mvp, Expiration expiration) {
 		if (!Init()) return;
 		if (isExpired(expiration)) return;
 
@@ -173,7 +171,7 @@ namespace se {
 		GL_CALL(glEnable(GL_BLEND));
 		GL_CALL(glLineWidth(tickness));
 		GL_CALL(glDrawArrays(GL_LINES, 0, vertices.size()));
-		GL_CALL(glLineWidth(1));
+		GL_CALL(glLineWidth(1.0f));
 		GL_CALL(glDisable(GL_BLEND));
 
 		if (renderMode == RenderMode::SCREEN) {
@@ -184,7 +182,7 @@ namespace se {
 		shader->Leave();
 	}
 
-	void Design::DrawPolygon(std::vector<glm::vec3> vertices, Color color, int tickness, DrawMode mode, RenderMode renderMode, glm::mat4 mvp, Expiration expiration) {
+	void Design::DrawPolygon(std::vector<glm::vec3> vertices, Color color, float tickness, DrawMode mode, RenderMode renderMode, glm::mat4 mvp, Expiration expiration) {
 		if (!Init()) return;
 		if (isExpired(expiration)) return;
 
@@ -221,7 +219,7 @@ namespace se {
 		}
 
 		GL_CALL(glDisable(GL_BLEND));
-		GL_CALL(glLineWidth(1));
+		GL_CALL(glLineWidth(1.0f));
 		VAO->GetBuffer(VertexBuffer::VERTICES)->Unbind();
 
 		if (renderMode == RenderMode::SCREEN) {
@@ -232,7 +230,7 @@ namespace se {
 		shader->Leave();
 	}
 
-	void Design::DrawCircle(glm::vec3 position, float radius, Color color, int tickness, DrawMode mode, RenderMode renderMode, glm::mat4 mvp, Expiration expiration) {
+	void Design::DrawCircle(glm::vec3 position, float radius, Color color, float tickness, DrawMode mode, RenderMode renderMode, glm::mat4 mvp, Expiration expiration) {
 		if (!Init()) return;
 		if (isExpired(expiration)) return;
 
@@ -265,7 +263,7 @@ namespace se {
 		GL_CALL(glEnable(GL_BLEND));
 		GL_CALL(glLineWidth(tickness));
 		GL_CALL(glDrawArrays((mode == DrawMode::FULL ? GL_TRIANGLE_STRIP : GL_LINE_LOOP), 0, vertices.size()));
-		GL_CALL(glLineWidth(1));
+		GL_CALL(glLineWidth(1.0f));
 		GL_CALL(glDisable(GL_BLEND));
 
 		if (renderMode == RenderMode::SCREEN) {
@@ -276,7 +274,7 @@ namespace se {
 		shader->Leave();
 	}
 
-	void Design::DrawRect(glm::vec3 position, Rect rect, Color color, int tickness, DrawMode mode, RenderMode renderMode, glm::mat4 mvp, Expiration expiration) {
+	void Design::DrawRect(glm::vec3 position, Rect rect, Color color, float tickness, DrawMode mode, RenderMode renderMode, glm::mat4 mvp, Expiration expiration) {
 		if (!Init()) return;
 
 		if (isExpired(expiration)) return;

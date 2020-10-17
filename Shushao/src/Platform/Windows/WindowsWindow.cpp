@@ -209,7 +209,7 @@ namespace se {
         fullscreen = fs;
 
         // TODO
-    #if 0
+        #if 0
         if (fullscreen) {
             SDL_SetWindowFullscreen(gWindow, SDL_WINDOW_FULLSCREEN_DESKTOP);
             glViewport(0, 0, DESKTOP_WIDTH, DESKTOP_HEIGHT);
@@ -217,9 +217,9 @@ namespace se {
             SDL_SetWindowFullscreen(gWindow, SDL_FALSE);
             SDL_GetWindowSize(gWindow, (int*)&WIDTH, (int*)&HEIGHT);
             glViewport(0, 0, WIDTH, HEIGHT);
+        }
+        #endif
     }
-    #endif
-}
 
     void WindowsWindow::ToggleFullscreen()
     {

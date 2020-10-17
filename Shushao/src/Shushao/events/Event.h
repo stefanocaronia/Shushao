@@ -63,25 +63,23 @@ namespace se {
     class EventDispatcher
     {
         template <typename T>
-        using EventFn = std::function<bool(T&)>;
+        using EventFunction = std::function<bool(T&)>;
 
     public:
-        EventDispatcher(Event& event)
-            : m_Event(event)
-        {}
+        EventDispatcher(Event& event) : event(event) {}
 
         template <typename T>
-        bool Dispatch(EventFn<T> func)
+        bool Dispatch(EventFunction<T> function)
         {
-            if (m_Event.GetEventType() == T::GetStaticType()) {
-                m_Event.Handled = func(*(T*)&m_Event);
+            if (event.GetEventType() == T::GetStaticType()) {
+                event.Handled = function(*(T*)&event);
                 return true;
             }
             return false;
         }
 
     private:
-        Event& m_Event;
+        Event& event;
     };
 
     inline std::ostream& operator<<(std::ostream& os, const Event& e)

@@ -8,8 +8,10 @@ namespace se {
 class System {
 public:
     static void Init();
-    static void update();
-    static void exit();
+    static void Update();
+    static void Exit();
+    static void Clear();
+    static void ListServices();
 
     //static InputManager& Input;
 
@@ -28,10 +30,6 @@ public:
         }
         return nullptr;
     }
-
-    static void Clear();
-
-    static void ListServices();
 
 protected:
     static std::vector<Service*> Services;

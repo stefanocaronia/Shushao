@@ -2,6 +2,7 @@
 
 #include "Window.h"
 #include "Events/ApplicationEvent.h"
+#include "Core/LayerStack.h"
 
 namespace se {
 
@@ -30,6 +31,9 @@ public:
 
     void OnEvent(Event& e);
 
+    void PushLayer(Layer* layer);
+    void PushOverlay(Layer* layer);
+
 protected:
     virtual void Configure() = 0;
     virtual void Awake() = 0;
@@ -47,6 +51,7 @@ protected:
 
 private:
     Window* window;
+    LayerStack layerStack;
 
     void scan();
     void update();

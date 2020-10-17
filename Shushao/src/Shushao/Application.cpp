@@ -44,10 +44,14 @@ namespace se {
 
         Awake(); // (derived)
 
-        initializeScene();
+        //initializeScene();
 
-        Camera* activeCamera = SceneManager::activeScene->activeCamera;
-        window->Clear(activeCamera->backgroundColor.r, activeCamera->backgroundColor.g, activeCamera->backgroundColor.b, 1.0f, 1.0f);
+        if (SceneManager::activeScene != nullptr) {
+            Camera* activeCamera = SceneManager::activeScene->activeCamera;
+            window->Clear(activeCamera->backgroundColor.r, activeCamera->backgroundColor.g, activeCamera->backgroundColor.b, 1.0f, 1.0f);
+        } else {
+            window->Clear();
+        }
     }
 
     void Application::loadConfiguration()
@@ -125,8 +129,8 @@ namespace se {
 
     void Application::Run()
     {
-        if (!SceneManager::sceneSet)
-            return;
+        //if (!SceneManager::sceneSet)
+        //    return;
 
         // Start method (derived)
         Start();
@@ -139,7 +143,7 @@ namespace se {
             //std::thread tFixed;
 
             // scan scene (se invalid) e init objects
-            scan();
+            //scan();
 
             // Process input method (derived)
             //tInput = std::thread(&Application::GetInput, this);
@@ -174,6 +178,7 @@ namespace se {
 
     void Application::scan()
     {
+        return;
         if (SceneManager::activeScene->Invalid) {
             SceneManager::activeScene->ScanEntities();
             SceneManager::activeScene->ScanActiveComponents();
@@ -187,11 +192,11 @@ namespace se {
     {
         Time::renderTime = Time::GetTime();
         window->Clear();
-        SceneManager::activeScene->render();
-        Render();  // (derived)
-        SceneManager::activeScene->renderOverlay();
+        //SceneManager::activeScene->render();
+        layerStack.Update();
+        //Render();  // (derived)
+        //SceneManager::activeScene->renderOverlay();
         // if (Physics::enabled && Physics::debug) ((b2World*)Physics::GetWorld())->DrawDebugData();
-
         window->Update();
         Time::frameCount++;
     }
@@ -200,9 +205,9 @@ namespace se {
     {
         Time::realtimeSinceStartup = Time::GetTime();
         // Input::update();  // Update Input Service
-        System::update();  // update dei system services
-        SceneManager::activeScene->update();
-        Update();  // (derived)
+        System::Update();  // update dei system services
+        //SceneManager::activeScene->update();
+        //Update();  // (derived)
     }
 
     void Application::fixed()
@@ -210,7 +215,7 @@ namespace se {
         Time::fixedTime = Time::GetTime();
         Time::inFixedTimeStep = true;
         if (Physics::enabled) Physics::Update();
-        SceneManager::activeScene->fixed();
+        //SceneManager::activeScene->fixed();
         FixedUpdate();  // (derived)
         Time::inFixedTimeStep = false;
     }
@@ -218,19 +223,38 @@ namespace se {
     void Application::exit()
     {
         End();  // (derived)
-        SceneManager::activeScene->exit();
+        //SceneManager::activeScene->exit();
         // Input::exit();
-        System::exit();
+        System::Exit();
         Physics::Exit();
-        SceneManager::Clear();
+        //SceneManager::Clear();
         Resources::Clear();
         System::Clear();
     }
 
-    void Application::OnEvent(Event& e)
+    void Application::OnEvent(Event& event)
     {
-        EventDispatcher dispatcher(e);
+        EventDispatcher dispatcher(event);
         dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FUNCTION(onWindowClose));
+
+        DEBUG_CORE_TRACE("Event {0}", event);
+
+        for (auto it = layerStack.end(); it != layerStack.begin();) {
+            (*--it)->OnEvent(event);
+            if (event.Handled) {
+                break;
+            }
+        }
+    }
+
+    void Application::PushLayer(Layer* layer)
+    {
+        layerStack.PushLayer(layer);
+    }
+
+    void Application::PushOverlay(Layer* layer)
+    {
+        layerStack.PushOverlay(layer);
     }
 
     bool Application::onWindowClose(WindowCloseEvent& e)

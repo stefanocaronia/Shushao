@@ -10,13 +10,13 @@ namespace se {
 		}
 	}
 
-	void System::update() {
+	void System::Update() {
 		for (Service* s : Services) {
 			s->Update();
 		}
 	}
 
-	void System::exit() {
+	void System::Exit() {
 		for (Service* s : Services) {
 			s->Exit();
 		}

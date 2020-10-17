@@ -16,8 +16,8 @@ workspace "Shushao"
     outputdir = "%{cfg.buildcfg}"
     Sandbox = "Sandbox"
     Engine = "Shushao"
-    gamebin = "../bin/" .. outputdir .. "/%{Sandbox}/"
-    enginebin = "../bin/" .. outputdir .. "/%{Engine}/"
+    sandbox_bin = "../bin/" .. outputdir .. "/%{Sandbox}/"
+    engine_bin = "../bin/" .. outputdir .. "/%{Engine}/"
 
     IncludeDir = {}
     IncludeDir["GLFW"] = "%{Engine}/vendor/GLFW/include";
@@ -119,7 +119,7 @@ project "Shushao Resources"
     }
 
     postbuildcommands {
-        ("{COPY} %{enginebin}/*.dll %{gamebin}")
+        ("{COPY} %{engine_bin}/*.dll %{sandbox_bin}")
     }
 
     linkoptions "/NOENTRY"
@@ -184,8 +184,8 @@ project "Sandbox"
     }
 
     prelinkcommands {
-        ("{COPY} res %{gamebin}"),
-        ("{COPY} %{enginebin}/*.dll %{gamebin}")
+        ("{COPY} res %{sandbox_bin}"),
+        ("{COPY} %{engine_bin}/*.dll %{sandbox_bin}")
     }
 
     filter { "configurations:Debug", "toolset:gcc" }

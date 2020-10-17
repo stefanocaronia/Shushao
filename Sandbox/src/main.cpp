@@ -2,22 +2,43 @@
 
 using namespace se;
 
-class Game : public Application {
+class TestLayer : public se::Layer
+{
+public:
+    TestLayer() : Layer("Layer di test") {}
 
-    bool perspectiveTest = false;
-
-    void Configure() {
-        DEBUG_INFO("In Configuration");
+    void OnUpdate() override
+    {
+        //DEBUG_INFO("{0} Update", GetName());
     }
 
-    void Awake() {
-        DEBUG_INFO("Application is Awake");
-    }
-
-    void GetInput() override {
+    void OnEvent(se::Event& event) override
+    {
+        DEBUG_INFO("Received event {0} ", event);
+        event.Handled = true;
     }
 };
 
-se::Application* se::CreateApplication() {
+class Game : public Application
+{
+    bool perspectiveTest = false;
+
+    void Configure()
+    {
+        PushLayer(new TestLayer());
+        DEBUG_INFO("In Configuration");
+    }
+
+    void Awake()
+    {
+        DEBUG_INFO("Application is Awake");
+    }
+
+    void GetInput() override
+    {}
+};
+
+se::Application* se::CreateApplication()
+{
     return new Game();
 }
