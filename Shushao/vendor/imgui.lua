@@ -3,20 +3,12 @@ project "ImGui"
     kind "StaticLib"
     language "C++"
 
-    targetdir ("%{prj.location}/lib")
-    objdir ("%{prj.location}/obj")
+    targetdir ("%{prj.location}/lib/" .. outputdir .. "/%{prj.name}")
+    objdir ("%{prj.location}/obj/" .. outputdir .. "/%{prj.name}")
 
     files {
-        "%{prj.location}/imconfig.h",
-        "%{prj.location}/imgui.h",
-        "%{prj.location}/imgui.cpp",
-        "%{prj.location}/imgui_draw.cpp",
-        "%{prj.location}/imgui_internal.h",
-        "%{prj.location}/imgui_widgets.cpp",
-        "%{prj.location}/imstb_rectpack.h",
-        "%{prj.location}/imstb_textedit.h",
-        "%{prj.location}/imstb_truetype.h",
-        "%{prj.location}/imgui_demo.cpp"
+        "%{prj.location}/*.h",
+        "%{prj.location}/*.cpp",
     }
 
     filter "system:windows"
@@ -24,17 +16,8 @@ project "ImGui"
         cppdialect "C++17"
         staticruntime "On"
 
-    -- filter { "system:windows", "configurations:Release" }
-    --     buildoptions "/MT"
-
-    configuration "Debug"
-        defines "DEBUG"
-        runtime "Debug"
-        symbols "On"
+    filter { "system:windows", "configurations:Debug" }
         buildoptions "/MTd"
 
-    configuration "Release"
-        defines "NDEBUG"
-        runtime "Release"
-        optimize "On"
+    filter { "system:windows", "configurations:Release" }
         buildoptions "/MT"

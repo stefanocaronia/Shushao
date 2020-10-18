@@ -1,4 +1,4 @@
-#include "Precompiled.h"
+#include "sepch.h"
 
 #include "SpriteSheet.h"
 #include "Resources.h"

@@ -1,5 +1,6 @@
 #pragma once
 
 #include "Shushao/Application.h"
-#include "Shushao/Core/Layer.h"
-#include "Shushao/Core/Logger.h"
+#include "Shushao/Layer.h"
+#include "Shushao/Logger.h"
+#include "Shushao/ImGui/ImGuiLayer.h"

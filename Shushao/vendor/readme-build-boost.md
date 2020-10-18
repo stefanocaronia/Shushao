@@ -12,8 +12,6 @@ da Command Prompt di Visual Studio:
 
 in msvc.jam sostituire VS150COMNTOOLS con VS160COMNTOOLS
 .\b2 -j8 toolset=msvc --variant=release --link=static --runtime-link=static --build-type=complete cxxflags="/std:c++17" -mt --with-coroutine stage
-
-
 .\b2 -j8 toolset=msvc --build-type=complete cxxflags="/std:c++17" -mt --with-coroutine stage
 .\b2 -j8 --toolset=msvc-14.1 --link=static --threading=multi --build-type=minimal --with-coroutine stage
 

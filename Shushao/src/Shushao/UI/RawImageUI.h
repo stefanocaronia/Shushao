@@ -1,15 +1,15 @@
 #pragma once
 
 #include "Shushao/Entity.h"
-#include "Shushao/transform.h"
 
 namespace se {
-namespace ui {
+    namespace ui {
 
-    class RawImageUI : public se::Entity {
-    public:
-        void Awake();
-    };
+        class RawImageUI : public Entity
+        {
+        public:
+            void Awake();
+        };
 
-}  // namespace ui
+    }  // namespace ui
 }  // namespace se

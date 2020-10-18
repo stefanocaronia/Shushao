@@ -1,4 +1,4 @@
-#include "Precompiled.h"
+#include "sepch.h"
 
 #include "Mesh.h"
 #include "Shaders/phongShader.h"

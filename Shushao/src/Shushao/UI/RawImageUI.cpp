@@ -1,7 +1,8 @@
-#include "Precompiled.h"
+#include "sepch.h"
 
 #include "RawImageUI.h"
 #include "Shushao/RawImage.h"
+#include "Shushao/Transform.h"
 
 namespace se {
 	namespace ui {

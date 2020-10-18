@@ -14,31 +14,23 @@ public:
 
     void OnEvent(se::Event& event) override
     {
-        DEBUG_INFO("Received event {0} ", event);
+        //DEBUG_INFO("Received event {0} ", event);
         event.Handled = true;
     }
 };
 
-class Game : public Application
+class Sandbox : public Application
 {
-    bool perspectiveTest = false;
+public:
 
-    void Configure()
+    Sandbox()
     {
         PushLayer(new TestLayer());
-        DEBUG_INFO("In Configuration");
+        PushOverlay(new ImGuiLayer());
     }
-
-    void Awake()
-    {
-        DEBUG_INFO("Application is Awake");
-    }
-
-    void GetInput() override
-    {}
 };
 
 se::Application* se::CreateApplication()
 {
-    return new Game();
+    return new Sandbox();
 }

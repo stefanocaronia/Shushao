@@ -17,16 +17,3 @@ project "Boost"
         prebuildcommands {
             (path.translate("bjam toolset=msvc link=static threading=multi address-model=64 runtime-link=static --with-coroutine stage"))
         }
-
-
-    configuration "Debug"
-        defines "DEBUG"
-        runtime "Debug"
-        symbols "On"
-        buildoptions "/MTd"
-
-    configuration "Release"
-        defines "NDEBUG"
-        runtime "Release"
-        optimize "On"
-        buildoptions "/MT"

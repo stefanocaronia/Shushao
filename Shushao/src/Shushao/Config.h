@@ -2,7 +2,7 @@
 
 #include "Core.h"
 
-#include "Shushao/LevelMap.h"
+#include "LevelMap.h"
 
 #define USER_CONFIG_FILE "config/config.ini"
 

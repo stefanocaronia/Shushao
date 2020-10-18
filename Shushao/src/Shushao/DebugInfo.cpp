@@ -1,9 +1,10 @@
-#include "Precompiled.h"
+#include "sepch.h"
 
 #include "DebugInfo.h"
 #include "Resources.h"
 #include "Color.h"
 #include "UI/TextUI.h"
+#include "Transform.h"
 
 namespace se {
 

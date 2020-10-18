@@ -1,8 +1,8 @@
 
-#include "Precompiled.h"
+#include "sepch.h"
 
 #include "Component.h"
-#include "Precompiled.h"
+#include "sepch.h"
 #include "Scene.h"
 #include "Transform.h"
 #include "Entity.h"

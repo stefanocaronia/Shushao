@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Shushao/VertexArray.h"
-#include "Shushao/shaders/Shader.h"
+#include "Shushao/Shaders/Shader.h"
 
 namespace se {
 

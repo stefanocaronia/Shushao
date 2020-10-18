@@ -1,5 +1,4 @@
-#include "Precompiled.h"
-
+#include "sepch.h"
 
 #include "ParticlesShader.h"
 #include "Shushao/Resources.h"

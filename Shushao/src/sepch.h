@@ -53,6 +53,9 @@
 // GLFW
 #include <GLFW/glfw3.h>
 
+// ImgUi
+#include <imgui.h>
+
 // windows
 #ifdef SE_PLATFORM_WINDOWS
     #include <windows.h>
@@ -70,10 +73,10 @@
 #include "Include/spimpl/spimpl.h"
 
 // Shushao
-#include "Shushao/Core/Debug.h"
-#include "Shushao/Core/Logger.h"
-#include "Shushao/Core/Time.h"
-#include "Shushao/Core/Utility.h"
-#include "Shushao/Core/OpenGL.h"
-#include "Shushao/Core/Core.h"
-#include "Shushao/Core/Globals.h"
+#include "Debug.h"
+#include "Logger.h"
+#include "Time.h"
+#include "Utility.h"
+#include "OpenGL.h"
+#include "Core.h"
+#include "Globals.h"

@@ -8,35 +8,36 @@ workspace "Shushao"
 		"Dist"
     }
 
-    --[[ rebuildcommands {
-        "make %{cfg.buildcfg} rebuild"
-    } ]]
+--[[ rebuildcommands {
+    "make %{cfg.buildcfg} rebuild"
+} ]]
 
-    --outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
-    outputdir = "%{cfg.buildcfg}"
-    Sandbox = "Sandbox"
-    Engine = "Shushao"
-    sandbox_bin = "../bin/" .. outputdir .. "/%{Sandbox}/"
-    engine_bin = "../bin/" .. outputdir .. "/%{Engine}/"
+--outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
+outputdir = "%{cfg.buildcfg}"
+Sandbox = "Sandbox"
+Engine = "Shushao"
+sandbox_bin = "../bin/" .. outputdir .. "/%{Sandbox}/"
+engine_bin = "../bin/" .. outputdir .. "/%{Engine}/"
 
-    IncludeDir = {}
-    IncludeDir["GLFW"] = "%{Engine}/vendor/GLFW/include";
-    IncludeDir["Glad"] = "%{Engine}/vendor/Glad/include";
-    IncludeDir["SOIL"] = "%{Engine}/vendor/SOIL/include";
-    IncludeDir["spdlog"] = "%{Engine}/vendor/spdlog/include";
-    IncludeDir["freetype"] = "%{Engine}/vendor/freetype/include";
-    IncludeDir["glm"] = "%{Engine}/vendor/glm";
-    IncludeDir["boost"] = "%{Engine}/vendor/boost";
-    IncludeDir["Box2D"] = "%{Engine}/vendor/Box2D";
+IncludeDir = {}
+IncludeDir["GLFW"] = "%{Engine}/vendor/GLFW/include";
+IncludeDir["Glad"] = "%{Engine}/vendor/Glad/include";
+IncludeDir["SOIL"] = "%{Engine}/vendor/SOIL/include";
+IncludeDir["spdlog"] = "%{Engine}/vendor/spdlog/include";
+IncludeDir["freetype"] = "%{Engine}/vendor/freetype/include";
+IncludeDir["glm"] = "%{Engine}/vendor/glm";
+IncludeDir["boost"] = "%{Engine}/vendor/boost";
+IncludeDir["Box2D"] = "%{Engine}/vendor/Box2D";
+IncludeDir["ImGui"] = "%{Engine}/vendor/imgui";
 
-    include "Shushao/vendor/Box2D.lua"
-    include "Shushao/vendor/boost.lua"
-    include "Shushao/vendor/freetype.lua"
-    include "Shushao/vendor/Glad.lua"
-    include "Shushao/vendor/GLFW.lua"
-    include "Shushao/vendor/imgui.lua"
-    include "Shushao/vendor/SOIL.lua"
-    include "Shushao/vendor/spdlog.lua"
+include "Shushao/vendor/Box2D.lua"
+include "Shushao/vendor/boost.lua"
+include "Shushao/vendor/freetype.lua"
+include "Shushao/vendor/Glad.lua"
+include "Shushao/vendor/GLFW.lua"
+include "Shushao/vendor/SOIL.lua"
+include "Shushao/vendor/spdlog.lua"
+include "Shushao/vendor/imgui.lua"
 
 project "Shushao"
 	location "Shushao"
@@ -49,8 +50,8 @@ project "Shushao"
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("obj/" .. outputdir .. "/%{prj.name}")
 
-	pchheader "Precompiled.h"
-    pchsource "%{Engine}/src/Shushao/Core/Precompiled.cpp"
+	pchheader "sepch.h"
+    pchsource "%{Engine}/src/Shushao/sepch.cpp"
 
     files {
 		"%{prj.name}/src/**.h",
@@ -68,7 +69,8 @@ project "Shushao"
         "%{IncludeDir.freetype}",
         "%{IncludeDir.glm}",
         "%{IncludeDir.boost}",
-        "%{IncludeDir.Box2D}"
+        "%{IncludeDir.Box2D}",
+        "%{IncludeDir.ImGui}"
     }
 
 	filter "system:windows"
@@ -85,19 +87,19 @@ project "Shushao"
     filter { "configurations:Debug", "toolset:gcc" }
         buildoptions { "-std=c++17", "-Wall", "-fmax-errors=4", "-Wfatal-errors" }
 
-    configuration "Debug"
+    filter { "system:windows", "configurations:Debug" }
         defines "SE_DEBUG"
         runtime "Debug"
         symbols "On"
         buildoptions {"/MTd"}
 
-    configuration "Release"
+    filter { "system:windows", "configurations:Release" }
         defines "SE_RELEASE"
         runtime "Release"
         optimize "On"
         buildoptions {"/MT"}
 
-    configuration "Dist"
+    filter { "system:windows", "configurations:Dist" }
         defines "SE_DIST"
         runtime "Release"
         optimize "On"
@@ -124,10 +126,10 @@ project "Shushao Resources"
 
     linkoptions "/NOENTRY"
 
-    configuration "Debug"
+    filter { "system:windows", "configurations:Debug" }
         buildoptions "/MDd"
 
-    configuration "Release"
+    filter { "system:windows", "configurations:Release" }
         buildoptions "/MD"
 
 project "Sandbox"
@@ -157,16 +159,11 @@ project "Sandbox"
         "%{IncludeDir.freetype}",
         "%{IncludeDir.glm}",
         "%{IncludeDir.boost}",
-        "%{IncludeDir.Box2D}"
+        "%{IncludeDir.Box2D}",
+        "%{IncludeDir.ImGui}"
     }
 
     libdirs {
-		"%{Engine}/vendor/Box2D/lib",
-		"%{Engine}/vendor/freetype/objs",
-		"%{Engine}/vendor/SOIL/lib",
-		"%{Engine}/vendor/GLFW/lib",
-		"%{Engine}/vendor/Glad/lib",
-		"%{Engine}/vendor/spdlog/lib",
         "%{Engine}/vendor/boost/stage/lib"
     }
 
@@ -178,6 +175,7 @@ project "Sandbox"
         "Box2D",
         "freetype",
         "spdlog",
+        "imgui",
         "opengl32",
         "libboost_context-vc142-mt-sgd-x64-1_71.lib",
         "libboost_coroutine-vc142-mt-sgd-x64-1_71.lib"
@@ -202,19 +200,19 @@ project "Sandbox"
 			"SE_PLATFORM_WINDOWS"
 		}
 
-    configuration "Debug"
+    filter { "system:windows", "configurations:Debug" }
         defines "SE_DEBUG"
         runtime "Debug"
         symbols "On"
         buildoptions {"/MTd"}
 
-    configuration "Release"
+    filter { "system:windows", "configurations:Release" }
         defines "SE_RELEASE"
         runtime "Release"
         optimize "On"
         buildoptions {"/MT"}
 
-    configuration "Dist"
+    filter { "system:windows", "configurations:Dist" }
         defines "SE_DIST"
         runtime "Release"
         optimize "On"

@@ -1,5 +1,5 @@
 
-#include "Precompiled.h"
+#include "sepch.h"
 
 #include "Shushao/Entity.h"
 #include "Shushao/Sprite.h"

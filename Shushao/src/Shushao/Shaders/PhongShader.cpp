@@ -1,4 +1,4 @@
-#include "Precompiled.h"
+#include "sepch.h"
 
 #include "PhongShader.h"
 #include "Shushao/Resources.h"
@@ -63,7 +63,8 @@ namespace se {
 		SetInteger("point_lights_number", pointLightCount);
 		SetInteger("spot_lights_number", spotLightCount);
 
-		glm::vec3 viewPosition = SceneManager::activeScene->activeCamera->transform->localPosition;
-		SetVector("view_position", { viewPosition.x, viewPosition.y, viewPosition.z });
+		/// TODO: sostituire lo SceneManager
+		//glm::vec3 viewPosition = SceneManager::activeScene->activeCamera->transform->localPosition;
+		//SetVector("view_position", { viewPosition.x, viewPosition.y, viewPosition.z });
 	}
 }  // namespace se

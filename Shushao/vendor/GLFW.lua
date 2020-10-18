@@ -7,11 +7,8 @@ project "GLFW"
     -- configuration { "gmake2" }
     --     targetextension (".a")
 
-    -- targetdir ("bin/" .. outputdir .. "/%{prj.name}")
-    -- objdir ("obj/" .. outputdir .. "/%{prj.name}")
-
-    targetdir ("%{prj.location}/lib")
-    objdir ("%{prj.location}/obj")
+    targetdir ("%{prj.location}/lib/" .. outputdir .. "/%{prj.name}")
+    objdir ("%{prj.location}/obj/" .. outputdir .. "/%{prj.name}")
 
     makesettings [[
         CC = gcc
@@ -59,8 +56,8 @@ project "GLFW"
     -- filter { "system:windows", "configurations:Release" }
     --     buildoptions "/MT"
 
-    configuration "Debug"
+    filter { "system:windows", "configurations:Debug" }
         buildoptions "/MTd"
 
-    configuration "Release"
+    filter { "system:windows", "configurations:Release" }
         buildoptions "/MT"

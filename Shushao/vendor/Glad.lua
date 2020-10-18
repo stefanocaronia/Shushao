@@ -3,8 +3,8 @@ project "Glad"
     kind "StaticLib"
     targetname "libGlad"
 
-    targetdir ("%{prj.location}/lib")
-    objdir ("%{prj.location}/obj")
+    targetdir ("%{prj.location}/lib/" .. outputdir .. "/%{prj.name}")
+    objdir ("%{prj.location}/obj/" .. outputdir .. "/%{prj.name}")
 
     makesettings [[
         CC = gcc
@@ -27,14 +27,10 @@ project "Glad"
         systemversion "latest"
         staticruntime "On"
 
-    configuration "Debug"
-        defines "DEBUG"
-        runtime "Debug"
+    filter { "system:windows", "configurations:Debug" }
         symbols "On"
         buildoptions "/MTd"
 
-    configuration "Release"
-        defines "NDEBUG"
-        runtime "Release"
+    filter { "system:windows", "configurations:Release" }
         optimize "On"
         buildoptions "/MT"

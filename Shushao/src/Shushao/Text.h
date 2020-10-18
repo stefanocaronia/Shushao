@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Color.h"
-#include "Core/Config.h"
+#include "Config.h"
 #include "Rect.h"
 #include "Renderer.h"
 

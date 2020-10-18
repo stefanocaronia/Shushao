@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Shushao/Events/Event.h"
+#include "Events/Event.h"
 
 namespace se {
 

@@ -1,5 +1,5 @@
 
-#include "Precompiled.h"
+#include "sepch.h"
 
 #include "Component.h"
 #include "GameData.h"

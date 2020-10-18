@@ -43,5 +43,7 @@
 
 #define LIB_SHUSHAO "shushaores.dll"
 
+#define SE_BIND_EVENT_FUNCTION(fn) std::bind(&fn, this, std::placeholders::_1)
+
 // Helper classes
 #include "Helper/BitsafeEnum.h"

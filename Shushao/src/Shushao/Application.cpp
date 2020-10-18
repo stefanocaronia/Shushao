@@ -1,8 +1,8 @@
-#include "Precompiled.h"
+#include "sepch.h"
 
 #include "GameData.h"
 #include "Application.h"
-#include "Core/Config.h"
+#include "Config.h"
 #include "Design.h"
 #include "Events/ApplicationEvent.h"
 #include "Font.h"
@@ -13,11 +13,17 @@
 #include "System.h"
 #include "Time.h"
 
-#define BIND_EVENT_FUNCTION(x) std::bind(&Application::x, this, std::placeholders::_1)
-
 namespace se {
 
     Application* Application::instance = nullptr;
+
+    Application::Application()
+    {
+        SE_CORE_ASSERT(!instance, "Application already exists!");
+
+        instance = this;
+        Initialize();
+    }
 
     Application::~Application()
     {
@@ -31,8 +37,6 @@ namespace se {
 
         loadConfiguration();
 
-        Configure(); // (derived) ovverride configuration
-
         initializeLibraries();
         initializeWindow();
         initializeTime();
@@ -41,8 +45,6 @@ namespace se {
         loadEngineResources();
 
         System::Init(); // Init System services
-
-        Awake(); // (derived)
 
         //initializeScene();
 
@@ -68,7 +70,7 @@ namespace se {
     void Application::initializeWindow()
     {
         window = Window::Create({ Config::title, Config::displayWidth, Config::displayHeight, Config::fullscreen });
-        window->SetEventCallback(BIND_EVENT_FUNCTION(OnEvent));
+        window->SetEventCallback(SE_BIND_EVENT_FUNCTION(Application::OnEvent));
         GameData::Window = window;
     }
 
@@ -235,9 +237,9 @@ namespace se {
     void Application::OnEvent(Event& event)
     {
         EventDispatcher dispatcher(event);
-        dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FUNCTION(onWindowClose));
+        dispatcher.Dispatch<WindowCloseEvent>(SE_BIND_EVENT_FUNCTION(Application::onWindowClose));
 
-        DEBUG_CORE_TRACE("Event {0}", event);
+        //DEBUG_CORE_TRACE("Event {0}", event);
 
         for (auto it = layerStack.end(); it != layerStack.begin();) {
             (*--it)->OnEvent(event);

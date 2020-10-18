@@ -1,11 +1,10 @@
 
-#include "Precompiled.h"
+#include "sepch.h"
 
 #include "Physics.h"
 #include "PhysicsContactFilter.h"
 #include "PhysicsContactListener.h"
 #include "PhysicsDebugDraw.h"
-#include "Shushao/SceneManager.h"
 
 namespace se {
 

@@ -1,4 +1,4 @@
-#include "Precompiled.h"
+#include "sepch.h"
 
 #include <SOIL2.h>
 

@@ -1,4 +1,4 @@
-#include "Precompiled.h"
+#include "sepch.h"
 
 #include "PanelUI.h"
 #include "Shushao/Image.h"

@@ -1,8 +1,8 @@
 
-#include "Precompiled.h"
+#include "sepch.h"
 
 #include "Resources.h"
-#include "Precompiled.h"
+#include "sepch.h"
 #include "Font.h"
 #include "GameData.h"
 

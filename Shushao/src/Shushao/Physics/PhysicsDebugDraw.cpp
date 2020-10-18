@@ -1,8 +1,7 @@
-#include "Precompiled.h"
+#include "sepch.h"
 
 #include "Shushao/Design.h"
-#include "Shushao/SceneManager.h"
-#include "Shushao/shaders/BaseShader.h"
+#include "Shushao/Shaders/BaseShader.h"
 #include "PhysicsDebugDraw.h"
 
 namespace se {
@@ -38,9 +37,10 @@ namespace se {
 		VAO->Use();
 		VAO->Load<glm::vec3>(VertexBuffer::VERTICES, vertices);
 
-		glm::mat4 MVP = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
+		/// TODO: qui va rimessa la gestione MVP presa dalla camera
+		//glm::mat4 MVP = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
+		//shader->SetMVP(&MVP[0][0]);
 
-		shader->SetMVP(&MVP[0][0]);
 		shader->SetRenderColor({ 0.0f, 1.0f, 0.0f, alpha });
 
 		VAO->GetBuffer(VertexBuffer::VERTICES)->Bind();
@@ -66,8 +66,9 @@ namespace se {
 		VAO->Use();
 		VAO->Load<glm::vec3>(VertexBuffer::VERTICES, vertices);
 
-		glm::mat4 MVP = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
-		shader->SetMVP(&MVP[0][0]);
+		/// TODO: qui va rimessa la gestione MVP presa dalla camera
+		//glm::mat4 MVP = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
+		//shader->SetMVP(&MVP[0][0]);
 
 		VAO->GetBuffer(VertexBuffer::VERTICES)->Bind();
 		GL_CALL(glEnable(GL_BLEND));
@@ -98,8 +99,9 @@ namespace se {
 		VAO->Load<glm::vec3>(VertexBuffer::VERTICES, vertices);
 		shader->update();
 
-		glm::mat4 MVP = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
-		shader->SetMVP(&MVP[0][0]);
+		/// TODO: qui va rimessa la gestione MVP presa dalla camera
+		//glm::mat4 MVP = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
+		//shader->SetMVP(&MVP[0][0]);
 
 		VAO->GetBuffer(VertexBuffer::VERTICES)->Bind();
 		GL_CALL(glLineWidth(2));
@@ -128,9 +130,9 @@ namespace se {
 
 		VAO->Use();
 		VAO->Load<glm::vec3>(VertexBuffer::VERTICES, vertices);
-
-		glm::mat4 MVP = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
-		shader->SetMVP(&MVP[0][0]);
+		/// TODO: qui va rimessa la gestione MVP presa dalla camera
+		//glm::mat4 MVP = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
+		//shader->SetMVP(&MVP[0][0]);
 
 		VAO->GetBuffer(VertexBuffer::VERTICES)->Bind();
 		GL_CALL(glLineWidth(2));
@@ -158,8 +160,9 @@ namespace se {
 		VAO->Use();
 		VAO->Load<glm::vec3>(VertexBuffer::VERTICES, vertices);
 
-		glm::mat4 MVP = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
-		shader->SetMVP(&MVP[0][0]);
+		/// TODO: qui va rimessa la gestione MVP presa dalla camera
+		//glm::mat4 MVP = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
+		//shader->SetMVP(&MVP[0][0]);
 
 		VAO->GetBuffer(VertexBuffer::VERTICES)->Bind();
 		shader->SetRenderColor({ color.r, color.g, color.b, color.a * alpha });
@@ -194,8 +197,9 @@ namespace se {
 		VAO->Use();
 		VAO->Load<glm::vec3>(VertexBuffer::VERTICES, vertices);
 
-		glm::mat4 MVP = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
-		shader->SetMVP(&MVP[0][0]);
+		/// TODO: qui va rimessa la gestione MVP presa dalla camera
+		//glm::mat4 MVP = SceneManager::activeScene->activeCamera->Projection * SceneManager::activeScene->activeCamera->getViewMatrix() * glm::mat4();
+		//shader->SetMVP(&MVP[0][0]);
 
 		VAO->GetBuffer(VertexBuffer::VERTICES)->Bind();
 		GL_CALL(glEnable(GL_BLEND));

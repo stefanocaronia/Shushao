@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Core/Config.h"
+#include "Config.h"
 #include "Object.h"
 #include "Rect.h"
 #include "Texture.h"

@@ -2,14 +2,12 @@
 
 #include "Window.h"
 #include "Events/ApplicationEvent.h"
-#include "Core/LayerStack.h"
+#include "LayerStack.h"
 
 namespace se {
 
 class Application {
 public:
-    static Application* instance;
-
     enum class Stage {
         INIT,
         UPDATE,
@@ -18,6 +16,7 @@ public:
         EXIT
     };
 
+    Application();
     virtual ~Application();
 
     std::string name;
@@ -35,8 +34,6 @@ public:
     void PushOverlay(Layer* layer);
 
 protected:
-    virtual void Configure() = 0;
-    virtual void Awake() = 0;
     virtual void Start() {};
     virtual void GetInput() {};
     virtual void Update() {};
@@ -50,6 +47,7 @@ protected:
     bool keys[350];
 
 private:
+    static Application* instance;
     Window* window;
     LayerStack layerStack;
 

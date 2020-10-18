@@ -12,8 +12,12 @@ Makefile
 **/*.user
 **/.vs/
 **/*.vcxproj
+**/*.vcxproj.filters
+**/*.vcxproj.user
 **/*.filters
 **/*.sln
+**/*.cpb
+**/*.layout
 
 # vscode
 .vscode/ipch
@@ -31,4 +35,4 @@ Makefile
 *.gch
 *.pch
 
-/Shushao/vendor/**/**
+# /Shushao/vendor/**/**

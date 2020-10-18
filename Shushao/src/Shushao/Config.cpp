@@ -1,9 +1,9 @@
-#include "Precompiled.h"
+#include "sepch.h"
 
 #include "Config.h"
 
-#include "../LevelMap.h"
-#include "../Resources.h"
+#include "LevelMap.h"
+#include "Resources.h"
 
 namespace Config {
 

@@ -1,4 +1,4 @@
-#include "Precompiled.h"
+#include "sepch.h"
 
 #include "WindowsInput.h"
 #include "Shushao/Application.h"
