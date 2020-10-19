@@ -2,44 +2,26 @@
     "version": "0.2.0",
     "configurations": [
         { // F5
-            "name": "Build & Debug (GDB)",
-            "type": "cppdbg",
+            "name": "Build & Debug",
+            "type": "cppvsdbg",
             "request": "launch",
-            "targetArchitecture": "x64",
             /* "program": "${workspaceRoot}/bin/Debug/${workspaceFolderBasename}.exe", */
-            "program": "${workspaceRoot}/bin/Debug/Game.exe",
-            "miDebuggerPath":"gdb.exe",
-            "args": ["-q"],
+            "program": "${workspaceRoot}\\bin\\Debug\\Sandbox\\Sandbox.exe",
+            "args": [""],
             "stopAtEntry": false,
-            "cwd": "${workspaceRoot}/bin/Debug/",
-            "externalConsole": true,
+            "cwd": "${workspaceRoot}/bin/Debug/Sandbox/",
+            "externalConsole": false,
             "preLaunchTask": "Build",
-            "setupCommands": [
-                {
-                    "description": "Enable pretty-printing for gdb",
-                    "text": "-enable-pretty-printing",
-                    "ignoreFailures": true
-                }
-            ],　
         },
         {
             "name": "Debug (GDB)",
-            "type": "cppdbg",
+            "type": "cppvsdbg",
             "request": "launch",
-            "targetArchitecture": "x64",
-            "program": "${workspaceRoot}/bin/Debug/Game.exe",
-            "miDebuggerPath":"gdb.exe",
-            "args": ["-q"],
+            "program": "${workspaceRoot}/bin/Debug/Sandbox/Sandbox.exe",
+            "args": ["/debugexe"],
             "stopAtEntry": false,
-            "cwd": "${workspaceRoot}/bin/Debug/",
+            "cwd": "${workspaceRoot}/bin/Debug/Sandbox",
             "externalConsole": true,
-            "setupCommands": [
-                {
-                    "description": "Enable pretty-printing for gdb",
-                    "text": "-enable-pretty-printing",
-                    "ignoreFailures": true
-                }
-            ],　
         }
     ]
  }

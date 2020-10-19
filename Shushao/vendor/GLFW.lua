@@ -2,13 +2,14 @@ project "GLFW"
     basedir ("GLFW")
     kind "StaticLib"
     language "c"
+    staticruntime "On"
     -- toolset "gcc"
 
     -- configuration { "gmake2" }
     --     targetextension (".a")
 
-    targetdir ("%{prj.location}/lib/" .. outputdir .. "/%{prj.name}")
-    objdir ("%{prj.location}/obj/" .. outputdir .. "/%{prj.name}")
+    targetdir ("%{prj.location}/lib/" .. outputdir)
+    objdir ("%{prj.location}/obj/" .. outputdir)
 
     makesettings [[
         CC = gcc
@@ -56,8 +57,12 @@ project "GLFW"
     -- filter { "system:windows", "configurations:Release" }
     --     buildoptions "/MT"
 
-    filter { "system:windows", "configurations:Debug" }
-        buildoptions "/MTd"
+    filter "configurations:Debug"
+        defines "DEBUG"
+        runtime "Debug"
+        symbols "On"
 
-    filter { "system:windows", "configurations:Release" }
-        buildoptions "/MT"
+    filter "configurations:Release"
+        defines "NDEBUG"
+        runtime "Release"
+        optimize "On"

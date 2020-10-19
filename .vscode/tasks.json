@@ -10,22 +10,17 @@
                 "kind": "build",
                 "isDefault": true
             },
-            "command": "mingw32-make -j 7",
+            "command": "msbuild Shushao.sln /p:Configuration=Debug -maxCpuCount -verbosity:minimal -graphBuild:True -nodeReuse:True -nologo",
+            // "command": "mingw32-make -j 7",
             "presentation": {
                 "clear": true
             }
-            /* "options": {
-                "shell": {
-                    "executable": "cmd.exe",
-                    "args": ["/d", "/c"]
-                }
-            } */
         },
         {
             "label": "Build Release",
             "type": "shell",
             "group": "build",
-            "command": "mingw32-make -j 7 config=Release",
+            "command": "msbuild Shushao.sln /p:Configuration=Release -maxCpuCount -verbosity:minimal -graphBuild:True -nodeReuse:True -nologo",
             "problemMatcher": [],
             "presentation": {
                 "clear": true
@@ -35,7 +30,7 @@
             "label": "Rebuild",
             "type": "shell",
             "group": "build",
-            "command": "mingw32-make clean && mingw32-make -j 7",
+            "command": "msbuild Shushao.sln /t:Clean;Rebuild -maxCpuCount -verbosity:minimal -graphBuild:True -nodeReuse:True -nologo",
             //"command": "mingw32-make clean && mingw32-make",
             "presentation": {
                 "clear": true
@@ -48,7 +43,7 @@
                 "kind": "test",
                 "isDefault": true
             },
-            "command": "mingw32-make -j 7 && cd bin/Debug-windows-x86_64/Game &&./Game.exe",
+            "command": "msbuild Shushao.sln /p:Configuration=Debug -maxCpuCount -verbosity:minimal -graphBuild:True -nodeReuse:True -nologo && cd ${workspaceRoot}\\bin\\Debug\\Sandbox && Sandbox.exe",
             "presentation": {
                 "clear": true
             }
@@ -57,7 +52,7 @@
             "label": "Run",
             "type": "shell",
             "group": "test",
-            "command": "cd bin/Debug-windows-x86_64/Game &&./Game.exe",
+            "command": "cd ${workspaceRoot}\\bin\\Debug\\Sandbox && Sandbox.exe",
             "presentation": {
                 "clear": true
             }
@@ -65,29 +60,37 @@
         {
             "label": "Clean",
             "type": "shell",
-            "command": "mingw32-make clean",
+            "command": "msbuild Shushao.sln /t:Clean -maxCpuCount -verbosity:minimal -graphBuild:True -nodeReuse:True -nologo",
             "problemMatcher": [],
             "presentation": {
                 "clear": true
             }
         },
-        {
-            "label": "Build current file",
-            "type": "shell",
-            "command": "mingw32-make single FILE=${relativeFile}",
-            "problemMatcher": [],
-            "presentation": {
-                "clear": true
-            }
-        },
-        {
-            "label": "Header Precompilation",
-            "type": "shell",
-            "command": "mingw32-make precomp",
-            "problemMatcher": [],
-            "presentation": {
-                "clear": true
-            }
-        }
+        // {
+        //     "label": "Build current file",
+        //     "type": "shell",
+        //     "command": "F:\\Programmi\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.27.29110\\bin\\Hostx64\\x64\\cl.exe",
+        //     "args": [
+        //         "${fileDirname}\\${fileBasenameNoExtension}.exe",
+        //         "${file}"
+        //     ],
+        //     "problemMatcher": ["$msCompile"],
+        //     "presentation": {
+        //         "clear": true
+        //     },
+        //     "group": {
+        //         "kind": "build",
+        //         "isDefault": true
+        //     }
+        // },
+        // {
+        //     "label": "Header Precompilation",
+        //     "type": "shell",
+        //     "command": "mingw32-make precomp",
+        //     "problemMatcher": [],
+        //     "presentation": {
+        //         "clear": true
+        //     }
+        // }
     ]
 }

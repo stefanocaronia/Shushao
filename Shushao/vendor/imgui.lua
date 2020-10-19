@@ -2,9 +2,10 @@ project "ImGui"
     basedir ("imgui")
     kind "StaticLib"
     language "C++"
+    staticruntime "On"
 
-    targetdir ("%{prj.location}/lib/" .. outputdir .. "/%{prj.name}")
-    objdir ("%{prj.location}/obj/" .. outputdir .. "/%{prj.name}")
+    targetdir ("%{prj.location}/lib/" .. outputdir)
+    objdir ("%{prj.location}/obj/" .. outputdir)
 
     files {
         "%{prj.location}/*.h",
@@ -16,8 +17,12 @@ project "ImGui"
         cppdialect "C++17"
         staticruntime "On"
 
-    filter { "system:windows", "configurations:Debug" }
-        buildoptions "/MTd"
+    filter "configurations:Debug"
+        defines "DEBUG"
+        runtime "Debug"
+        symbols "On"
 
-    filter { "system:windows", "configurations:Release" }
-        buildoptions "/MT"
+    filter "configurations:Release"
+        defines "NDEBUG"
+        runtime "Release"
+        optimize "On"

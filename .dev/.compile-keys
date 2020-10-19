@@ -1,0 +1,8 @@
+F9          Build & Run
+ctrl+F9     Build
+ctrl+F10    Run
+ctrl+F11    Rebuild
+ctrl+F12    Clean
+
+F7          Build current file
+F6          Header Precompilation

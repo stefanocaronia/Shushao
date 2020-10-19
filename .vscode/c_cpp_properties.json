@@ -2,16 +2,17 @@
     "configurations": [
         {
             "name": "Win32",
-            "compilerPath": "C:/bin/mingw64/mingw64/bin/g++",
-            "cStandard": "c99",
+            "compilerPath": "F:\\Programmi\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.27.29110\\bin\\Hostx64\\x64\\cl.exe",
+            "cStandard": "c17",
             "cppStandard": "c++17",
-            "intelliSenseMode": "gcc-x64",
+            "intelliSenseMode": "msvc-x64",
             "includePath": [
-                "C:/bin/mingw64/mingw64/**",
+                "${default}",
                 "${workspaceFolder}/Sandbox/src/*",
                 "${workspaceFolder}/Shushao/src/*",
                 "${workspaceFolder}/Shushao/vendor/GLFW/include/*",
                 "${workspaceFolder}/Shushao/vendor/Glad/include/*",
+                "${workspaceFolder}/Shushao/vendor/imgui/*",
                 "${workspaceFolder}/Shushao/vendor/spdlog/include/*",
                 "${workspaceFolder}/Shushao/vendor/boost/*",
                 "${workspaceFolder}/Shushao/vendor/glm/*",

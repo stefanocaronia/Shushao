@@ -8,36 +8,38 @@ workspace "Shushao"
 		"Dist"
     }
 
---[[ rebuildcommands {
-    "make %{cfg.buildcfg} rebuild"
-} ]]
+    --[[ rebuildcommands {
+        "make %{cfg.buildcfg} rebuild"
+    } ]]
 
---outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
-outputdir = "%{cfg.buildcfg}"
-Sandbox = "Sandbox"
-Engine = "Shushao"
-sandbox_bin = "../bin/" .. outputdir .. "/%{Sandbox}/"
-engine_bin = "../bin/" .. outputdir .. "/%{Engine}/"
+    --outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
+    outputdir = "%{cfg.buildcfg}"
+    Sandbox = "Sandbox"
+    Engine = "Shushao"
+    sandbox_bin = "../bin/" .. outputdir .. "/%{Sandbox}/"
+    engine_bin = "../bin/" .. outputdir .. "/%{Engine}/"
 
-IncludeDir = {}
-IncludeDir["GLFW"] = "%{Engine}/vendor/GLFW/include";
-IncludeDir["Glad"] = "%{Engine}/vendor/Glad/include";
-IncludeDir["SOIL"] = "%{Engine}/vendor/SOIL/include";
-IncludeDir["spdlog"] = "%{Engine}/vendor/spdlog/include";
-IncludeDir["freetype"] = "%{Engine}/vendor/freetype/include";
-IncludeDir["glm"] = "%{Engine}/vendor/glm";
-IncludeDir["boost"] = "%{Engine}/vendor/boost";
-IncludeDir["Box2D"] = "%{Engine}/vendor/Box2D";
-IncludeDir["ImGui"] = "%{Engine}/vendor/imgui";
+    IncludeDir = {}
+    IncludeDir["GLFW"] = "%{Engine}/vendor/GLFW/include";
+    IncludeDir["Glad"] = "%{Engine}/vendor/Glad/include";
+    IncludeDir["SOIL"] = "%{Engine}/vendor/SOIL/include";
+    IncludeDir["spdlog"] = "%{Engine}/vendor/spdlog/include";
+    IncludeDir["freetype"] = "%{Engine}/vendor/freetype/include";
+    IncludeDir["glm"] = "%{Engine}/vendor/glm";
+    IncludeDir["boost"] = "%{Engine}/vendor/boost";
+    IncludeDir["Box2D"] = "%{Engine}/vendor/Box2D";
+    IncludeDir["ImGui"] = "%{Engine}/vendor/imgui";
 
-include "Shushao/vendor/Box2D.lua"
-include "Shushao/vendor/boost.lua"
-include "Shushao/vendor/freetype.lua"
-include "Shushao/vendor/Glad.lua"
-include "Shushao/vendor/GLFW.lua"
-include "Shushao/vendor/SOIL.lua"
-include "Shushao/vendor/spdlog.lua"
-include "Shushao/vendor/imgui.lua"
+group "Dependencies"
+    include "Shushao/vendor/Box2D.lua"
+    include "Shushao/vendor/boost.lua"
+    include "Shushao/vendor/freetype.lua"
+    include "Shushao/vendor/Glad.lua"
+    include "Shushao/vendor/GLFW.lua"
+    include "Shushao/vendor/SOIL.lua"
+    include "Shushao/vendor/spdlog.lua"
+    include "Shushao/vendor/imgui.lua"
+group ""
 
 project "Shushao"
 	location "Shushao"
@@ -77,7 +79,8 @@ project "Shushao"
         systemversion "latest"
         defines {
             "SE_PLATFORM_WINDOWS",
-            "GLFW_INCLUDE_NONE"
+            "GLFW_INCLUDE_NONE",
+            "_CRT_SECURE_NO_WARNINGS"
         }
 
     filter { "configurations:Release", "toolset:gcc" }
@@ -87,23 +90,20 @@ project "Shushao"
     filter { "configurations:Debug", "toolset:gcc" }
         buildoptions { "-std=c++17", "-Wall", "-fmax-errors=4", "-Wfatal-errors" }
 
-    filter { "system:windows", "configurations:Debug" }
+    filter "configurations:Debug"
         defines "SE_DEBUG"
         runtime "Debug"
         symbols "On"
-        buildoptions {"/MTd"}
 
-    filter { "system:windows", "configurations:Release" }
+    filter "configurations:Release"
         defines "SE_RELEASE"
         runtime "Release"
         optimize "On"
-        buildoptions {"/MT"}
 
-    filter { "system:windows", "configurations:Dist" }
+    filter "configurations:Dist"
         defines "SE_DIST"
         runtime "Release"
         optimize "On"
-        buildoptions {"/MT"}
 
 
 project "Shushao Resources"
@@ -126,11 +126,11 @@ project "Shushao Resources"
 
     linkoptions "/NOENTRY"
 
-    filter { "system:windows", "configurations:Debug" }
-        buildoptions "/MDd"
+    filter "configurations:Debug"
+        runtime "Debug"
 
-    filter { "system:windows", "configurations:Release" }
-        buildoptions "/MD"
+    filter "configurations:Release"
+        runtime "Release"
 
 project "Sandbox"
 	location "Sandbox"
@@ -177,8 +177,8 @@ project "Sandbox"
         "spdlog",
         "imgui",
         "opengl32",
-        "libboost_context-vc142-mt-sgd-x64-1_71.lib",
-        "libboost_coroutine-vc142-mt-sgd-x64-1_71.lib"
+        "libboost_context-vc142-mt-sgd-x64-1_71",
+        "libboost_coroutine-vc142-mt-sgd-x64-1_71"
     }
 
     prelinkcommands {
@@ -200,23 +200,20 @@ project "Sandbox"
 			"SE_PLATFORM_WINDOWS"
 		}
 
-    filter { "system:windows", "configurations:Debug" }
+    filter "configurations:Debug"
         defines "SE_DEBUG"
         runtime "Debug"
         symbols "On"
-        buildoptions {"/MTd"}
 
-    filter { "system:windows", "configurations:Release" }
+    filter "configurations:Release"
         defines "SE_RELEASE"
         runtime "Release"
         optimize "On"
-        buildoptions {"/MT"}
 
-    filter { "system:windows", "configurations:Dist" }
+    filter "configurations:Dist"
         defines "SE_DIST"
         runtime "Release"
         optimize "On"
-        buildoptions {"/MT"}
 
 
 

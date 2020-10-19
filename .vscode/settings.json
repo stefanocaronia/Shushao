@@ -83,5 +83,15 @@
         "random": "cpp",
         "codecvt": "cpp",
         "csignal": "cpp"
+    },
+    "emeraldwalk.runonsave": {
+        "autoClearConsole": true,
+        "commands": [
+            {
+                "match": "\\.lua$",
+                "isAsync": true,
+                "cmd": "premake"
+            }
+        ]
     }
 }

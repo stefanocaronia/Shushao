@@ -49,6 +49,7 @@ public:
 
     unsigned int width;
     unsigned int height;
+
 protected:
     virtual void initialize(const WindowProperties& props) = 0;
     virtual void shutdown() const = 0;

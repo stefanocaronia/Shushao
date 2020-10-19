@@ -2,19 +2,22 @@ project "SOIL2"
     basedir ("SOIL")
     kind "StaticLib"
     language "C++"
+    staticruntime "On"
 
     buildoptions { "/TP" }
     defines { "_CRT_SECURE_NO_WARNINGS" }
 
-    targetdir ("%{prj.location}/lib/" .. outputdir .. "/%{prj.name}")
-    objdir ("%{prj.location}/obj/" .. outputdir .. "/%{prj.name}")
+    targetdir ("%{prj.location}/lib/" .. outputdir)
+    objdir ("%{prj.location}/obj/" .. outputdir)
 
     files { "%{prj.location}/src/SOIL2/*.c" }
 
-    filter { "system:windows", "configurations:Debug" }
+    filter "configurations:Debug"
+        defines "DEBUG"
+        runtime "Debug"
         symbols "On"
-        buildoptions "/MTd"
 
-    filter { "system:windows", "configurations:Release" }
+    filter "configurations:Release"
+        defines "NDEBUG"
+        runtime "Release"
         optimize "On"
-        buildoptions "/MT"

@@ -86,9 +86,6 @@ namespace se {
     {
         // Init Input service
         // Input::init();
-        for (bool& k : keys) {
-            k = false;
-        }
     }
 
     void Application::loadEngineResources()

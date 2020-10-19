@@ -2,9 +2,10 @@ project 'Freetype'
     basedir ("freetype")
     kind 'StaticLib'
     language "c"
+    staticruntime "On"
 
-    targetdir ("%{prj.location}/lib/" .. outputdir .. "/%{prj.name}")
-    objdir ("%{prj.location}/obj/" .. outputdir .. "/%{prj.name}")
+    targetdir ("%{prj.location}/lib/" .. outputdir)
+    objdir ("%{prj.location}/obj/" .. outputdir)
 
     files {
         "%{prj.location}/src/autofit/autofit.c",
@@ -75,10 +76,12 @@ project 'Freetype'
         "FT2_BUILD_LIBRARY"
     }
 
-    filter { "system:windows", "configurations:Debug" }
+    filter "configurations:Debug"
         symbols "On"
-        buildoptions {"/MDd", "/Zi"}
+        runtime "Debug"
+        -- buildoptions {"/MDd", "/Zi"}
 
-    filter { "system:windows", "configurations:Release" }
+    filter "configurations:Release"
+        runtime "Release"
+        -- buildoptions "/MD"
         optimize "On"
-        buildoptions "/MD"

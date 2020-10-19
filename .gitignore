@@ -2,8 +2,11 @@
 /bin/
 obj/
 lib/
-objs/
+objs/*
 stage/
+vc2010/
+objs/Win32/
+builds/windows/vc2010/.vs/
 
 Makefile
 !.makefiles/makefile
