@@ -1,10 +1,11 @@
-
 #include "sepch.h"
 
+#include <glad/glad.h>
+
+#include "Application.h"
 #include "Resources.h"
 #include "sepch.h"
 #include "Font.h"
-#include "GameData.h"
 
 namespace se {
 
@@ -27,7 +28,7 @@ namespace se {
 	}
 
 	bool Font::Load(std::string filename) {
-		if (FT_New_Face(GameData::freetypeLibrary, filename.c_str(), 0, &face)) {
+		if (FT_New_Face(Application::Get().FreetypeLibrary, filename.c_str(), 0, &face)) {
 			Debug::Log(ERROR) << "Could not load font: " << filename << std::endl;
 			return false;
 		}
@@ -40,7 +41,7 @@ namespace se {
 		if (bytes != nullptr) delete (bytes);
 		bytes = new FT_Byte[data.size()];
 		std::copy(data.begin(), data.end(), bytes);
-		FT_Error r = FT_New_Memory_Face(GameData::freetypeLibrary, bytes, data.size() * sizeof(char), 0, &face);
+		FT_Error r = FT_New_Memory_Face(Application::Get().FreetypeLibrary, bytes, data.size() * sizeof(char), 0, &face);
 		if (r == 0) init();
 		return r == 0;
 	}

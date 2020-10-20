@@ -1,6 +1,8 @@
 
 #include "sepch.h"
 
+#include <Box2D/Box2D.h>
+
 #include "Physics.h"
 #include "PhysicsContactFilter.h"
 #include "PhysicsContactListener.h"

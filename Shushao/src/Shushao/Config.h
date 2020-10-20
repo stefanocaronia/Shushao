@@ -2,7 +2,7 @@
 
 #include "Core.h"
 
-#include "LevelMap.h"
+//#include "LevelMap.h"
 
 #define USER_CONFIG_FILE "config/config.ini"
 
@@ -38,8 +38,8 @@ namespace Physics {
     extern int positionIterations;
 }  // namespace Physics
 
-extern se::LevelMap Layers;
-extern se::LevelMap SortingLayers;
+//extern se::LevelMap Layers;
+//extern se::LevelMap SortingLayers;
 
 extern std::map<std::string, std::string> data;
 extern bool LoadUserConfig();

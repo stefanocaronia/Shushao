@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Shushao/Input.h"
+#include "Shushao/input/Input.h"
 
 namespace se {
 

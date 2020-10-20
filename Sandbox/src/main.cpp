@@ -9,7 +9,9 @@ public:
 
     void OnUpdate() override
     {
-        //DEBUG_INFO("{0} Update", GetName());
+        if (Input::IsKeyPressed(SE_KEY_A)) {
+            DEBUG_INFO("Hai premuto A!");
+        }
     }
 
     void OnEvent(se::Event& event) override

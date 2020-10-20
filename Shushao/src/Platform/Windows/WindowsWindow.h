@@ -18,6 +18,7 @@ namespace se {
         inline virtual void* GetNativeWindow() const override { return window; }
         inline float GetAspect() const override { return (float)width / (float)height; }
         inline glm::vec2 GetViewport() const { return { (float)width / (Config::pixelPerUnit / 2), (float)height / (Config::pixelPerUnit / 2) }; }
+        virtual void SetViewport(unsigned int x, unsigned int y, unsigned int width, unsigned int height);
         inline void SetEventCallback(const CallbackFunction& callback) override { Callback = callback; }
         virtual int GetDesktopWidth()  const override { return desktopWidth; }
         virtual int GetDesktopHeight()  const override { return desktopHeight; }

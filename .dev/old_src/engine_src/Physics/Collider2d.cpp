@@ -1,6 +1,8 @@
 
 #include "sepch.h"
 
+#include <Box2D/Box2D.h>
+
 #include "Shushao/Entity.h"
 #include "Shushao/Sprite.h"
 #include "Shushao/SpriteRenderer.h"

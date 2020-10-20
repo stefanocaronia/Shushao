@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Shushao/Color.h"
-#include "Shushao/Light.h"
+//#include "Shushao/Light.h"
 #include "Shushao/Object.h"
 
 namespace se {
@@ -48,7 +48,7 @@ public:
     void SetVector(glm::vec3&);
     void SetVector(glm::vec4&);
     void SetColor(Color&);
-    void SetLight(UniformLight&);
+    //void SetLight(UniformLight&);
 };
 
 class Shader : public Object {
@@ -87,7 +87,7 @@ public:
     void SetVector(std::string, glm::vec3);
     void SetVector(std::string, glm::vec4);
     void SetColor(std::string, Color);
-    void SetLight(std::string, UniformLight&);
+    //void SetLight(std::string, UniformLight&);
 
     unsigned int GetTextureIndex(std::string);
 

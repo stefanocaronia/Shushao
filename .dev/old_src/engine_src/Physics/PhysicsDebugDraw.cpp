@@ -1,5 +1,7 @@
 #include "sepch.h"
 
+#include <Box2D/Box2D.h>
+
 #include "Shushao/Design.h"
 #include "Shushao/Shaders/BaseShader.h"
 #include "PhysicsDebugDraw.h"

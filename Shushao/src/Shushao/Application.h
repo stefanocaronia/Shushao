@@ -21,7 +21,6 @@ namespace se {
 
         std::string name;
 
-        void Initialize();
         void Run();
         void Stop();
 
@@ -33,6 +32,9 @@ namespace se {
         void PushLayer(Layer* layer);
         void PushOverlay(Layer* layer);
 
+        // readonly properties
+        const FT_Library& FreetypeLibrary = _freetypeLibrary;
+
     protected:
         virtual void Start(){};
         virtual void GetInput(){};
@@ -43,6 +45,8 @@ namespace se {
 
         bool RUNNING = true;
         bool READY = false;
+
+        const FT_Library& freetypeLibrary = _freetypeLibrary;
 
     private:
         static Application* instance;
@@ -65,6 +69,8 @@ namespace se {
         void initializeLibraries();
 
         bool onWindowClose(WindowCloseEvent& e);
+
+        FT_Library _freetypeLibrary;
     };
 
     // To be defined in CLIENT

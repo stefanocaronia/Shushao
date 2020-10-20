@@ -1,20 +1,19 @@
 
 #include "sepch.h"
 
-#include "Component.h"
-#include "GameData.h"
-#include "SceneManager.h"
+//#include "GameData.h"
+#include "Object.h"
 
 namespace se {
 
 	Object::Object() {
 		name = "Object";
-		GameData::RegisterObject(this);
+		//GameData::RegisterObject(this);
 	}
 
 	Object::Object(std::string _name) {
 		name = _name;
-		GameData::RegisterObject(this);
+		//GameData::RegisterObject(this);
 	}
 
 	Object::~Object() {

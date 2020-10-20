@@ -1,8 +1,7 @@
 #include "sepch.h"
 
 #include "Resources.h"
-#include "Shaders/Shader.h"
-#include "Texture.h"
+//#include "Shaders/Shader.h"
 
 namespace se {
 
@@ -53,7 +52,7 @@ std::string Resources::GetEmbeddedText(int IDRES, std::string library) {
 void Resources::Clear() {
     for (auto& asset : Assets) {
         if (asset.second != nullptr) {
-            DEBUG_CORE_INFO("Cancello {0}", asset.second->name + " (" + util::classtitle(typeid(*asset.second).name()) + ")");
+            //DEBUG_CORE_INFO("Cancello {0}", asset.second->name + " (" + util::classtitle(typeid(*asset.second).name()) + ")");
             delete (asset.second);
             asset.second = nullptr;
         }
@@ -65,7 +64,7 @@ void Resources::toString() {
     Logger::setColor(ConsoleColor::WHITE);
     std::cout << " Resources [" << Assets.size() << "] :" << std::endl;
     for (auto const& asset : Assets) {
-        std::cout << "  - (" << util::classtitle(typeid(*asset.second).name()) << ") " << asset.first << std::endl;
+        //std::cout << "  - (" << util::classtitle(typeid(*asset.second).name()) << ") " << asset.first << std::endl;
     }
     Logger::setColor(ConsoleColor::LIGHTGREY);
 }

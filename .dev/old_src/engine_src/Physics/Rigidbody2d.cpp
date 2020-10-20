@@ -1,5 +1,7 @@
 #include "sepch.h"
 
+#include <Box2D/Box2D.h>
+
 #include "Physics.h"
 #include "Rigidbody2d.h"
 #include "Shushao/Entity.h"

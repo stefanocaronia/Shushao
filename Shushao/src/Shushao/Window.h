@@ -29,6 +29,7 @@ public:
     virtual void SetHeight(unsigned int _height) = 0;
     virtual float GetAspect() const = 0;
     virtual glm::vec2 GetViewport() const = 0;
+    virtual void SetViewport(unsigned int x, unsigned int y, unsigned int width, unsigned int height) = 0;
 
     virtual int GetDesktopWidth() const = 0;
     virtual int GetDesktopHeight() const = 0;

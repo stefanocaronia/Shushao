@@ -2,7 +2,7 @@
 
 #include "Config.h"
 
-#include "LevelMap.h"
+//#include "LevelMap.h"
 #include "Resources.h"
 
 namespace Config {
@@ -42,13 +42,11 @@ namespace Physics {
     int positionIterations = 3;
 }  // namespace Physics
 
-se::LevelMap Layers;
-se::LevelMap SortingLayers;
+//se::LevelMap Layers;
+//se::LevelMap SortingLayers;
 
-std::map<std::string, std::string> data;
-/*
-	caricamento configurazione user
-*/
+std::map<std::string, std::string> data; 
+
 bool LoadUserConfig() {
     std::ifstream cfile;
     cfile.open(USER_CONFIG_FILE);
@@ -74,9 +72,6 @@ bool LoadUserConfig() {
     return true;
 }
 
-/*
-	caricamento configurazione engine
-*/
 bool LoadEngineConfig() {
     std::string engine_config = se::Resources::GetEmbeddedText(CONFIG_ENGINE);
 
@@ -179,21 +174,21 @@ bool parseEngineConfig() {
             se::Debug::debugGridMode = se::GridMode::PERSPECTIVE;
     }
 
-    if (data.find("layers") != data.end()) {
-        Config::Layers = se::util::split(data["layers"], ',');
-    }
+    //if (data.find("layers") != data.end()) {
+    //    Config::Layers = se::util::split(data["layers"], ',');
+    //}
 
-    if (data.find("sorting_layers") != data.end()) {
-        Config::SortingLayers = se::util::split(data["sorting_layers"], ',');
-    }
+    //if (data.find("sorting_layers") != data.end()) {
+    //    Config::SortingLayers = se::util::split(data["sorting_layers"], ',');
+    //}
 
-    if (data.find("max_layers") != data.end()) {
-        Config::Layers.setMaxElements(stoi(data["max_layers"]));
-    }
+    //if (data.find("max_layers") != data.end()) {
+    //    Config::Layers.setMaxElements(stoi(data["max_layers"]));
+    //}
 
-    if (data.find("max_sorting_layers") != data.end()) {
-        Config::SortingLayers.setMaxElements(stoi(data["max_sorting_layers"]));
-    }
+    //if (data.find("max_sorting_layers") != data.end()) {
+    //    Config::SortingLayers.setMaxElements(stoi(data["max_sorting_layers"]));
+    //}
 
     return true;
 }

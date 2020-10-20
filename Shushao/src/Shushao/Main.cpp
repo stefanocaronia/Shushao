@@ -1,7 +1,6 @@
 
 #include "sepch.h"
 
-#include "GameData.h"
 #include "Application.h"
 
 extern se::Application* se::CreateApplication();

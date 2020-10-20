@@ -1,8 +1,13 @@
 #include "sepch.h"
 
+//#include <GLFW/glfw3.h>
+
+#include "Shushao/Application.h"
 #include "ImGuiLayer.h"
 #include "Shushao/Application.h"
 #include "Platform/OpenGL/ImGuiOpenGLRenderer.h"
+#include "Shushao/Input/InputCodes.h"
+#include "Shushao/Time.h"
 
 namespace se {
 
@@ -24,27 +29,27 @@ namespace se {
         io.BackendFlags |= ImGuiBackendFlags_HasSetMousePos;
 
         // Keyboard mapping. ImGui will use those indices to peek into the io.KeysDown[] array.
-        io.KeyMap[ImGuiKey_Tab] = GLFW_KEY_TAB;
-        io.KeyMap[ImGuiKey_LeftArrow] = GLFW_KEY_LEFT;
-        io.KeyMap[ImGuiKey_RightArrow] = GLFW_KEY_RIGHT;
-        io.KeyMap[ImGuiKey_UpArrow] = GLFW_KEY_UP;
-        io.KeyMap[ImGuiKey_DownArrow] = GLFW_KEY_DOWN;
-        io.KeyMap[ImGuiKey_PageUp] = GLFW_KEY_PAGE_UP;
-        io.KeyMap[ImGuiKey_PageDown] = GLFW_KEY_PAGE_DOWN;
-        io.KeyMap[ImGuiKey_Home] = GLFW_KEY_HOME;
-        io.KeyMap[ImGuiKey_End] = GLFW_KEY_END;
-        io.KeyMap[ImGuiKey_Insert] = GLFW_KEY_INSERT;
-        io.KeyMap[ImGuiKey_Delete] = GLFW_KEY_DELETE;
-        io.KeyMap[ImGuiKey_Backspace] = GLFW_KEY_BACKSPACE;
-        io.KeyMap[ImGuiKey_Space] = GLFW_KEY_SPACE;
-        io.KeyMap[ImGuiKey_Enter] = GLFW_KEY_ENTER;
-        io.KeyMap[ImGuiKey_Escape] = GLFW_KEY_ESCAPE;
-        io.KeyMap[ImGuiKey_A] = GLFW_KEY_A;
-        io.KeyMap[ImGuiKey_C] = GLFW_KEY_C;
-        io.KeyMap[ImGuiKey_V] = GLFW_KEY_V;
-        io.KeyMap[ImGuiKey_X] = GLFW_KEY_X;
-        io.KeyMap[ImGuiKey_Y] = GLFW_KEY_Y;
-        io.KeyMap[ImGuiKey_Z] = GLFW_KEY_Z;
+        io.KeyMap[ImGuiKey_Tab] = SE_KEY_TAB;
+        io.KeyMap[ImGuiKey_LeftArrow] = SE_KEY_LEFT;
+        io.KeyMap[ImGuiKey_RightArrow] = SE_KEY_RIGHT;
+        io.KeyMap[ImGuiKey_UpArrow] = SE_KEY_UP;
+        io.KeyMap[ImGuiKey_DownArrow] = SE_KEY_DOWN;
+        io.KeyMap[ImGuiKey_PageUp] = SE_KEY_PAGE_UP;
+        io.KeyMap[ImGuiKey_PageDown] = SE_KEY_PAGE_DOWN;
+        io.KeyMap[ImGuiKey_Home] = SE_KEY_HOME;
+        io.KeyMap[ImGuiKey_End] = SE_KEY_END;
+        io.KeyMap[ImGuiKey_Insert] = SE_KEY_INSERT;
+        io.KeyMap[ImGuiKey_Delete] = SE_KEY_DELETE;
+        io.KeyMap[ImGuiKey_Backspace] = SE_KEY_BACKSPACE;
+        io.KeyMap[ImGuiKey_Space] = SE_KEY_SPACE;
+        io.KeyMap[ImGuiKey_Enter] = SE_KEY_ENTER;
+        io.KeyMap[ImGuiKey_Escape] = SE_KEY_ESCAPE;
+        io.KeyMap[ImGuiKey_A] = SE_KEY_A;
+        io.KeyMap[ImGuiKey_C] = SE_KEY_C;
+        io.KeyMap[ImGuiKey_V] = SE_KEY_V;
+        io.KeyMap[ImGuiKey_X] = SE_KEY_X;
+        io.KeyMap[ImGuiKey_Y] = SE_KEY_Y;
+        io.KeyMap[ImGuiKey_Z] = SE_KEY_Z;
 
         ImGui_ImplOpenGL3_Init("#version 430");
     }
@@ -61,9 +66,11 @@ namespace se {
         ImGuiIO& io = ImGui::GetIO();
         io.DisplaySize = ImVec2(app.GetWindow().GetWidth(), app.GetWindow().GetHeight());
 
-        float glfwTime = (float)glfwGetTime();
-        io.DeltaTime = time > 0.0f ? glfwTime - time : 1.0f / 60.0f;
-        time = glfwTime;
+        //float glfwTime = (float)glfwGetTime();
+        //io.DeltaTime = time > 0.0f ? glfwTime - time : 1.0f / 60.0f;
+        //time = glfwTime;
+
+        io.DeltaTime = Time::deltaTime;
 
         ImGui_ImplOpenGL3_NewFrame();
         ImGui::NewFrame();
@@ -130,10 +137,10 @@ namespace se {
     {
         ImGuiIO& io = ImGui::GetIO();
         io.KeysDown[event.GetKeyCode()] = true;
-        io.KeyCtrl = io.KeysDown[GLFW_KEY_LEFT_CONTROL] || io.KeysDown[GLFW_KEY_RIGHT_CONTROL];
-        io.KeyShift = io.KeysDown[GLFW_KEY_LEFT_SHIFT] || io.KeysDown[GLFW_KEY_RIGHT_SHIFT];
-        io.KeyAlt = io.KeysDown[GLFW_KEY_LEFT_ALT] || io.KeysDown[GLFW_KEY_RIGHT_ALT];
-        io.KeySuper = io.KeysDown[GLFW_KEY_LEFT_SUPER] || io.KeysDown[GLFW_KEY_RIGHT_SUPER];
+        io.KeyCtrl = io.KeysDown[SE_KEY_LEFT_CONTROL] || io.KeysDown[SE_KEY_RIGHT_CONTROL];
+        io.KeyShift = io.KeysDown[SE_KEY_LEFT_SHIFT] || io.KeysDown[SE_KEY_RIGHT_SHIFT];
+        io.KeyAlt = io.KeysDown[SE_KEY_LEFT_ALT] || io.KeysDown[SE_KEY_RIGHT_ALT];
+        io.KeySuper = io.KeysDown[SE_KEY_LEFT_SUPER] || io.KeysDown[SE_KEY_RIGHT_SUPER];
 
         return false;
     }
@@ -160,8 +167,7 @@ namespace se {
         ImGuiIO& io = ImGui::GetIO();
         io.DisplaySize = ImVec2(event.GetWidth(), event.GetHeight());
         io.DisplayFramebufferScale = ImVec2(1.0f, 1.0f);
-
-        glViewport(0, 0, event.GetWidth(), event.GetHeight());
+        Application::Get().GetWindow().SetViewport(0, 0, event.GetWidth(), event.GetHeight());
 
         return false;
     }

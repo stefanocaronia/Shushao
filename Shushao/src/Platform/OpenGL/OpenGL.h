@@ -1,6 +1,8 @@
 #pragma once
 
-#include "Debug.h"
+#include <glad/glad.h>
+
+#include "Shushao/Debug.h"
 
 namespace se {
 

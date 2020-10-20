@@ -1,16 +1,15 @@
 #include "sepch.h"
 
-#include "GameData.h"
 #include "Application.h"
 #include "Config.h"
-#include "Design.h"
+//#include "Design.h"
 #include "Events/ApplicationEvent.h"
 #include "Font.h"
-#include "Input.h"
-#include "Physics/Physics.h"
+#include "Input/Input.h"
+//#include "Physics/Physics.h"
 #include "Resources.h"
-#include "SceneManager.h"
-#include "System.h"
+//#include "SceneManager.h"
+//#include "System.h"
 #include "Time.h"
 
 namespace se {
@@ -22,17 +21,7 @@ namespace se {
         SE_CORE_ASSERT(!instance, "Application already exists!");
 
         instance = this;
-        Initialize();
-    }
 
-    Application::~Application()
-    {
-        DEBUG_CORE_INFO("Application Destructor");
-    }
-
-    void Application::Initialize()
-    {
-        GameData::Application = this;
         Debug::Initialize();
 
         loadConfiguration();
@@ -44,16 +33,23 @@ namespace se {
         initializeInput();
         loadEngineResources();
 
-        System::Init(); // Init System services
+        //System::Init(); // Init System services
 
         //initializeScene();
 
-        if (SceneManager::activeScene != nullptr) {
-            Camera* activeCamera = SceneManager::activeScene->activeCamera;
-            window->Clear(activeCamera->backgroundColor.r, activeCamera->backgroundColor.g, activeCamera->backgroundColor.b, 1.0f, 1.0f);
-        } else {
-            window->Clear();
-        }
+        //if (SceneManager::activeScene != nullptr) {
+        //    Camera* activeCamera = SceneManager::activeScene->activeCamera;
+        //    window->Clear(activeCamera->backgroundColor.r, activeCamera->backgroundColor.g, activeCamera->backgroundColor.b, 1.0f, 1.0f);
+        //} else {
+        //    window->Clear();
+        //}
+
+        window->Clear();
+    }
+
+    Application::~Application()
+    {
+        DEBUG_CORE_INFO("Application Destructor");
     }
 
     void Application::loadConfiguration()
@@ -64,14 +60,13 @@ namespace se {
 
     void Application::initializeLibraries()
     {
-        FT_Init_FreeType(&GameData::freetypeLibrary);
+        FT_Init_FreeType(&_freetypeLibrary);
     }
 
     void Application::initializeWindow()
     {
         window = Window::Create({ Config::title, Config::displayWidth, Config::displayHeight, Config::fullscreen });
         window->SetEventCallback(SE_BIND_EVENT_FUNCTION(Application::OnEvent));
-        GameData::Window = window;
     }
 
     void Application::initializeTime()
@@ -80,7 +75,6 @@ namespace se {
         Time::setFrameRateLimit(Config::Time::frameRateLimit);
         Time::setFixedRateLimit(Config::Time::fixedRateLimit);
     }
-
 
     void Application::initializeInput()
     {
@@ -96,34 +90,34 @@ namespace se {
 
     void Application::initializeScene()
     {
-        SE_CORE_ASSERT(SceneManager::activeScene != nullptr, "Active Scene not set");
+        //SE_CORE_ASSERT(SceneManager::activeScene != nullptr, "Active Scene not set");
 
-        // init all entities
-        SceneManager::activeScene->ScanEntities();
-        SceneManager::activeScene->ScanActiveComponents();
-        SceneManager::activeScene->Init();  // vengono chiamati qui gli Awake di tutti gli oggetti attivi
+        //// init all entities
+        //SceneManager::activeScene->ScanEntities();
+        //SceneManager::activeScene->ScanActiveComponents();
+        //SceneManager::activeScene->Init();  // vengono chiamati qui gli Awake di tutti gli oggetti attivi
 
-        if (Debug::enabled) {
-            SceneManager::activeScene->PrintHierarchy();
-            SceneManager::activeScene->PrintActiveComponentsInScene();
-            SceneManager::activeScene->PrintActiveRenderersInScene();
-            SceneManager::activeScene->PrintActiveLightsInScene();
-            System::ListServices();
-            SceneManager::activeScene->activeCamera->print();
-            Resources::toString();
-            Config::Layers.toString("Layers");
-            Config::SortingLayers.toString("SortingLayers");
-        }
+        //if (Debug::enabled) {
+        //    SceneManager::activeScene->PrintHierarchy();
+        //    SceneManager::activeScene->PrintActiveComponentsInScene();
+        //    SceneManager::activeScene->PrintActiveRenderersInScene();
+        //    SceneManager::activeScene->PrintActiveLightsInScene();
+        //    System::ListServices();
+        //    SceneManager::activeScene->activeCamera->print();
+        //    Resources::toString();
+        //    Config::Layers.toString("Layers");
+        //    Config::SortingLayers.toString("SortingLayers");
+        //}
     }
 
     void Application::initializePhysics()
     {
         // Physics 2d init
-        if (Config::Physics::enabled) {
+        /*if (Config::Physics::enabled) {
             if (!Physics::Init()) {
                 DEBUG_CORE_ERROR("Error Initializing Physics");
             }
-        }
+        }*/
     }
 
     void Application::Run()
@@ -177,14 +171,14 @@ namespace se {
 
     void Application::scan()
     {
-        return;
-        if (SceneManager::activeScene->Invalid) {
-            SceneManager::activeScene->ScanEntities();
-            SceneManager::activeScene->ScanActiveComponents();
-        }
+        //return;
+        //if (SceneManager::activeScene->Invalid) {
+        //    SceneManager::activeScene->ScanEntities();
+        //    SceneManager::activeScene->ScanActiveComponents();
+        //}
 
-        // chiamo awake di tutti i componenti non ancora svegli
-        SceneManager::activeScene->Init();
+        //// chiamo awake di tutti i componenti non ancora svegli
+        //SceneManager::activeScene->Init();
     }
 
     void Application::render()
@@ -204,7 +198,7 @@ namespace se {
     {
         Time::realtimeSinceStartup = Time::GetTime();
         // Input::update();  // Update Input Service
-        System::Update();  // update dei system services
+        //System::Update();  // update dei system services
         //SceneManager::activeScene->update();
         //Update();  // (derived)
     }
@@ -213,7 +207,7 @@ namespace se {
     {
         Time::fixedTime = Time::GetTime();
         Time::inFixedTimeStep = true;
-        if (Physics::enabled) Physics::Update();
+        //if (Physics::enabled) Physics::Update();
         //SceneManager::activeScene->fixed();
         FixedUpdate();  // (derived)
         Time::inFixedTimeStep = false;
@@ -224,11 +218,11 @@ namespace se {
         End();  // (derived)
         //SceneManager::activeScene->exit();
         // Input::exit();
-        System::Exit();
-        Physics::Exit();
+        //System::Exit();
+        //Physics::Exit();
         //SceneManager::Clear();
         Resources::Clear();
-        System::Clear();
+        //System::Clear();
     }
 
     void Application::OnEvent(Event& event)

@@ -1,11 +1,13 @@
 #include "sepch.h"
 
+#include <GLFW/glfw3.h>
+
 #include "WindowsInput.h"
 #include "Shushao/Application.h"
 
 namespace se {
 
-    Input* Input::s_Instance = new WindowsInput();
+    Input* Input::instance = new WindowsInput();
 
     bool WindowsInput::IsKeyPressedImpl(int keycode)
     {

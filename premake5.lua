@@ -53,7 +53,7 @@ project "Shushao"
 	objdir ("obj/" .. outputdir .. "/%{prj.name}")
 
 	pchheader "sepch.h"
-    pchsource "%{Engine}/src/Shushao/sepch.cpp"
+    pchsource "%{Engine}/src/sepch.cpp"
 
     files {
 		"%{prj.name}/src/**.h",

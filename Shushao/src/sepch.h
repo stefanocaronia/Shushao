@@ -23,7 +23,7 @@
 #include <vector>
 #include <cmath>
 
-// freetype
+// fonts
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
@@ -47,12 +47,6 @@
 #include <glm/gtx/spline.hpp>
 #include <glm/gtx/transform.hpp>
 
-// OpenGL
-#include <glad/glad.h>
-
-// GLFW
-#include <GLFW/glfw3.h>
-
 // ImgUi
 #include <imgui.h>
 
@@ -67,16 +61,15 @@
 #include <spdlog/sinks/stdout_color_sinks.h>
 
 // Box2D
-#include <Box2D/Box2D.h>
+// #include <Box2D/Box2D.h>
 
 // Includes
 #include "Include/spimpl/spimpl.h"
 
-// Shushao
-#include "Debug.h"
-#include "Logger.h"
-#include "Time.h"
-#include "Utility.h"
-#include "OpenGL.h"
-#include "Core.h"
-#include "Globals.h"
+// Core
+#include "Shushao/Debug.h"
+#include "Shushao/Logger.h"
+#include "Shushao/Time.h"
+#include "Shushao/Utility.h"
+#include "Shushao/Core.h"
+#include "Shushao/Globals.h"

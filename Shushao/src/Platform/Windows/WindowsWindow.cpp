@@ -1,5 +1,9 @@
 #include "sepch.h"
 
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+#include "Platform/OpenGL/OpenGL.h"
+
 #include "WindowsWindow.h"
 #include "Shushao/Events/ApplicationEvent.h"
 #include "Shushao/Events/KeyEvent.h"
@@ -173,6 +177,11 @@ namespace se {
     {
         glfwDestroyWindow(window);
         glfwTerminate();
+    }
+
+    void WindowsWindow::SetViewport(unsigned int x, unsigned int y, unsigned int width, unsigned int height)
+    {
+        glViewport(x, y, width, height);
     }
 
     void WindowsWindow::SetVSync(bool enabled)
