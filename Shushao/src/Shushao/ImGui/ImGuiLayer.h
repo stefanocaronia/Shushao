@@ -7,30 +7,18 @@
 
 namespace se {
 
-    class ImGuiLayer : public Layer
-    {
-    public:
-        ImGuiLayer();
-        ~ImGuiLayer();
+	class ImGuiLayer : public Layer
+	{
+	public:
+		ImGuiLayer();
+		~ImGuiLayer();
 
-        void OnAttach();
-        void OnDetach();
-        void OnUpdate();
-        void OnImGuiRender();
-        void OnEvent(Event& event);
+		virtual void OnAttach() override;
+		virtual void OnDetach() override;
+		virtual void OnImGuiRender() override;
 
-    private:
-        float time = 0.0f;
-
-        bool onMouseButtonPressedEvent(MouseButtonPressedEvent& event);
-        bool onMouseButtonReleasedEvent(MouseButtonReleasedEvent& event);
-        bool onMouseMovedEvent(MouseMovedEvent& event);
-        bool onMouseScrolledEvent(MouseScrolledEvent& event);
-        bool onKeyPressedEvent(KeyPressedEvent& event);
-        bool onKeyReleasedEvent(KeyReleasedEvent& event);
-        bool onKeyTypedEvent(KeyTypedEvent& event);
-        bool onWindowResizedEvent(WindowResizeEvent& event);
-
-    };
+		void Begin();
+		void End();
+	};
 }
 

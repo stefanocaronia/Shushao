@@ -28,7 +28,6 @@ public:
     Sandbox()
     {
         PushLayer(new TestLayer());
-        PushOverlay(new ImGuiLayer());
     }
 };
 

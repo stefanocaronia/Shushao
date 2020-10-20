@@ -29,6 +29,10 @@ namespace se {
         initializeLibraries();
         initializeWindow();
         initializeTime();
+
+        imGuiLayer = new ImGuiLayer();
+        PushOverlay(imGuiLayer);
+
         initializePhysics();
         initializeInput();
         loadEngineResources();
@@ -65,7 +69,7 @@ namespace se {
 
     void Application::initializeWindow()
     {
-        window = Window::Create({ Config::title, Config::displayWidth, Config::displayHeight, Config::fullscreen });
+        window = std::unique_ptr<Window>(Window::Create({ Config::title, Config::displayWidth, Config::displayHeight, Config::fullscreen }));
         window->SetEventCallback(SE_BIND_EVENT_FUNCTION(Application::OnEvent));
     }
 
@@ -186,7 +190,11 @@ namespace se {
         Time::renderTime = Time::GetTime();
         window->Clear();
         //SceneManager::activeScene->render();
-        layerStack.Update();
+        imGuiLayer->Begin();
+        for (Layer* layer : layerStack) {
+            layer->OnImGuiRender();
+        }
+        imGuiLayer->End();
         //Render();  // (derived)
         //SceneManager::activeScene->renderOverlay();
         // if (Physics::enabled && Physics::debug) ((b2World*)Physics::GetWorld())->DrawDebugData();
@@ -197,6 +205,7 @@ namespace se {
     void Application::update()
     {
         Time::realtimeSinceStartup = Time::GetTime();
+        layerStack.Update();
         // Input::update();  // Update Input Service
         //System::Update();  // update dei system services
         //SceneManager::activeScene->update();

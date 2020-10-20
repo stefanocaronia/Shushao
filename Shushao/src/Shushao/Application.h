@@ -2,6 +2,7 @@
 
 #include "Window.h"
 #include "Events/ApplicationEvent.h"
+#include "ImGui/ImGuiLayer.h"
 #include "LayerStack.h"
 
 namespace se {
@@ -50,7 +51,8 @@ namespace se {
 
     private:
         static Application* instance;
-        Window* window;
+        std::unique_ptr<Window> window;
+        ImGuiLayer* imGuiLayer;
         LayerStack layerStack;
 
         void scan();
