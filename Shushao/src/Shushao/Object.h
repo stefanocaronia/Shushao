@@ -1,13 +1,13 @@
 #pragma once
 
-namespace se {
+namespace Shushao {
 
     class Object
     {
     public:
         Object();
         Object(std::string);
-        virtual ~Object();
+        ~Object();
 
         int InstanceID = 0;
 

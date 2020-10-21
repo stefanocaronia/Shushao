@@ -1,11 +1,11 @@
 #include <Shushao.h>
 
-using namespace se;
+using namespace Shushao;
 
-class TestLayer : public se::Layer
+class TestLayer : public Shushao::Layer
 {
 public:
-    TestLayer() : Layer("Layer di test") {}
+    TestLayer() : Shushao::Layer("Layer di test") {}
 
     void OnUpdate() override
     {
@@ -14,14 +14,14 @@ public:
         }
     }
 
-    void OnEvent(se::Event& event) override
+    void OnEvent(Shushao::Event& event) override
     {
         //DEBUG_INFO("Received event {0} ", event);
         event.Handled = true;
     }
 };
 
-class Sandbox : public Application
+class Sandbox : public Shushao::Application
 {
 public:
 
@@ -31,7 +31,7 @@ public:
     }
 };
 
-se::Application* se::CreateApplication()
+Shushao::Application* Shushao::CreateApplication()
 {
     return new Sandbox();
 }

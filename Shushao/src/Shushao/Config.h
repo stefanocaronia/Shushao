@@ -38,8 +38,8 @@ namespace Physics {
     extern int positionIterations;
 }  // namespace Physics
 
-//extern se::LevelMap Layers;
-//extern se::LevelMap SortingLayers;
+//extern Shushao::LevelMap Layers;
+//extern Shushao::LevelMap SortingLayers;
 
 extern std::map<std::string, std::string> data;
 extern bool LoadUserConfig();
@@ -55,7 +55,7 @@ bool processConfigData(T& cstring) {
         if (line.size() == 0) continue;
         f = line.substr(0, 1);
         if (f == "#" || f == "/" || f == "[" || f == "*" || f == "[") continue;
-        std::vector<std::string> parts = se::util::split(line, '=');
+        std::vector<std::string> parts = Shushao::util::split(line, '=');
         if (parts.size() > 1) {
             //data.insert({parts[0], parts[1]});
             data[parts[0]] = parts[1];

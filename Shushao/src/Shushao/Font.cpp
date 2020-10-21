@@ -7,7 +7,7 @@
 #include "sepch.h"
 #include "Font.h"
 
-namespace se {
+namespace Shushao {
 
 	Font::Font(std::string filename, std::string n) {
 		if (filename != "") Load(filename);
@@ -19,7 +19,7 @@ namespace se {
 	}
 
 	void Font::SetSize(float wsize_) {
-		SetPixelSize(wsize_ * Config::pixelPerUnit);
+		SetPixelSize((int)(wsize_ * Config::pixelPerUnit));
 	}
 
 	void Font::SetPixelSize(int size_) {
@@ -41,7 +41,7 @@ namespace se {
 		if (bytes != nullptr) delete (bytes);
 		bytes = new FT_Byte[data.size()];
 		std::copy(data.begin(), data.end(), bytes);
-		FT_Error r = FT_New_Memory_Face(Application::Get().FreetypeLibrary, bytes, data.size() * sizeof(char), 0, &face);
+		FT_Error r = FT_New_Memory_Face(Application::Get().FreetypeLibrary, bytes, (FT_Long)(data.size() * sizeof(char)), 0, &face);
 		if (r == 0) init();
 		return r == 0;
 	}

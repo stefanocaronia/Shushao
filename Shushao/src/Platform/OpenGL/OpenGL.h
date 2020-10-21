@@ -4,7 +4,7 @@
 
 #include "Shushao/Debug.h"
 
-namespace se {
+namespace Shushao {
 
     static void GLFWErrorCallback(int error, const char* description)
     {

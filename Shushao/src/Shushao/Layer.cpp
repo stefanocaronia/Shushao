@@ -2,7 +2,7 @@
 
 #include "Layer.h"
 
-namespace se {
+namespace Shushao {
 
 	Layer::Layer(const std::string& name) : name(name) {}
 

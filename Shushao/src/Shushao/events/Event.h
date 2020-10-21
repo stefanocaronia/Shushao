@@ -2,7 +2,7 @@
 
 #include "sepch.h"
 
-namespace se {
+namespace Shushao {
 
     enum class EventType
     {

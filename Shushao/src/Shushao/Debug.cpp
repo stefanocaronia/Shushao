@@ -1,7 +1,7 @@
 #include "sepch.h"
 
 
-namespace se {
+namespace Shushao {
 
 	void Debug::Initialize() {
 		spdlog::set_pattern("%^[%T] %n: %v%$");

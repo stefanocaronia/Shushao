@@ -8,11 +8,6 @@ workspace "Shushao"
 		"Dist"
     }
 
-    --[[ rebuildcommands {
-        "make %{cfg.buildcfg} rebuild"
-    } ]]
-
-    --outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
     outputdir = "%{cfg.buildcfg}"
     Sandbox = "Sandbox"
     Engine = "Shushao"
@@ -30,16 +25,16 @@ workspace "Shushao"
     IncludeDir["Box2D"] = "%{Engine}/vendor/Box2D";
     IncludeDir["ImGui"] = "%{Engine}/vendor/imgui";
 
-group "Dependencies"
-    include "Shushao/vendor/Box2D.lua"
-    include "Shushao/vendor/boost.lua"
-    include "Shushao/vendor/freetype.lua"
-    include "Shushao/vendor/Glad.lua"
-    include "Shushao/vendor/GLFW.lua"
-    include "Shushao/vendor/SOIL.lua"
-    include "Shushao/vendor/spdlog.lua"
-    include "Shushao/vendor/imgui.lua"
-group ""
+    group "Dependencies"
+        include "Shushao/vendor/Box2D.lua"
+        include "Shushao/vendor/boost.lua"
+        include "Shushao/vendor/freetype.lua"
+        include "Shushao/vendor/Glad.lua"
+        include "Shushao/vendor/GLFW.lua"
+        include "Shushao/vendor/SOIL.lua"
+        include "Shushao/vendor/spdlog.lua"
+        include "Shushao/vendor/imgui.lua"
+    group ""
 
 project "Shushao"
 	location "Shushao"
@@ -75,12 +70,15 @@ project "Shushao"
         "%{IncludeDir.ImGui}"
     }
 
+    -- defines {
+    --     "_CRT_SECURE_NO_WARNINGS"
+    -- }
+
 	filter "system:windows"
         systemversion "latest"
         defines {
             "SE_PLATFORM_WINDOWS",
-            "GLFW_INCLUDE_NONE",
-            "_CRT_SECURE_NO_WARNINGS"
+            "GLFW_INCLUDE_NONE"
         }
 
     filter { "configurations:Release", "toolset:gcc" }
@@ -110,7 +108,7 @@ project "Shushao Resources"
     location "Shushao"
     kind "SharedLib"
     targetname "shushaores"
-    staticruntime "Off"
+    staticruntime "off"
 
     targetdir ("bin/" .. outputdir .. "/Shushao")
     objdir ("obj/" .. outputdir .. "/Shushao")
@@ -125,6 +123,9 @@ project "Shushao Resources"
     }
 
     linkoptions "/NOENTRY"
+
+    filter "system:windows"
+        systemversion "latest"
 
     filter "configurations:Debug"
         runtime "Debug"
@@ -197,7 +198,8 @@ project "Sandbox"
     filter "system:windows"
 		systemversion "latest"
 		defines {
-			"SE_PLATFORM_WINDOWS"
+			"SE_PLATFORM_WINDOWS",
+            -- "_CRT_SECURE_NO_WARNINGS"
 		}
 
     filter "configurations:Debug"

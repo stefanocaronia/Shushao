@@ -5,7 +5,7 @@
 //#include "input.h"
 //#include "system.h"
 //
-//namespace se {
+//namespace Shushao {
 //
 //	InputMapping* Input::addMapping(std::string name_) {
 //		InputMapping* input = new InputMapping();

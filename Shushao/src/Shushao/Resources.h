@@ -1,11 +1,10 @@
 #pragma once
 
+#include "Object.h"
 #include "Resource.h"
 #include "Resources/Resources.h"
 
-namespace se {
-
-    class Object;
+namespace Shushao {
 
     class Resources
     {

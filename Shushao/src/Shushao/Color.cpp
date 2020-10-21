@@ -2,7 +2,7 @@
 
 #include "Color.h"
 
-namespace se {
+namespace Shushao {
 
 	Color::Color() {
 		Set(0.0f, 0.0f, 0.0f, 1.0f);

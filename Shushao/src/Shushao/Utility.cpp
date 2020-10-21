@@ -1,7 +1,7 @@
 #include "sepch.h"
 
 
-namespace se {
+namespace Shushao {
 
 	namespace util {
 
@@ -52,7 +52,7 @@ namespace se {
 
 		/// NB: modificare anche versione template in header
 		std::string classtitle(std::string type) {
-			std::regex pat("N2se|P6|class se::");
+			std::regex pat("N2se|P6|class Shushao::");
 			type = std::regex_replace(type, pat, "");
 
 			pat = "E$";

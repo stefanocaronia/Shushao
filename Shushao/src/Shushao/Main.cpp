@@ -3,10 +3,10 @@
 
 #include "Application.h"
 
-extern se::Application* se::CreateApplication();
+extern Shushao::Application* Shushao::CreateApplication();
 
 int main(int argc, char** argv) {
-    auto app = se::CreateApplication();
+    auto app = Shushao::CreateApplication();
     app->Run();
     delete app;
 }

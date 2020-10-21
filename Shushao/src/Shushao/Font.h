@@ -3,7 +3,7 @@
 #include "Object.h"
 #include "Resource.h"
 
-namespace se {
+namespace Shushao {
 
 class Font : public Object, public Resource {
 public:

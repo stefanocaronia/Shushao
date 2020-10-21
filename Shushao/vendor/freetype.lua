@@ -1,8 +1,8 @@
 project 'Freetype'
     basedir ("freetype")
     kind 'StaticLib'
-    language "c"
-    staticruntime "On"
+    language "C"
+    staticruntime "on"
 
     targetdir ("%{prj.location}/lib/" .. outputdir)
     objdir ("%{prj.location}/obj/" .. outputdir)
@@ -71,17 +71,16 @@ project 'Freetype'
 
     defines {
         "_CRT_SECURE_NO_WARNINGS",
-        "FT_DEBUG_LEVEL_ERROR",
-        "FT_DEBUG_LEVEL_TRACE",
         "FT2_BUILD_LIBRARY"
     }
 
+    filter "system:windows"
+        systemversion "latest"
+
     filter "configurations:Debug"
-        symbols "On"
         runtime "Debug"
-        -- buildoptions {"/MDd", "/Zi"}
+        symbols "On"
 
     filter "configurations:Release"
         runtime "Release"
-        -- buildoptions "/MD"
         optimize "On"

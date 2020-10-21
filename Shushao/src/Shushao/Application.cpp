@@ -12,7 +12,7 @@
 //#include "System.h"
 #include "Time.h"
 
-namespace se {
+namespace Shushao {
 
     Application* Application::instance = nullptr;
 

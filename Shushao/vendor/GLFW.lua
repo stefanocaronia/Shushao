@@ -1,19 +1,11 @@
 project "GLFW"
     basedir ("GLFW")
     kind "StaticLib"
-    language "c"
-    staticruntime "On"
-    -- toolset "gcc"
-
-    -- configuration { "gmake2" }
-    --     targetextension (".a")
+    language "C"
+    staticruntime "on"
 
     targetdir ("%{prj.location}/lib/" .. outputdir)
     objdir ("%{prj.location}/obj/" .. outputdir)
-
-    makesettings [[
-        CC = gcc
-    ]]
 
     files {
         "%{prj.location}/include/GLFW/glfw3.h",
@@ -31,12 +23,12 @@ project "GLFW"
         "gdi32"
     }
 
-    filter "system:windows"
-        buildoptions { "-std=c11" }
-        systemversion "latest"
-        staticruntime "on"
-        toolset "gcc"
+    defines {
+        "_CRT_SECURE_NO_WARNINGS"
+    }
 
+    filter "system:windows"
+        systemversion "latest"
         files {
             "%{prj.location}/src/win32_init.c",
             "%{prj.location}/src/win32_joystick.c",
@@ -54,15 +46,10 @@ project "GLFW"
             "_CRT_SECURE_NO_WARNINGS"
         }
 
-    -- filter { "system:windows", "configurations:Release" }
-    --     buildoptions "/MT"
-
     filter "configurations:Debug"
-        defines "DEBUG"
         runtime "Debug"
         symbols "On"
 
     filter "configurations:Release"
-        defines "NDEBUG"
         runtime "Release"
         optimize "On"

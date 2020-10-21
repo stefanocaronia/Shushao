@@ -2,7 +2,7 @@
 
 #include "Config.h"
 
-namespace se {
+namespace Shushao {
 
 class Time {
 public:

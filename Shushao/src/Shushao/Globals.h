@@ -1,6 +1,6 @@
 #include "Core.h"
 
-namespace se {
+namespace Shushao {
 
     // typeid without rtti
     using TypeInfo = void*;

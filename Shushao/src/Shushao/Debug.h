@@ -2,7 +2,7 @@
 
 #include "Logger.h"
 
-namespace se {
+namespace Shushao {
 
     enum class GridMode
     {
@@ -35,13 +35,13 @@ namespace se {
 }  // namespace se
 
 // Core log macros
-#define DEBUG_CORE_TRACE(...) ::se::Debug::GetCoreLogger()->trace(__VA_ARGS__)
-#define DEBUG_CORE_INFO(...) ::se::Debug::GetCoreLogger()->info(__VA_ARGS__)
-#define DEBUG_CORE_WARN(...) ::se::Debug::GetCoreLogger()->warn(__VA_ARGS__)
-#define DEBUG_CORE_ERROR(...) ::se::Debug::GetCoreLogger()->error(__VA_ARGS__)
+#define DEBUG_CORE_TRACE(...) ::Shushao::Debug::GetCoreLogger()->trace(__VA_ARGS__)
+#define DEBUG_CORE_INFO(...) ::Shushao::Debug::GetCoreLogger()->info(__VA_ARGS__)
+#define DEBUG_CORE_WARN(...) ::Shushao::Debug::GetCoreLogger()->warn(__VA_ARGS__)
+#define DEBUG_CORE_ERROR(...) ::Shushao::Debug::GetCoreLogger()->error(__VA_ARGS__)
 
 // Client log macros
-#define DEBUG_TRACE(...) ::se::Debug::GetClientLogger()->trace(__VA_ARGS__)
-#define DEBUG_INFO(...) ::se::Debug::GetClientLogger()->info(__VA_ARGS__)
-#define DEBUG_WARN(...) ::se::Debug::GetClientLogger()->warn(__VA_ARGS__)
-#define DEBUG_ERROR(...) ::se::Debug::GetClientLogger()->error(__VA_ARGS__)
+#define DEBUG_TRACE(...) ::Shushao::Debug::GetClientLogger()->trace(__VA_ARGS__)
+#define DEBUG_INFO(...) ::Shushao::Debug::GetClientLogger()->info(__VA_ARGS__)
+#define DEBUG_WARN(...) ::Shushao::Debug::GetClientLogger()->warn(__VA_ARGS__)
+#define DEBUG_ERROR(...) ::Shushao::Debug::GetClientLogger()->error(__VA_ARGS__)

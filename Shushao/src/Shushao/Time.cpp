@@ -4,7 +4,7 @@
 
 // TODO: problema chrono
 
-namespace se {
+namespace Shushao {
 
 	float Time::GetTime() {
 		using namespace std::chrono;
@@ -32,7 +32,7 @@ namespace se {
 
 	std::string Time::Clock() {
 		using namespace std::chrono;
-		int mil = duration_cast<milliseconds>(high_resolution_clock::now() - startTime).count();
+		int mil = (int)duration_cast<milliseconds>(high_resolution_clock::now() - startTime).count();
 
 		int mills = (int)(mil % 1000);
 		int seconds = (int)(mil / 1000) % 60;

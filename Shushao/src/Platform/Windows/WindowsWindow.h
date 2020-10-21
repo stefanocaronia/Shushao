@@ -1,13 +1,14 @@
 #pragma once
 
 #include "Shushao/Window.h"
+#include "Shushao/Renderer/GraphicContext.h"
 
-namespace se {
+namespace Shushao {
 
     class WindowsWindow : public Window
     {
     public:
-        WindowsWindow(const WindowProperties& props);
+        WindowsWindow(const WindowProperties& prwindowPropertiesops);
         virtual ~WindowsWindow();
 
         inline std::string GetTitle() const override { return title; }
@@ -36,17 +37,14 @@ namespace se {
         virtual void Update() const override;
 
     private:
+
         GLFWwindow* window;
         GLFWmonitor* monitor;
+        GraphicContext* context;
 
-        virtual void initialize(const WindowProperties& props);
         virtual void shutdown() const override;
 
-        void inizializeGLFW();
-        void initializeGlad();
-        void initializeOpenGL();
-        void retrieveDesktopSize();
-        void setGlfwCallbacks();
+        void initializeGlfwCallbacks();
     };
 
 }  // namespace se

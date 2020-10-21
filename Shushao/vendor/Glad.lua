@@ -2,7 +2,7 @@ project "Glad"
     basedir ("Glad")
     kind "StaticLib"
     targetname "libGlad"
-    staticruntime "On"
+    staticruntime "on"
 
     targetdir ("%{prj.location}/lib/" .. outputdir)
     objdir ("%{prj.location}/obj/" .. outputdir)
@@ -24,15 +24,17 @@ project "Glad"
         "%{prj.location}/include"
     }
 
+    defines {
+        "_CRT_SECURE_NO_WARNINGS"
+    }
+
     filter "system:windows"
         systemversion "latest"
 
     filter "configurations:Debug"
-        defines "DEBUG"
         runtime "Debug"
         symbols "On"
 
     filter "configurations:Release"
-        defines "NDEBUG"
         runtime "Release"
         optimize "On"

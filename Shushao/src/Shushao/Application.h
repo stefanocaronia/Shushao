@@ -5,7 +5,7 @@
 #include "ImGui/ImGuiLayer.h"
 #include "LayerStack.h"
 
-namespace se {
+namespace Shushao {
 
     class Application {
     public:

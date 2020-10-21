@@ -2,7 +2,7 @@
 
 #include "Event.h"
 
-namespace se {
+namespace Shushao {
 
 class MouseMovedEvent : public Event {
 public:

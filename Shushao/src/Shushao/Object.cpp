@@ -4,7 +4,7 @@
 //#include "GameData.h"
 #include "Object.h"
 
-namespace se {
+namespace Shushao {
 
 	Object::Object() {
 		name = "Object";

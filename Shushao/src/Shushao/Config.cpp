@@ -42,10 +42,10 @@ namespace Physics {
     int positionIterations = 3;
 }  // namespace Physics
 
-//se::LevelMap Layers;
-//se::LevelMap SortingLayers;
+//Shushao::LevelMap Layers;
+//Shushao::LevelMap SortingLayers;
 
-std::map<std::string, std::string> data; 
+std::map<std::string, std::string> data;
 
 bool LoadUserConfig() {
     std::ifstream cfile;
@@ -73,7 +73,7 @@ bool LoadUserConfig() {
 }
 
 bool LoadEngineConfig() {
-    std::string engine_config = se::Resources::GetEmbeddedText(CONFIG_ENGINE);
+    std::string engine_config = Shushao::Resources::GetEmbeddedText(CONFIG_ENGINE);
 
     if (engine_config == "") {
         DEBUG_CORE_ERROR("Can't load engine config");
@@ -139,19 +139,19 @@ bool parseEngineConfig() {
     }
 
     if (data.find("debug_enabled") != data.end()) {
-        se::Debug::enabled = (data["debug_enabled"] == "Y");
+        Shushao::Debug::enabled = (data["debug_enabled"] == "Y");
     }
 
     if (data.find("debuginfo_enabled") != data.end()) {
-        se::Debug::infoEnabled = (data["debuginfo_enabled"] == "Y");
+        Shushao::Debug::infoEnabled = (data["debuginfo_enabled"] == "Y");
     }
 
     if (data.find("debug_draw_transforms") != data.end()) {
-        se::Debug::drawTransforms = (data["debug_draw_transforms"] == "Y");
+        Shushao::Debug::drawTransforms = (data["debug_draw_transforms"] == "Y");
     }
 
     if (data.find("debug_draw_rect_transforms") != data.end()) {
-        se::Debug::drawRectTransforms = (data["debug_draw_rect_transforms"] == "Y");
+        Shushao::Debug::drawRectTransforms = (data["debug_draw_rect_transforms"] == "Y");
     }
 
     if (data.find("physics_debug") != data.end()) {
@@ -160,26 +160,26 @@ bool parseEngineConfig() {
 
     if (data.find("debug_level") != data.end()) {
         if (data["debug_level"] == "INFO")
-            se::Debug::level = se::DebugLevel::INFO;
+            Shushao::Debug::level = Shushao::DebugLevel::INFO;
         else if (data["debug_level"] == "WARNING")
-            se::Debug::level = se::DebugLevel::WARNING;
+            Shushao::Debug::level = Shushao::DebugLevel::WARNING;
         else if (data["debug_level"] == "ERROR")
-            se::Debug::level = se::DebugLevel::ERROR;
+            Shushao::Debug::level = Shushao::DebugLevel::ERROR;
     }
 
     if (data.find("debuggrid_mode") != data.end()) {
         if (data["debuggrid_mode"] == "ORTHOGRAFIC")
-            se::Debug::debugGridMode = se::GridMode::ORTHOGRAFIC;
+            Shushao::Debug::debugGridMode = Shushao::GridMode::ORTHOGRAFIC;
         else if (data["debuggrid_mode"] == "PERSPECTIVE")
-            se::Debug::debugGridMode = se::GridMode::PERSPECTIVE;
+            Shushao::Debug::debugGridMode = Shushao::GridMode::PERSPECTIVE;
     }
 
     //if (data.find("layers") != data.end()) {
-    //    Config::Layers = se::util::split(data["layers"], ',');
+    //    Config::Layers = Shushao::util::split(data["layers"], ',');
     //}
 
     //if (data.find("sorting_layers") != data.end()) {
-    //    Config::SortingLayers = se::util::split(data["sorting_layers"], ',');
+    //    Config::SortingLayers = Shushao::util::split(data["sorting_layers"], ',');
     //}
 
     //if (data.find("max_layers") != data.end()) {

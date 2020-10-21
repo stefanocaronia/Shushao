@@ -1,6 +1,6 @@
 #pragma once
 
-namespace se {
+namespace Shushao {
 
     template<typename Enum>
     struct EnableBitMaskOperators

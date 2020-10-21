@@ -3,7 +3,7 @@ project "spdlog"
     kind "StaticLib"
     language "C++"
     cppdialect "C++11"
-    staticruntime "On"
+    staticruntime "on"
 
     targetdir ("%{prj.location}/lib/" .. outputdir)
     objdir ("%{prj.location}/obj/" .. outputdir)
@@ -17,14 +17,18 @@ project "spdlog"
         "%{prj.location}/include"
     }
 
-    defines { "SPDLOG_COMPILED_LIB" }
+    defines {
+        "SPDLOG_COMPILED_LIB",
+        "_CRT_SECURE_NO_WARNINGS"
+    }
+
+    filter "system:windows"
+        systemversion "latest"
 
     filter "configurations:Debug"
-        defines "DEBUG"
         runtime "Debug"
         symbols "On"
 
     filter "configurations:Release"
-        defines "NDEBUG"
         runtime "Release"
         optimize "On"

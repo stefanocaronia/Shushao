@@ -4,7 +4,7 @@ project "SOIL2"
     language "C++"
     staticruntime "On"
 
-    buildoptions { "/TP" }
+    -- buildoptions { "/TP" }
     defines { "_CRT_SECURE_NO_WARNINGS" }
 
     targetdir ("%{prj.location}/lib/" .. outputdir)
@@ -12,12 +12,17 @@ project "SOIL2"
 
     files { "%{prj.location}/src/SOIL2/*.c" }
 
+    defines {
+        "_CRT_SECURE_NO_WARNINGS"
+    }
+
+    filter "system:windows"
+        systemversion "latest"
+
     filter "configurations:Debug"
-        defines "DEBUG"
         runtime "Debug"
         symbols "On"
 
     filter "configurations:Release"
-        defines "NDEBUG"
         runtime "Release"
         optimize "On"

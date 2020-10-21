@@ -8,59 +8,24 @@
 #include "Shushao/Events/ApplicationEvent.h"
 #include "Shushao/Events/KeyEvent.h"
 #include "Shushao/Events/MouseEvent.h"
+#include "Platform/OpenGL/OpenGLContext.h"
 
-namespace se {
+namespace Shushao {
 
     static bool GLFWInitialized = false;
 
-    Window* Window::Create(const WindowProperties& props)
+    Window* Window::Create(const WindowProperties& windowProperties)
     {
-        return new WindowsWindow(props);
+        return new WindowsWindow(windowProperties);
     }
 
-    WindowsWindow::WindowsWindow(const WindowProperties& props)
-    {
-        initialize(props);
-        inizializeGLFW();
-        retrieveDesktopSize();
-        initializeGlad();
-        initializeOpenGL();
-        setGlfwCallbacks();
-        Clear();
-    }
-
-    WindowsWindow::~WindowsWindow()
-    {
-        shutdown();
-    }
-
-    void WindowsWindow::initialize(const WindowProperties& windowProperties)
+    WindowsWindow::WindowsWindow(const WindowProperties& windowProperties)
     {
         title = windowProperties.Title;
         width = windowProperties.Width;
         height = windowProperties.Height;
         fullscreen = windowProperties.Fullscreen;
 
-    }
-
-    void WindowsWindow::initializeOpenGL()
-    {
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        glClearDepth(1.0f);
-        glEnable(GL_DEPTH_TEST);
-        glDepthFunc(GL_ALWAYS);  // questo per il 2d
-        glViewport(0, 0, GetWidth(), GetHeight());
-    }
-
-    void WindowsWindow::initializeGlad()
-    {
-        int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-        SE_CORE_ASSERT(status, "Failed to initialize Glad!");
-    }
-
-    void WindowsWindow::inizializeGLFW()
-    {
         DEBUG_CORE_INFO("Creating window {0} ({1}, {2})", title, width, height);
 
         if (!GLFWInitialized) {
@@ -77,20 +42,28 @@ namespace se {
 
         window = glfwCreateWindow((int)width, (int)height, title.c_str(), (fullscreen ? monitor : nullptr), nullptr);
 
-        glfwMakeContextCurrent(window);
+        context = new OpenGLContext(window);
+        context->Initialize();
 
         glfwSetWindowUserPointer(window, this);
         SetVSync(true);
-    }
 
-    void WindowsWindow::retrieveDesktopSize()
-    {
         const GLFWvidmode* mode = glfwGetVideoMode(monitor);
         desktopWidth = mode->width;
         desktopHeight = mode->height;
+
+        glViewport(0, 0, GetWidth(), GetHeight());
+
+        initializeGlfwCallbacks();
+        Clear();
     }
 
-    void WindowsWindow::setGlfwCallbacks()
+    WindowsWindow::~WindowsWindow()
+    {
+        shutdown();
+    }
+
+    void WindowsWindow::initializeGlfwCallbacks()
     {
         // Set GLFW callbacks
         glfwSetWindowSizeCallback(window, [](GLFWwindow* window, int width, int height) {
@@ -238,12 +211,12 @@ namespace se {
     void WindowsWindow::Update() const
     {
         glfwPollEvents();
-        glfwSwapBuffers(window);
+        Swap();
     }
 
     void WindowsWindow::Swap() const
     {
-        glfwSwapBuffers(window);
+        context->SwapBuffers();
     }
 
     void WindowsWindow::Reset() const

@@ -2,7 +2,7 @@
 
 #include "LayerStack.h"
 
-namespace se {
+namespace Shushao {
 
     LayerStack::LayerStack() {}
 

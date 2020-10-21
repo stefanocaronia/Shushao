@@ -5,7 +5,7 @@
 #include "Shushao/Events/MouseEvent.h"
 #include "Shushao/Events/ApplicationEvent.h"
 
-namespace se {
+namespace Shushao {
 
 	class ImGuiLayer : public Layer
 	{

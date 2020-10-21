@@ -2,7 +2,7 @@
 
 #include "Events/Event.h"
 
-namespace se {
+namespace Shushao {
 
     class Layer
 	{

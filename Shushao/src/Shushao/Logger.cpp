@@ -2,7 +2,7 @@
 
 #include "Config.h"
 
-namespace se {
+namespace Shushao {
 
 	std::map<DebugLevel, std::string> DebugLevelName = {
 		{INFO, "INFO"},

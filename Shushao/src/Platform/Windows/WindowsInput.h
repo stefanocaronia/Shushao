@@ -2,7 +2,7 @@
 
 #include "Shushao/input/Input.h"
 
-namespace se {
+namespace Shushao {
 
 	class WindowsInput : public Input {
 	protected:

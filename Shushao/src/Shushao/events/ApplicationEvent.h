@@ -2,7 +2,7 @@
 
 #include "Event.h"
 
-namespace se {
+namespace Shushao {
 
 class WindowResizeEvent : public Event {
 public:

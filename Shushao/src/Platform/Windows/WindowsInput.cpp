@@ -5,7 +5,7 @@
 #include "WindowsInput.h"
 #include "Shushao/Application.h"
 
-namespace se {
+namespace Shushao {
 
     Input* Input::instance = new WindowsInput();
 
