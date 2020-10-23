@@ -1,17 +1,17 @@
 #pragma once
 
-#include "Shushao/Renderer/GraphicContext.h"
+#include "Shushao/Renderer/RenderContext.h"
 
 struct GLFWwindow;
 
 namespace Shushao {
 
-    class OpenGLContext : public GraphicContext
+    class OpenGLContext : public RenderContext
     {
     public:
         OpenGLContext(GLFWwindow* window);
 
-        virtual void Initialize() override;
+        virtual void Init() override;
         virtual void SwapBuffers() override;
 
     private:

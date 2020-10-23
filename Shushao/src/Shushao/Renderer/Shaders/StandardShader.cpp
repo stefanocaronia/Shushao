@@ -3,16 +3,18 @@
 #include "StandardShader.h"
 #include "Shushao/Resources.h"
 
-namespace se {
+#include <glad/glad.h>
+
+namespace Shushao {
 
 	StandardShader::StandardShader() {
 		name = "Standard Shader";
-
-		VertexShaderCode = Resources::GetEmbeddedText(STANDARDSHADER_VERT, LIB_SHUSHAO);
-		FragmentShaderCode = Resources::GetEmbeddedText(STANDARDSHADER_FRAG, LIB_SHUSHAO);
+		vertexShaderCode = Resources::GetEmbeddedText(STANDARDSHADER_VERT, LIB_SHUSHAO);
+		fragmentShaderCode = Resources::GetEmbeddedText(STANDARDSHADER_FRAG, LIB_SHUSHAO);
+		Init();
 	}
 
-	void StandardShader::Awake() {
+	void StandardShader::onAwake() {
 		// custom uniforms
 		AddUniform("Diffuse Map", "diffuse_map", Uniform::Type::TEXTURE);
 		AddUniform("Render Color", "render_color", Uniform::Type::TEXTURE, ShaderLocation::LOCATION_RENDER_COLOR);
@@ -28,4 +30,4 @@ namespace se {
 		// valorizzazione
 		SetTextureIndex("diffuse_map", GL_TEXTURE0);
 	}
-}  // namespace se
+} // Shushao

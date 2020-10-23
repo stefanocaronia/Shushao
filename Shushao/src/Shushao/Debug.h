@@ -32,7 +32,7 @@ namespace Shushao {
         static std::shared_ptr<spdlog::logger> clientLogger;
     };
 
-}  // namespace se
+}  // Shushao
 
 // Core log macros
 #define DEBUG_CORE_TRACE(...) ::Shushao::Debug::GetCoreLogger()->trace(__VA_ARGS__)

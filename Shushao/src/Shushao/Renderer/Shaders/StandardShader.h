@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Shader.h"
+#include "Shushao/Renderer/Shader.h"
 
 namespace Shushao {
 
@@ -10,7 +10,7 @@ namespace Shushao {
 			StandardShader();
 
 		protected:
-			virtual void onAwake() override;
+			void onAwake();
 	};
 
 }

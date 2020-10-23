@@ -36,4 +36,4 @@ public:
     EVENT_CLASS_CATEGORY(EventCategory::Application)
 };
 
-}  // namespace se
+}  // Shushao

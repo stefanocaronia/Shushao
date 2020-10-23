@@ -36,14 +36,14 @@ namespace Shushao {
         }
 
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
 
         monitor = glfwGetPrimaryMonitor();
 
         window = glfwCreateWindow((int)width, (int)height, title.c_str(), (fullscreen ? monitor : nullptr), nullptr);
 
         context = new OpenGLContext(window);
-        context->Initialize();
+        context->Init();
 
         glfwSetWindowUserPointer(window, this);
         SetVSync(true);
@@ -181,6 +181,7 @@ namespace Shushao {
 
     void WindowsWindow::Clear(float r, float g, float b, float a, float depth = 1.0f) const
     {
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glClearColor(r, g, b, a);
         glClearDepth(depth);
         GLClearError();
@@ -224,4 +225,4 @@ namespace Shushao {
         Clear();
     }
 
-}  // namespace se
+}  // Shushao

@@ -23,4 +23,4 @@ namespace Shushao {
 		static Input* instance;
 	};
 
-}  // namespace se
+}  // Shushao

@@ -75,4 +75,4 @@ namespace Shushao {
 
     std::map<std::string, Object*> Resources::Assets;
 
-}  // namespace se
+}  // Shushao

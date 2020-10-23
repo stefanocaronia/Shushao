@@ -65,4 +65,4 @@ public:
     static void setColor(ConsoleColor);
 };
 
-}  // namespace se
+}  // Shushao

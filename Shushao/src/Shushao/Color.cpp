@@ -172,4 +172,4 @@ namespace Shushao {
 		return *this;
 	}
 
-}  // namespace se
+}  // Shushao

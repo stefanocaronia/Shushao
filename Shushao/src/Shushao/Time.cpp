@@ -65,4 +65,4 @@ namespace Shushao {
 	float Time::fixedLimitDuration = 1.0f / Config::Time::fixedRateLimit;
 	float Time::frameRateLimit = Config::Time::frameRateLimit;
 	float Time::frameLimitDuration = 1.0f / Config::Time::frameRateLimit;
-}  // namespace se
+}  // Shushao

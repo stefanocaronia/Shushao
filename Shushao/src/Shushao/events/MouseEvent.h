@@ -82,4 +82,4 @@ public:
     EVENT_CLASS_TYPE(MouseButtonReleased)
 };
 
-}  // namespace se
+}  // Shushao

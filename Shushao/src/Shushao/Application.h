@@ -7,6 +7,10 @@
 
 namespace Shushao {
 
+    class Shader;
+    class IndexBuffer;
+    class VertexBuffer;
+
     class Application {
     public:
         enum class Stage {
@@ -73,9 +77,17 @@ namespace Shushao {
         bool onWindowClose(WindowCloseEvent& e);
 
         FT_Library _freetypeLibrary;
+
+        unsigned int vertexArray;
+
+        VertexBuffer* vertexBuffer;
+        IndexBuffer* indexBuffer;
+
+
+        Shader* shader;
     };
 
     // To be defined in CLIENT
     Application* CreateApplication();
 
-}  // namespace se
+}  // Shushao

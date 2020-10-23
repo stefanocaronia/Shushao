@@ -23,4 +23,4 @@ namespace Shushao {
 	std::shared_ptr<spdlog::logger> Debug::clientLogger;
 	Logger Debug::Log(Debug::level);
 
-}  // namespace se
+}  // Shushao

@@ -65,4 +65,4 @@ namespace Shushao {
         bool fullscreen;
     };
 
-}  // namespace se
+}  // Shushao

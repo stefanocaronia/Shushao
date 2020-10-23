@@ -22,6 +22,7 @@
 #include <typeinfo>
 #include <vector>
 #include <cmath>
+#include <cstdint>
 
 // fonts
 #include <ft2build.h>

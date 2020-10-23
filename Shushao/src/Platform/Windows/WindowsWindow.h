@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Shushao/Window.h"
-#include "Shushao/Renderer/GraphicContext.h"
+#include "Shushao/Renderer/RenderContext.h"
 
 namespace Shushao {
 
@@ -40,11 +40,11 @@ namespace Shushao {
 
         GLFWwindow* window;
         GLFWmonitor* monitor;
-        GraphicContext* context;
+        RenderContext* context;
 
         virtual void shutdown() const override;
 
         void initializeGlfwCallbacks();
     };
 
-}  // namespace se
+}  // Shushao

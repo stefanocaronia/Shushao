@@ -62,4 +62,4 @@ namespace Shushao {
 		return true;
 	}
 
-}  // namespace se
+}  // Shushao

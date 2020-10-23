@@ -1,6 +1,7 @@
 #include "sepch.h"
 
-#include "Application.h"
+#include <glad/glad.h>
+
 #include "Config.h"
 //#include "Design.h"
 #include "Events/ApplicationEvent.h"
@@ -11,6 +12,11 @@
 //#include "SceneManager.h"
 //#include "System.h"
 #include "Time.h"
+#include "Platform/OpenGL/OpenGL.h"
+#include "Shushao/Renderer/Shader.h"
+#include "Application.h"
+#include "Renderer/VertexBuffer.h"
+#include "Renderer/IndexBuffer.h"
 
 namespace Shushao {
 
@@ -48,7 +54,136 @@ namespace Shushao {
         //    window->Clear();
         //}
 
+        float positions[3 * 3] = {
+            -0.5f, -0.5f, 0.0f, // 0
+             0.5f, -0.5f, 0.0f, // 1
+             0.0f,  0.5f, 0.0f // 2
+        };
+
+        unsigned int indices[3] = {
+            0, 1, 2
+        };
+
+        glGenVertexArrays(1, &vertexArray);
+        glBindVertexArray(vertexArray);
+
+        vertexBuffer = VertexBuffer::Create(positions, 9);        
+        indexBuffer = IndexBuffer::Create(indices, 3);
+
+        vertexBuffer->Bind();
+        indexBuffer->Bind();
+
+        glEnableVertexAttribArray(0);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
+
+        glBindVertexArray(0);
+        vertexBuffer->Unbind();
+        indexBuffer->Unbind();
+
+        window->Clear(0.1f, 0.1f, 0.1f, 1.0f, 1.0f);
+
+        std::string vertexSrc = R"(
+			#version 330 core
+			
+			layout(location = 0) in vec3 a_Position;
+
+			out vec3 v_Position;
+
+			void main()
+			{
+				v_Position = a_Position;
+				gl_Position = vec4(a_Position, 1.0);	
+			}
+		)";
+
+        std::string fragmentSrc = R"(
+			#version 330 core
+			
+			layout(location = 0) out vec4 color;
+
+			in vec3 v_Position;
+
+			void main()
+			{
+				color = vec4(v_Position * 0.5 + 0.5, 1.0);
+			}
+		)";
+
+        shader = new Shader();
+        shader->LoadFromString(vertexSrc, fragmentSrc);
+        shader->Init();
+    }
+
+    void Application::render()
+    {
+        Time::renderTime = Time::GetTime();
         window->Clear();
+        //SceneManager::activeScene->render();
+
+        shader->Bind();
+        glBindVertexArray(vertexArray);
+        GL_CALL(glDrawElements(GL_TRIANGLES, indexBuffer->Count, GL_UNSIGNED_INT, nullptr));
+        glBindVertexArray(0);
+        shader->Unbind();
+
+        //imGuiLayer->Begin();
+        //for (Layer* layer : layerStack) {
+        //    layer->OnImGuiRender();
+        //}
+        //imGuiLayer->End();
+
+        //Render();  // (derived)
+        //SceneManager::activeScene->renderOverlay();
+        // if (Physics::enabled && Physics::debug) ((b2World*)Physics::GetWorld())->DrawDebugData();
+        window->Update();
+        Time::frameCount++;
+    }
+
+    void Application::update()
+    {
+        Time::realtimeSinceStartup = Time::GetTime();
+        layerStack.Update();
+        // Input::update();  // Update Input Service
+        //System::Update();  // update dei system services
+        //SceneManager::activeScene->update();
+        //Update();  // (derived)
+    }
+
+    void Application::fixed()
+    {
+        Time::fixedTime = Time::GetTime();
+        Time::inFixedTimeStep = true;
+        //if (Physics::enabled) Physics::Update();
+        //SceneManager::activeScene->fixed();
+        FixedUpdate();  // (derived)
+        Time::inFixedTimeStep = false;
+    }
+
+    void Application::exit()
+    {
+        End();  // (derived)
+        //SceneManager::activeScene->exit();
+        // Input::exit();
+        //System::Exit();
+        //Physics::Exit();
+        //SceneManager::Clear();
+        Resources::Clear();
+        //System::Clear();
+    }
+
+    void Application::OnEvent(Event& event)
+    {
+        EventDispatcher dispatcher(event);
+        dispatcher.Dispatch<WindowCloseEvent>(SE_BIND_EVENT_FUNCTION(Application::onWindowClose));
+
+        //DEBUG_CORE_TRACE("Event {0}", event);
+
+        for (auto it = layerStack.end(); it != layerStack.begin();) {
+            (*--it)->OnEvent(event);
+            if (event.Handled) {
+                break;
+            }
+        }
     }
 
     Application::~Application()
@@ -185,70 +320,6 @@ namespace Shushao {
         //SceneManager::activeScene->Init();
     }
 
-    void Application::render()
-    {
-        Time::renderTime = Time::GetTime();
-        window->Clear();
-        //SceneManager::activeScene->render();
-        imGuiLayer->Begin();
-        for (Layer* layer : layerStack) {
-            layer->OnImGuiRender();
-        }
-        imGuiLayer->End();
-        //Render();  // (derived)
-        //SceneManager::activeScene->renderOverlay();
-        // if (Physics::enabled && Physics::debug) ((b2World*)Physics::GetWorld())->DrawDebugData();
-        window->Update();
-        Time::frameCount++;
-    }
-
-    void Application::update()
-    {
-        Time::realtimeSinceStartup = Time::GetTime();
-        layerStack.Update();
-        // Input::update();  // Update Input Service
-        //System::Update();  // update dei system services
-        //SceneManager::activeScene->update();
-        //Update();  // (derived)
-    }
-
-    void Application::fixed()
-    {
-        Time::fixedTime = Time::GetTime();
-        Time::inFixedTimeStep = true;
-        //if (Physics::enabled) Physics::Update();
-        //SceneManager::activeScene->fixed();
-        FixedUpdate();  // (derived)
-        Time::inFixedTimeStep = false;
-    }
-
-    void Application::exit()
-    {
-        End();  // (derived)
-        //SceneManager::activeScene->exit();
-        // Input::exit();
-        //System::Exit();
-        //Physics::Exit();
-        //SceneManager::Clear();
-        Resources::Clear();
-        //System::Clear();
-    }
-
-    void Application::OnEvent(Event& event)
-    {
-        EventDispatcher dispatcher(event);
-        dispatcher.Dispatch<WindowCloseEvent>(SE_BIND_EVENT_FUNCTION(Application::onWindowClose));
-
-        //DEBUG_CORE_TRACE("Event {0}", event);
-
-        for (auto it = layerStack.end(); it != layerStack.begin();) {
-            (*--it)->OnEvent(event);
-            if (event.Handled) {
-                break;
-            }
-        }
-    }
-
     void Application::PushLayer(Layer* layer)
     {
         layerStack.PushLayer(layer);
@@ -265,4 +336,4 @@ namespace Shushao {
         return true;
     }
 
-}  // namespace se
+}  // Shushao

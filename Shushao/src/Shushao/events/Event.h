@@ -87,4 +87,4 @@ namespace Shushao {
         return os << e.ToString();
     }
 
-}  // namespace se
+}  // Shushao
