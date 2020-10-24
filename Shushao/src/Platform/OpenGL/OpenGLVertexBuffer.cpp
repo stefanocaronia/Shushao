@@ -5,12 +5,11 @@
 #include <glad/glad.h>
 
 namespace Shushao {
-    OpenGLVertexBuffer::OpenGLVertexBuffer(float* vertices, uint32_t _count)
+    OpenGLVertexBuffer::OpenGLVertexBuffer(float* vertices, uint32_t _size) : size(_size)
     {
-        count = _count;
         glCreateBuffers(1, &rendererId);
         glBindBuffer(GL_ARRAY_BUFFER, rendererId);
-        glBufferData(GL_ARRAY_BUFFER, count * sizeof(float), vertices, GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, _size, vertices, GL_STATIC_DRAW);
     }
 
     OpenGLVertexBuffer::~OpenGLVertexBuffer()
@@ -27,4 +26,5 @@ namespace Shushao {
     {
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
+
 }

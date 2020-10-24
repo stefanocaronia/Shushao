@@ -17,6 +17,8 @@
 #include "Application.h"
 #include "Renderer/VertexBuffer.h"
 #include "Renderer/IndexBuffer.h"
+#include "Renderer/BufferLayout.h"
+#include "Renderer/VertexArray.h"
 
 namespace Shushao {
 
@@ -57,41 +59,38 @@ namespace Shushao {
         float positions[3 * 3] = {
             -0.5f, -0.5f, 0.0f, // 0
              0.5f, -0.5f, 0.0f, // 1
-             0.0f,  0.5f, 0.0f // 2
+             0.0f,  0.5f, 0.0f  // 2
         };
 
         unsigned int indices[3] = {
             0, 1, 2
         };
 
-        glGenVertexArrays(1, &vertexArray);
-        glBindVertexArray(vertexArray);
+        float squarePositions[7 * 4] = {
+            -0.7f, -0.7f, 0.0f,      0.4f, 0.8f, 0.2f, 1.0f,// 0
+             0.7f, -0.7f, 0.0f,      0.4f, 0.8f, 0.2f, 1.0f,// 1
+             0.7f,  0.7f, 0.0f,      0.4f, 0.8f, 0.2f, 1.0f,// 2
+            -0.7f,  0.7f, 0.0f,      0.4f, 0.8f, 0.2f, 1.0f // 3
+        };
 
-        vertexBuffer = VertexBuffer::Create(positions, 9);        
-        indexBuffer = IndexBuffer::Create(indices, 3);
-
-        vertexBuffer->Bind();
-        indexBuffer->Bind();
-
-        glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
-
-        glBindVertexArray(0);
-        vertexBuffer->Unbind();
-        indexBuffer->Unbind();
-
-        window->Clear(0.1f, 0.1f, 0.1f, 1.0f, 1.0f);
+        unsigned int squareIndices[6] = {
+            0, 1, 2,
+            2, 3, 0
+        };
 
         std::string vertexSrc = R"(
 			#version 330 core
 			
 			layout(location = 0) in vec3 a_Position;
+			layout(location = 1) in vec4 a_Color;
 
 			out vec3 v_Position;
+			out vec4 v_Color;
 
 			void main()
 			{
 				v_Position = a_Position;
+                v_Color = a_Color;
 				gl_Position = vec4(a_Position, 1.0);	
 			}
 		)";
@@ -102,16 +101,44 @@ namespace Shushao {
 			layout(location = 0) out vec4 color;
 
 			in vec3 v_Position;
+			in vec4 v_Color;
 
 			void main()
 			{
-				color = vec4(v_Position * 0.5 + 0.5, 1.0);
+                if (v_Color[0] > 0.0) {
+                    color = vec4(v_Color);
+                } else {
+				    color = vec4(v_Position * 0.5 +0.5, 1.0);
+                }
 			}
 		)";
+
+        triangleVAO = VertexArray::Create();
+        VertexBuffer* triangleVBO = VertexBuffer::Create(positions, sizeof(positions));
+        IndexBuffer* triangleIBO = IndexBuffer::Create(indices, 3);
+        triangleVBO->SetLayout({
+                { ShaderDataType::Float3, "a_Position" }
+            });
+
+        triangleVAO->AddVertexBuffer(triangleVBO);
+        triangleVAO->SetIndexBuffer(triangleIBO);
+
+        squareVAO = VertexArray::Create();
+        VertexBuffer* squareVBO = VertexBuffer::Create(squarePositions, sizeof(squarePositions));
+        IndexBuffer* squareIBO = IndexBuffer::Create(squareIndices, 6);
+        squareVBO->SetLayout({
+                { ShaderDataType::Float3, "a_Position" },
+                { ShaderDataType::Float4, "a_Color" }
+            });
+
+        squareVAO->AddVertexBuffer(squareVBO);
+        squareVAO->SetIndexBuffer(squareIBO);
 
         shader = new Shader();
         shader->LoadFromString(vertexSrc, fragmentSrc);
         shader->Init();
+
+        window->Clear(0.1f, 0.1f, 0.1f, 1.0f, 1.0f);
     }
 
     void Application::render()
@@ -121,16 +148,19 @@ namespace Shushao {
         //SceneManager::activeScene->render();
 
         shader->Bind();
-        glBindVertexArray(vertexArray);
-        GL_CALL(glDrawElements(GL_TRIANGLES, indexBuffer->Count, GL_UNSIGNED_INT, nullptr));
-        glBindVertexArray(0);
-        shader->Unbind();
 
-        //imGuiLayer->Begin();
-        //for (Layer* layer : layerStack) {
-        //    layer->OnImGuiRender();
-        //}
-        //imGuiLayer->End();
+        squareVAO->Bind();
+        GL_CALL(glDrawElements(GL_TRIANGLES, squareVAO->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr));
+
+        triangleVAO->Bind();
+        GL_CALL(glDrawElements(GL_TRIANGLES, triangleVAO->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr));
+
+
+        imGuiLayer->Begin();
+        for (Layer* layer : layerStack) {
+            layer->OnImGuiRender();
+        }
+        imGuiLayer->End();
 
         //Render();  // (derived)
         //SceneManager::activeScene->renderOverlay();

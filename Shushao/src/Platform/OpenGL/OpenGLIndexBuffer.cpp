@@ -4,9 +4,8 @@
 #include <glad/glad.h>
 
 namespace Shushao {
-    OpenGLIndexBuffer::OpenGLIndexBuffer(uint32_t* vertices, uint32_t _count)
+    OpenGLIndexBuffer::OpenGLIndexBuffer(uint32_t* vertices, uint32_t _count) : count(_count)
     {
-        count = _count;
         glCreateBuffers(1, &rendererId);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, rendererId);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint32_t), vertices, GL_STATIC_DRAW);

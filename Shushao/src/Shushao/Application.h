@@ -10,6 +10,7 @@ namespace Shushao {
     class Shader;
     class IndexBuffer;
     class VertexBuffer;
+    class VertexArray;
 
     class Application {
     public:
@@ -59,6 +60,12 @@ namespace Shushao {
         ImGuiLayer* imGuiLayer;
         LayerStack layerStack;
 
+        VertexArray* triangleVAO;
+        VertexArray* squareVAO;
+        Shader* shader;
+
+        FT_Library _freetypeLibrary;
+
         void scan();
         void update();
         void render();
@@ -75,16 +82,6 @@ namespace Shushao {
         void initializeLibraries();
 
         bool onWindowClose(WindowCloseEvent& e);
-
-        FT_Library _freetypeLibrary;
-
-        unsigned int vertexArray;
-
-        VertexBuffer* vertexBuffer;
-        IndexBuffer* indexBuffer;
-
-
-        Shader* shader;
     };
 
     // To be defined in CLIENT
