@@ -8,10 +8,10 @@ namespace Shushao {
 
     VertexBuffer* VertexBuffer::Create(float* vertices, uint32_t count)
     {
-        switch (Renderer::GetAPI()) {
-            case RendererAPI::OpenGL:
+        switch (Renderer::GetApiType()) {
+            case RendererAPI::Type::OpenGL:
                 return new OpenGLVertexBuffer(vertices, count);
-            case RendererAPI::None:
+            case RendererAPI::Type::None:
                 SE_CORE_ASSERT(false, "Renderer API 'None' not supported");
                 return nullptr;
         }

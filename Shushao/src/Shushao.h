@@ -6,4 +6,8 @@
 #include "Shushao/Input/Input.h"
 #include "Shushao/Input/InputCodes.h"
 
+#include "Shushao/Renderer/Renderer.h"
+#include "Shushao/Renderer/Shader.h"
+#include "Shushao/Renderer/VertexArray.h"
+
 #include "Shushao/ImGui/ImGuiLayer.h"

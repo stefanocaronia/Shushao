@@ -48,7 +48,7 @@ namespace Shushao {
         glBindVertexArray(0);
     }
 
-    void OpenGLVertexArray::AddVertexBuffer(VertexBuffer* vertexBuffer)
+    void OpenGLVertexArray::AddVertexBuffer(const std::shared_ptr<VertexBuffer>& vertexBuffer)
     {
         glBindVertexArray(rendererId);
         vertexBuffer->Bind();
@@ -71,7 +71,7 @@ namespace Shushao {
         vertexBuffers.push_back(vertexBuffer);
     }
 
-    void OpenGLVertexArray::SetIndexBuffer(IndexBuffer* _indexBuffer)
+    void OpenGLVertexArray::SetIndexBuffer(const std::shared_ptr<IndexBuffer>& _indexBuffer)
     {
         glBindVertexArray(rendererId);
         _indexBuffer->Bind();

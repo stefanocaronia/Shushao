@@ -3,14 +3,10 @@
 #include <glad/glad.h>
 
 #include "Config.h"
-//#include "Design.h"
 #include "Events/ApplicationEvent.h"
 #include "Font.h"
 #include "Input/Input.h"
-//#include "Physics/Physics.h"
 #include "Resources.h"
-//#include "SceneManager.h"
-//#include "System.h"
 #include "Time.h"
 #include "Platform/OpenGL/OpenGL.h"
 #include "Shushao/Renderer/Shader.h"
@@ -19,6 +15,8 @@
 #include "Renderer/IndexBuffer.h"
 #include "Renderer/BufferLayout.h"
 #include "Renderer/VertexArray.h"
+#include "Shushao\Renderer\Renderer.h"
+#include "Shushao\Renderer\RenderCommand.h"
 
 namespace Shushao {
 
@@ -56,89 +54,7 @@ namespace Shushao {
         //    window->Clear();
         //}
 
-        float positions[3 * 3] = {
-            -0.5f, -0.5f, 0.0f, // 0
-             0.5f, -0.5f, 0.0f, // 1
-             0.0f,  0.5f, 0.0f  // 2
-        };
-
-        unsigned int indices[3] = {
-            0, 1, 2
-        };
-
-        float squarePositions[7 * 4] = {
-            -0.7f, -0.7f, 0.0f,      0.4f, 0.8f, 0.2f, 1.0f,// 0
-             0.7f, -0.7f, 0.0f,      0.4f, 0.8f, 0.2f, 1.0f,// 1
-             0.7f,  0.7f, 0.0f,      0.4f, 0.8f, 0.2f, 1.0f,// 2
-            -0.7f,  0.7f, 0.0f,      0.4f, 0.8f, 0.2f, 1.0f // 3
-        };
-
-        unsigned int squareIndices[6] = {
-            0, 1, 2,
-            2, 3, 0
-        };
-
-        std::string vertexSrc = R"(
-			#version 330 core
-			
-			layout(location = 0) in vec3 a_Position;
-			layout(location = 1) in vec4 a_Color;
-
-			out vec3 v_Position;
-			out vec4 v_Color;
-
-			void main()
-			{
-				v_Position = a_Position;
-                v_Color = a_Color;
-				gl_Position = vec4(a_Position, 1.0);	
-			}
-		)";
-
-        std::string fragmentSrc = R"(
-			#version 330 core
-			
-			layout(location = 0) out vec4 color;
-
-			in vec3 v_Position;
-			in vec4 v_Color;
-
-			void main()
-			{
-                if (v_Color[0] > 0.0) {
-                    color = vec4(v_Color);
-                } else {
-				    color = vec4(v_Position * 0.5 +0.5, 1.0);
-                }
-			}
-		)";
-
-        triangleVAO = VertexArray::Create();
-        VertexBuffer* triangleVBO = VertexBuffer::Create(positions, sizeof(positions));
-        IndexBuffer* triangleIBO = IndexBuffer::Create(indices, 3);
-        triangleVBO->SetLayout({
-                { ShaderDataType::Float3, "a_Position" }
-            });
-
-        triangleVAO->AddVertexBuffer(triangleVBO);
-        triangleVAO->SetIndexBuffer(triangleIBO);
-
-        squareVAO = VertexArray::Create();
-        VertexBuffer* squareVBO = VertexBuffer::Create(squarePositions, sizeof(squarePositions));
-        IndexBuffer* squareIBO = IndexBuffer::Create(squareIndices, 6);
-        squareVBO->SetLayout({
-                { ShaderDataType::Float3, "a_Position" },
-                { ShaderDataType::Float4, "a_Color" }
-            });
-
-        squareVAO->AddVertexBuffer(squareVBO);
-        squareVAO->SetIndexBuffer(squareIBO);
-
-        shader = new Shader();
-        shader->LoadFromString(vertexSrc, fragmentSrc);
-        shader->Init();
-
-        window->Clear(0.1f, 0.1f, 0.1f, 1.0f, 1.0f);
+        RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
     }
 
     void Application::render()
@@ -147,17 +63,11 @@ namespace Shushao {
         window->Clear();
         //SceneManager::activeScene->render();
 
-        shader->Bind();
-
-        squareVAO->Bind();
-        GL_CALL(glDrawElements(GL_TRIANGLES, squareVAO->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr));
-
-        triangleVAO->Bind();
-        GL_CALL(glDrawElements(GL_TRIANGLES, triangleVAO->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr));
-
+        RenderCommand::Clear();
 
         imGuiLayer->Begin();
         for (Layer* layer : layerStack) {
+            layer->OnUpdate();
             layer->OnImGuiRender();
         }
         imGuiLayer->End();

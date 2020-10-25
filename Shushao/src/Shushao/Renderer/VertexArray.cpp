@@ -8,10 +8,10 @@ namespace Shushao {
 
     VertexArray* VertexArray::Create()
     {
-        switch (Renderer::GetAPI()) {
-            case RendererAPI::OpenGL:
+        switch (Renderer::GetApiType()) {
+            case RendererAPI::Type::OpenGL:
                 return new OpenGLVertexArray();
-            case RendererAPI::None:
+            case RendererAPI::Type::None:
                 SE_CORE_ASSERT(false, "Renderer API 'None' not supported");
                 return nullptr;
         }

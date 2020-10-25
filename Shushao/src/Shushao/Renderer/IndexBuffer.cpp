@@ -8,10 +8,10 @@ namespace Shushao {
 
     IndexBuffer* IndexBuffer::Create(uint32_t* vertices, uint32_t count)
     {
-        switch (Renderer::GetAPI()) {
-            case RendererAPI::OpenGL:
+        switch (Renderer::GetApiType()) {
+            case RendererAPI::Type::OpenGL:
                 return new OpenGLIndexBuffer(vertices, count);
-            case RendererAPI::None:
+            case RendererAPI::Type::None:
                 SE_CORE_ASSERT(false, "Renderer API 'None' not supported");
                 return nullptr;
         }

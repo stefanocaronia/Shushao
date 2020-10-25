@@ -1,20 +1,17 @@
 #pragma once
 
-namespace Shushao {
+#include "RenderCommand.h"
 
-    enum class RendererAPI
-    {
-        None = 0,
-        OpenGL = 1
-    };
+namespace Shushao {
 
     class Renderer
     {
     public:
-        inline static RendererAPI GetAPI() { return API; }
-        inline static void SetAPI(RendererAPI _rendererAPI) { API = _rendererAPI; };
+        static void BeginScene();
+        static void EndScene();
 
-    private:
-        static RendererAPI API;
+        static void Submit(const std::shared_ptr<VertexArray>& vertexArray);
+
+        inline static RendererAPI::Type GetApiType() { return RendererAPI::GetType(); }
     };
 }

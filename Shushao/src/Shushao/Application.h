@@ -7,11 +7,6 @@
 
 namespace Shushao {
 
-    class Shader;
-    class IndexBuffer;
-    class VertexBuffer;
-    class VertexArray;
-
     class Application {
     public:
         enum class Stage {
@@ -59,10 +54,6 @@ namespace Shushao {
         std::unique_ptr<Window> window;
         ImGuiLayer* imGuiLayer;
         LayerStack layerStack;
-
-        VertexArray* triangleVAO;
-        VertexArray* squareVAO;
-        Shader* shader;
 
         FT_Library _freetypeLibrary;
 
