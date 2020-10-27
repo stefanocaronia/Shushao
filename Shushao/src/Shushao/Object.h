@@ -40,6 +40,12 @@ namespace Shushao {
             pObj->Copy(this);
             return pObj;
         }
+
+        inline void SetOwner(Object* _owner) { owner = _owner; }
+        inline Object* GetOwner() const { return owner; }
+
+    private:
+        Object* owner;
     };
 
 }  // Shushao

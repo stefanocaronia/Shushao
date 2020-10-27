@@ -2,7 +2,7 @@
 
 #include "Rect.h"
 
-namespace se {
+namespace Shushao {
 
 	Rect::Rect() {
 		Set(0.0f, 0.0f, 0.0f, 0.0f);

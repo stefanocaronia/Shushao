@@ -1,12 +1,13 @@
 #include "sepch.h"
 
-#include "canvas.h"
+//#include "Canvas.h"
 #include "Color.h"
-#include "Design.h"
-#include "SceneManager.h"
+//#include "Design.h"
+//#include "SceneManager.h"
 #include "Transform.h"
+#include "RectTransform.h"
 
-namespace se {
+namespace Shushao {
 
 	void Transform::setup() {
 		rectTransform = new RectTransform(this);
@@ -19,12 +20,11 @@ namespace se {
 
 	void Transform::Copy(Transform* other) {
 		if (other == nullptr) return;
-		Component::Copy(other);
+		Object::Copy(other);
 
 		isRoot = other->isRoot;
 		isFree = other->isFree;
 		origin = other->origin;
-		parent = other->parent;
 		localPosition = other->localPosition;
 		localRotation = other->localRotation;
 		localScale = other->localScale;
@@ -52,75 +52,6 @@ namespace se {
 	}
 
 	//{ #region parenting
-
-	Transform* Transform::GetParent() {
-		return parent;
-	}
-
-	bool Transform::isAtRoot() {
-		return (parent == nullptr || isRoot || (parent != nullptr && parent->isRoot));
-	}
-
-	void Transform::SetParent(Transform* newpa, bool worldPositionStays) {
-		if (parent != nullptr) {
-			parent->RemoveChild(this);
-		}
-
-		parent = newpa;
-		if (parent->entity->canvas != nullptr) {
-			entity->canvas = parent->entity->canvas;
-		}
-		else if (entity->GetComponent<Canvas>() == nullptr) {
-			entity->canvas = nullptr;
-		}
-
-		rectTransform->init();
-
-		if (worldPositionStays) {
-			localPosition = _position - parent->position;
-		}
-		else {
-			localPosition = VEC3_ZERO;
-		}
-
-		parent->AddChild(this);
-		matrixInvalid = true;
-	}
-
-	void Transform::RemoveChild(Transform* t) {
-		if (children.empty()) return;
-		auto it = find(children.begin(), children.end(), t);
-		if (it != children.end()) {
-			children.erase(it);
-		}
-	}
-
-	void Transform::AddChild(Transform* t) {
-		if (children.empty()) {
-			children.push_back(t);
-			return;
-		}
-		auto it = find(children.begin(), children.end(), t);
-		if (it == children.end()) children.push_back(t);
-	}
-
-	Transform* Transform::GetChild(unsigned int index) {
-		if (index >= children.size()) return nullptr;
-		return children.at(index);
-	}
-
-	std::vector<Transform*> Transform::GetParents() {
-		std::vector<Transform*> parents;
-		if (isAtRoot()) return parents;
-
-		Transform* p = parent;
-		while (p != nullptr && !p->isRoot) {
-			parents.push_back(p);
-			p = p->GetParent();
-		}
-
-		return parents;
-	}
 
 	//}
 
