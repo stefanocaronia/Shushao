@@ -1,30 +1,29 @@
 
 #include "sepch.h"
 
-#include "canvas.h"
-#include "Design.h"
+#include "Color.h"
 #include "Entity.h"
-#include "Transform.h"
+#include "RectTransform.h"
 
-namespace se {
+namespace Shushao {
 
 	RectTransform::RectTransform(Transform* transform_) {
 		transform = transform_;
 		init();
 		update();
 		_rect.YUP = true;
-		_rect.name = transform->entity->name;
+		_rect.name = transform->GetEntity()->name;
 	}
 
 	glm::mat4 RectTransform::GetLocalToParentMatrix() {
 		glm::mat4 matrix;
 		if (hasSingleAnchorPoint()) {
 			glm::vec2 parentAnchorCoord = parentRectTransform->rectCoordToLocal(anchorMin * parentRectTransform->rect.size);
-			matrix = glm::translate(glm::mat4(), glm::vec3(parentAnchorCoord, 0.0f)) * glm::translate(glm::mat4(), transform->localPosition) * glm::toMat4(transform->localRotation) * glm::scale(glm::mat4(), transform->localScale);
+			matrix = glm::translate(glm::mat4(), glm::vec3(parentAnchorCoord, 0.0f)) * glm::translate(glm::mat4(), transform->GetLocalPosition()) * glm::toMat4(transform->GetLocalRotation()) * glm::scale(glm::mat4(), transform->GetLocalScale());
 		}
 		else {
 			if (rectInvalid) SetSizeWithCurrentAnchors();
-			matrix = glm::translate(glm::mat4(), glm::vec3(anchoredPosition, 0.0f)) * glm::toMat4(transform->localRotation) * glm::scale(glm::mat4(), transform->localScale);
+			matrix = glm::translate(glm::mat4(), glm::vec3(anchoredPosition, 0.0f)) * glm::toMat4(transform->GetLocalRotation()) * glm::scale(glm::mat4(), transform->GetLocalScale());
 		}
 
 		return matrix;
@@ -249,11 +248,16 @@ namespace se {
 	}
 
 	void RectTransform::init() {
-		if (transform->parent != nullptr) {
-			parentRectTransform = transform->parent->rectTransform;
-			isRectTransformChild = transform->parent->isRectTransform;
+		Entity* parent = transform->GetEntity()->GetParentEntity();
+		if (parent != nullptr) {
+			parentRectTransform = parent->GetTransform()->GetRectTransform();
+			isRectTransformChild = parent->GetTransform()->IsRectTransform();
 		}
+		/// RIPRISTINARE CANVAS
+		#if 0
 		renderMode = transform->entity->canvas != nullptr ? transform->entity->canvas->renderMode : RenderMode::WORLD;
+		#endif
+		renderMode = RenderMode::WORLD;
 	}
 
 	void RectTransform::Invalidate() {
@@ -265,9 +269,15 @@ namespace se {
 	}
 
 	void RectTransform::InvalidateChildren() {
-		for (Transform* child : transform->children) {
-			if (child->isRectTransform)
-				child->rectTransform->Invalidate();
+		Entity* owner = ((Entity*)transform->GetOwner());
+		for (Node* child : owner->GetChildren()) {
+			if (child->HasTransform()) {
+				Transform* transform = ((Entity*)child)->GetTransform();
+				if (transform->IsRectTransform()) {
+					transform->GetRectTransform()->Invalidate();
+				}
+				/// TODO: se ci sono nodi non entity in mezzo si ferma la ricorsione
+			}
 		}
 	}
 
@@ -283,18 +293,18 @@ namespace se {
 			}
 			else if (renderMode == RenderMode::SCREEN) {
 				color = { 0.5f, 0.0f, 0.1f, 0.3f };
-				position = transform->position;
+				position = transform->GetPosition();
 			}
 
-			if (Debug::drawRectTransforms) {
-				Design::DrawRect(position, rect, color, 3, DrawMode::HOLLOW, renderMode, transform->MVP);
-			}
+			//if (Debug::drawRectTransforms) {
+			//	Design::DrawRect(position, rect, color, 3, DrawMode::HOLLOW, renderMode, transform->MVP);
+			//}
 
-			if (Debug::drawTransforms) {
-				Design::DrawVector(position, transform->up / 3.0f, color::green, 2, false, renderMode, transform->MVP);
-				Design::DrawVector(position, transform->right / 3.0f, color::red, 2, false, renderMode, transform->MVP);
-				Design::DrawVector(position, transform->forward / 3.0f, color::blue, 2, false, renderMode, transform->MVP);
-			}
+			//if (Debug::drawTransforms) {
+			//	Design::DrawVector(position, transform->up / 3.0f, color::green, 2, false, renderMode, transform->MVP);
+			//	Design::DrawVector(position, transform->right / 3.0f, color::red, 2, false, renderMode, transform->MVP);
+			//	Design::DrawVector(position, transform->forward / 3.0f, color::blue, 2, false, renderMode, transform->MVP);
+			//}
 		}
 	}
 }  // namespace se

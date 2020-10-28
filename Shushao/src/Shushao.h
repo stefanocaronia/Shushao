@@ -8,6 +8,8 @@
 
 #include "Shushao/Renderer/Renderer.h"
 #include "Shushao/Renderer/Shader.h"
+#include "Shushao/Renderer/Shaders/BaseShader.h"
 #include "Shushao/Renderer/VertexArray.h"
+#include "Shushao/OrthographicCamera.h"
 
 #include "Shushao/ImGui/ImGuiLayer.h"

@@ -4,14 +4,18 @@
 
 namespace Shushao {
 
-    class SpatialNode : public Node
+    class Entity : public Node
     {
     public:
-        SpatialNode();
-        ~SpatialNode();
+        Entity();
+        ~Entity();
 
         Transform* GetTransform() const { return transform; }
         void SetParent(Node* newParent, bool worldPositionStays = false);
+
+        Entity* GetParentEntity();
+
+        virtual inline bool HasTransform() const override { return true; }
 
     protected:
         Transform* transform = nullptr;

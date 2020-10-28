@@ -2,329 +2,299 @@
 
 //#include "Canvas.h"
 #include "Color.h"
-//#include "Design.h"
-//#include "SceneManager.h"
+#include "Entity.h"
 #include "Transform.h"
 #include "RectTransform.h"
+#include "Camera.h"
 
 namespace Shushao {
 
-	void Transform::setup() {
-		rectTransform = new RectTransform(this);
-	}
+    /*
+         _MVP = _P * _V * _M; 
+		_MV = _V * _M; 
+		_VP = _P * _V; 
+    
+    */
 
-	Transform::~Transform() {
-		delete (rectTransform);
-		rectTransform = nullptr;
-	}
+    void Transform::setup()
+    {
+        rectTransform = new RectTransform(this);
+    }
 
-	void Transform::Copy(Transform* other) {
-		if (other == nullptr) return;
-		Object::Copy(other);
+    Transform::~Transform()
+    {
+        delete (rectTransform);
+        rectTransform = nullptr;
+    }
 
-		isRoot = other->isRoot;
-		isFree = other->isFree;
-		origin = other->origin;
-		localPosition = other->localPosition;
-		localRotation = other->localRotation;
-		localScale = other->localScale;
-		matrixInvalid = other->matrixInvalid;
-		inverseMatrixInvalid = other->inverseMatrixInvalid;
-		_position = other->position;
-		_rotation = other->rotation;
-		_scale = other->scale;
-		_velocity = other->velocity;
-		_forward = other->forward;
-		_right = other->right;
-		_up = other->up;
-		_pivot = other->pivot;
-		_MVP = other->MVP;
-		_MV = other->MV;
-		_VP = other->VP;
-		_M = other->M;
-		_V = other->V;
-		_P = other->P;
-		_localToWorldMatrix = other->localToWorldMatrix;
-		_localToParentMatrix = other->localToParentMatrix;
-		_worldToLocalMatrix = other->worldToLocalMatrix;
-		_rootMatrix = other->rootMatrix;
-		lastPosition = other->lastPosition;
-	}
+    void Transform::Invalidate()
+    {
+        if (!matrixInvalid) {
+            matrixInvalid = true;
+            inverseMatrixInvalid = true;
+        }
 
-	//{ #region parenting
+        Entity* owner = ((Entity*)GetOwner());
+        for (Node* child : owner->GetChildren()) {
+            if (child->HasTransform()) {
+                ((Entity*)child)->GetTransform()->Invalidate();
+                /// TODO: se ci sono nodi non entity in mezzo si ferma la ricorsione
+            }
+        }
+    }
 
-	//}
+    //{ #region position
 
-	void Transform::Invalidate() {
-		if (!matrixInvalid) {
-			matrixInvalid = true;
-			inverseMatrixInvalid = true;
-		}
+    void Transform::SetPosition(glm::vec3 position_)
+    {
+        Entity* owner = ((Entity*)GetOwner());
 
-		for (Transform* child : children) {
-			child->Invalidate();
-		}
-	}
+        if (owner->IsRoot()) return;
 
-	//{ #region position
+        origin = Origin::WORLD;
+        Invalidate();
+        localPosition = owner->IsAtRoot() ? position_ : owner->GetTransform()->position - position_;
+        position = position_;
 
-	void Transform::SetPosition(glm::vec3 position_) {
-		if (isRoot) return;
-		origin = Origin::WORLD;
-		Invalidate();
-		localPosition = isAtRoot() ? position_ : parent->position - position_;
-		_position = position_;
+        if (isRectTransform) {
+            rectTransform->update();
+        }
 
-		if (isRectTransform) {
-			rectTransform->update();
-		}
+        setupDirections();
+    }
 
-		setupDirections();
-	}
+    void Transform::SetLocalPosition(glm::vec3 position_)
+    {
+        if (entity->IsRoot()) return;
+        origin = Origin::LOCAL;
+        localPosition = position_;
+        Invalidate();
+        position = GetWorldPosition();
 
-	void Transform::SetLocalPosition(glm::vec3 position_) {
-		if (isRoot) return;
-		origin = Origin::LOCAL;
-		localPosition = position_;
-		Invalidate();
-		_position = GetWorldPosition();
+        if (isRectTransform) {
+            rectTransform->update();
+        }
 
-		if (isRectTransform) {
-			rectTransform->update();
-		}
+        setupDirections();
+    }
 
-		setupDirections();
-	}
+    void Transform::SetLocalRotation(glm::vec3 angles_)
+    {  // angles_ is in radians
+        if (entity->IsRoot()) return;
+        origin = Origin::LOCAL;
+        localRotation = glm::quat(angles_ * DEGTORAD);
+        Invalidate();
+        rotation = GetWorldOrientation();
+        setupDirections();
+    }
 
-	void Transform::SetLocalRotation(glm::vec3 angles_) {  // angles_ is in radians
-		if (isRoot) return;
-		origin = Origin::LOCAL;
-		localRotation = glm::quat(angles_ * DEGTORAD);
-		Invalidate();
-		_rotation = GetWorldOrientation();
-		setupDirections();
-	}
+    void Transform::SetLocalRotation(glm::quat rotation_)
+    {
+        if (entity->IsRoot()) return;
+        origin = Origin::LOCAL;
+        localRotation = rotation_;
+        Invalidate();
+        rotation = GetWorldOrientation();
+        setupDirections();
+    }
 
-	void Transform::SetLocalRotation(glm::quat rotation_) {
-		if (isRoot) return;
-		origin = Origin::LOCAL;
-		localRotation = rotation_;
-		Invalidate();
-		_rotation = GetWorldOrientation();
-		setupDirections();
-	}
+    void Transform::SetRotation(glm::vec3 angles_)
+    {  // angles_ is in radians
+        if (entity->IsRoot()) return;
+        origin = Origin::WORLD;
+        rotation = glm::quat(angles_ * DEGTORAD);
+        //localRotation = rotation;
+        setupDirections();
+    }
 
-	void Transform::SetRotation(glm::vec3 angles_) {  // angles_ is in radians
-		if (isRoot) return;
-		origin = Origin::WORLD;
-		_rotation = glm::quat(angles_ * DEGTORAD);
-		//localRotation = _rotation;
-		setupDirections();
-	}
+    void Transform::SetRotation(glm::quat rotation_)
+    {
+        if (entity->IsRoot()) return;
+        origin = Origin::WORLD;
+        rotation = rotation_;
+        Invalidate();
+        setupDirections();
+    }
 
-	void Transform::SetRotation(glm::quat rotation_) {
-		if (isRoot) return;
-		origin = Origin::WORLD;
-		_rotation = rotation_;
-		Invalidate();
-		//localRotation = _rotation * parent->rotation;
-		setupDirections();
-	}
+    glm::vec3 Transform::GetEulerAngles()
+    {
+        return glm::eulerAngles(rotation) * RADTODEG;
+    }
 
-	glm::vec3 Transform::GetEulerAngles() {
-		return glm::eulerAngles(rotation) * RADTODEG;
-	}
+    glm::vec3 Transform::GetLocalEulerAngles()
+    {
+        return glm::eulerAngles(localRotation) * RADTODEG;
+    }
 
-	glm::vec3 Transform::GetLocalEulerAngles() {
-		return glm::eulerAngles(localRotation) * RADTODEG;
-	}
+    void Transform::setupDirections()
+    {
+        up = rotation * UP;
+        right = rotation * RIGHT;
+        forward = rotation * FORWARD;
+    }
 
-	void Transform::setupDirections() {
-		_up = _rotation * UP;
-		_right = _rotation * RIGHT;
-		_forward = _rotation * FORWARD;
-	}
+    void Transform::SetLocalScale(glm::vec3 scale_)
+    {
+        if (entity->IsRoot()) return;
+        localScale = scale_;
+        scale = GetWorldScale();
+    }
 
-	void Transform::SetLocalScale(glm::vec3 scale_) {
-		if (isRoot) return;
-		localScale = scale_;
-		_scale = GetWorldScale();
-	}
+    void Transform::SetPivot(glm::vec2 pivot_)
+    {
+        if (entity->IsRoot()) return;
+        pivot = { pivot_.x, pivot_.y, 0.0f };
+        rectTransform->SetPivot({ pivot.x, pivot.y });
+    }
 
-	void Transform::SetPivot(glm::vec2 pivot_) {
-		if (isRoot) return;
-		_pivot = { pivot_.x, pivot_.y, 0.0f };
-		rectTransform->SetPivot({ pivot.x, pivot.y });
-	}
+    float* Transform::GetUniformModelMatrix()
+    {
+        return &modelMatrix[0][0];
+    }
 
-	//}
+    void Transform::Awake()
+    {
+        Invalidate();
 
-	void Transform::buildMVP() {
-		_M = GetLocalToWorldMatrix();
-		if (entity->canvas != nullptr && entity->canvas->renderMode == RenderMode::CAMERA && entity->canvas->camera != nullptr) {
-			_P = entity->canvas->camera->getProjectionMatrix();
-			_V = entity->canvas->camera->getViewMatrix();
-		}
-		else {
-			_P = SceneManager::activeScene->activeCamera->getProjectionMatrix();
-			_V = SceneManager::activeScene->activeCamera->getViewMatrix();
-		}
-		_MVP = _P * _V * _M;
-		_MV = _V * _M;
-		_VP = _P * _V;
-	}
+        // da ripristinare
+        //rectTransform->init();
+    }
 
-	float* Transform::uMVP() {
-		return &_MVP[0][0];
-	}
+    void Transform::Update()
+    {
+        if (origin == Origin::LOCAL) {
+            position = GetWorldPosition();
+            rotation = GetWorldOrientation();
+        }
 
-	float* Transform::uM() {
-		return &_M[0][0];
-	}
+        if (isRectTransform) {
+            rectTransform->update();
+        }
 
-	float* Transform::uP() {
-		return &_P[0][0];
-	}
+        modelMatrix = GetLocalToWorldMatrix();
 
-	float* Transform::uV() {
-		return &_V[0][0];
-	}
+        setupDirections();
 
-	float* Transform::uMV() {
-		return &_MV[0][0];
-	}
+        velocity = (1 / Time::deltaTime) * (position - lastPosition);
+        lastPosition = position;
+    }
 
-	float* Transform::uVP() {
-		return &_VP[0][0];
-	}
+    void Transform::Render()
+    {
+        /// render debug graphics
+        /*if (isRectTransform) {
+            rectTransform->render();
+        } else {
+            if (Debug::enabled && Debug::drawTransforms) {
+                Design::DrawVector(VEC3_ZERO, up / 3.0f, color::green, 2, false, RenderMode::WORLD, MVP);
+                Design::DrawVector(VEC3_ZERO, right / 3.0f, color::red, 2, false, RenderMode::WORLD, MVP);
+                Design::DrawVector(VEC3_ZERO, forward / 3.0f, color::blue, 2, false, RenderMode::WORLD, MVP);
+            }
+        }*/
+    }
 
-	void Transform::Awake() {
-		buildMVP();
-		Invalidate();
-		rectTransform->init();
-	}
+    glm::mat4 Transform::GetLocalToParentMatrix()
+    {
+        Entity* parent = entity->GetParentEntity();
 
-	void Transform::Update() {
-		if (origin == Origin::LOCAL) {
-			_position = GetWorldPosition();
-			_rotation = GetWorldOrientation();
-		}
+        if (isRectTransform && parent->GetTransform()->IsRectTransform()) {
+            localToParentMatrix = rectTransform->GetLocalToParentMatrix();
+        } else {
+            localToParentMatrix = glm::translate(glm::mat4(), localPosition) * glm::toMat4(localRotation) * glm::scale(glm::mat4(), localScale);
+        }
+        return localToParentMatrix;
+    }
 
-		if (isRectTransform) {
-			rectTransform->update();
-		}
+    glm::mat4 Transform::GetRootMatrix()
+    {
+        return glm::translate(glm::mat4(), position) * glm::toMat4(rotation) * glm::scale(glm::mat4(), localScale);
+    }
 
-		setupDirections();
-		buildMVP();
+    glm::mat4 Transform::GetLocalToWorldMatrix()
+    {
+        if (matrixInvalid) {
+            if (origin == Origin::WORLD) {
+                localToWorldMatrix = GetRootMatrix();
+            } else if (entity->IsAtRoot()) {
+                localToWorldMatrix = GetLocalToParentMatrix();
+            } else {
+                localToWorldMatrix = entity->GetParentEntity()->GetTransform()->GetLocalToWorldMatrix() * GetLocalToParentMatrix();
+            }
+            matrixInvalid = false;
+        }
+        return localToWorldMatrix;
+    }
 
-		_velocity = (1 / Time::deltaTime) * (position - lastPosition);
-		lastPosition = position;
-	}
+    glm::mat4 Transform::GetWorldToLocalMatrix()
+    {
+        /*if (inverseMatrixInvalid) {
+                _worldToLocalMatrix = glm::inverse(GetLocalToWorldMatrix());
+                inverseMatrixInvalid = false;
+            }
+            return _worldToLocalMatrix;*/
 
-	void Transform::Render() {
-		if (isRectTransform) {
-			rectTransform->render();
-		}
-		else {
-			if (Debug::enabled && Debug::drawTransforms) {
-				Design::DrawVector(VEC3_ZERO, up / 3.0f, color::green, 2, false, RenderMode::WORLD, MVP);
-				Design::DrawVector(VEC3_ZERO, right / 3.0f, color::red, 2, false, RenderMode::WORLD, MVP);
-				Design::DrawVector(VEC3_ZERO, forward / 3.0f, color::blue, 2, false, RenderMode::WORLD, MVP);
-			}
-		}
-	}
+        if (inverseMatrixInvalid) {
+            Entity* parent = entity->GetParentEntity();
+            if (entity->IsAtRoot()) {
+                worldToLocalMatrix = glm::mat4();
+            } else if (parent) {
+                Transform* transform = parent->GetTransform();
+                worldToLocalMatrix = glm::toMat4(transform->rotation) * glm::translate(glm::mat4(), -transform->position);
+            }
+            inverseMatrixInvalid = false;
+        }
+        return worldToLocalMatrix;
+    }
 
-	glm::mat4 Transform::GetLocalToParentMatrix() {
-		if (isRectTransform && parent->isRectTransform) {
-			_localToParentMatrix = rectTransform->GetLocalToParentMatrix();
-		}
-		else {
-			_localToParentMatrix = glm::translate(glm::mat4(), localPosition) * glm::toMat4(localRotation) * glm::scale(glm::mat4(), localScale);
-		}
-		return _localToParentMatrix;
-	}
+    glm::vec3 Transform::GetWorldPosition()
+    {
+        glm::vec4 p = GetLocalToWorldMatrix() * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
+        return glm::vec3(p.x, p.y, p.z);
+    }
 
-	glm::mat4 Transform::GetRootMatrix() {
-		return glm::translate(glm::mat4(), _position) * glm::toMat4(_rotation) * glm::scale(glm::mat4(), localScale);
-	}
+    glm::vec3 Transform::GetLocalPosition(glm::vec3 position_)
+    {
+        glm::vec4 p = GetWorldToLocalMatrix() * glm::vec4(position_.x, position_.y, position_.z, 1.0f);
+        return glm::vec3(p.x, p.y, p.z);
+    }
 
-	glm::mat4 Transform::GetLocalToWorldMatrix() {
-		if (matrixInvalid) {
-			if (origin == Origin::WORLD) {
-				_localToWorldMatrix = GetRootMatrix();
-			}
-			else if (isAtRoot()) {
-				_localToWorldMatrix = GetLocalToParentMatrix();
-			}
-			else {
-				_localToWorldMatrix = parent->GetLocalToWorldMatrix() * GetLocalToParentMatrix();
-			}
-			matrixInvalid = false;
-		}
-		return _localToWorldMatrix;
-	}
+    glm::vec3 Transform::GetWorldScale()
+    {
+        if (!entity->IsAtRoot()) {
+            Entity* parent = entity->GetParentEntity();
+            if (parent != nullptr) {
+                return localScale * parent->GetTransform()->GetWorldScale();
+            }
+        }
 
-	glm::mat4 Transform::GetWorldToLocalMatrix() {
-		/*if (inverseMatrixInvalid) {
-				_worldToLocalMatrix = glm::inverse(GetLocalToWorldMatrix());
-				inverseMatrixInvalid = false;
-			}
-			return _worldToLocalMatrix;*/
+        return localScale;
+    }
 
-		if (inverseMatrixInvalid) {
-			if (isAtRoot()) {
-				_worldToLocalMatrix = glm::mat4();
-			}
-			else {
-				_worldToLocalMatrix = glm::toMat4(parent->rotation) * glm::translate(glm::mat4(), -parent->position);
-			}
-			inverseMatrixInvalid = false;
-		}
-		return _worldToLocalMatrix;
-	}
+    glm::quat Transform::GetWorldOrientation()
+    {
+        if (!entity->IsAtRoot()) {
+            Entity* parent = entity->GetParentEntity();
+            if (parent != nullptr) {
+                return localRotation * parent->GetTransform()->rotation;
+            }
 
-	glm::vec3 Transform::GetWorldPosition() {
-		glm::vec4 p = GetLocalToWorldMatrix() * glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
-		return glm::vec3(p.x, p.y, p.z);
-	}
+        }
+        return localRotation;
+    }
 
-	glm::vec3 Transform::GetLocalPosition(glm::vec3 position_) {
-		glm::vec4 p = GetWorldToLocalMatrix() * glm::vec4(position_.x, position_.y, position_.z, 1.0f);
-		return glm::vec3(p.x, p.y, p.z);
-	}
-
-	glm::vec3 Transform::GetWorldScale() {
-		if (isAtRoot()) {
-			return localScale;
-		}
-		else {
-			return localScale * parent->GetWorldScale();
-		}
-	}
-
-	glm::quat Transform::GetWorldOrientation() {
-		if (isAtRoot()) {
-			return localRotation;
-		}
-		else {
-			return localRotation * parent->rotation;
-		}
-		return glm::quat();
-	}
-
-	const glm::mat4 Transform::MAT4_IDENTITY = glm::mat4();
-	const glm::vec3 Transform::VEC3_ZERO = { 0.0f, 0.0f, 0.0f };
-	const glm::vec3 Transform::VEC3_IDENTITY = { 1.0f, 1.0f, 1.0f };
-	const glm::vec3 Transform::VEC3_IDENTITY2D = { 1.0f, 1.0f, 0.0f };
-	const glm::vec3 Transform::UP = { 0.0f, 1.0f, 0.0f };
-	const glm::vec3 Transform::AXIS_X = { 1.0f, 0.0f, 0.0f };
-	const glm::vec3 Transform::AXIS_Y = { 0.0f, 1.0f, 0.0f };
-	const glm::vec3 Transform::AXIS_Z = { 0.0f, 0.0f, 1.0f };
-	const glm::vec3 Transform::DOWN = { 0.0f, -1.0f, 0.0f };
-	const glm::vec3 Transform::FORWARD = { 0.0f, 0.0f, 1.0f };
-	const glm::vec3 Transform::BACK = { 0.0f, 0.0f, -1.0f };
-	const glm::vec3 Transform::RIGHT = { 1.0f, 0.0f, 0.0f };
-	const glm::vec3 Transform::LEFT = { -1.0f, 0.0f, 0.0f };
-	const glm::quat Transform::QUATERNION_IDENTITY = { 1.0f, 0.0f, 0.0f, 0.0f };
+    const glm::mat4 Transform::MAT4_IDENTITY = glm::mat4();
+    const glm::vec3 Transform::VEC3_ZERO = { 0.0f, 0.0f, 0.0f };
+    const glm::vec3 Transform::VEC3_IDENTITY = { 1.0f, 1.0f, 1.0f };
+    const glm::vec3 Transform::VEC3_IDENTITY2D = { 1.0f, 1.0f, 0.0f };
+    const glm::vec3 Transform::UP = { 0.0f, 1.0f, 0.0f };
+    const glm::vec3 Transform::AXIS_X = { 1.0f, 0.0f, 0.0f };
+    const glm::vec3 Transform::AXIS_Y = { 0.0f, 1.0f, 0.0f };
+    const glm::vec3 Transform::AXIS_Z = { 0.0f, 0.0f, 1.0f };
+    const glm::vec3 Transform::DOWN = { 0.0f, -1.0f, 0.0f };
+    const glm::vec3 Transform::FORWARD = { 0.0f, 0.0f, 1.0f };
+    const glm::vec3 Transform::BACK = { 0.0f, 0.0f, -1.0f };
+    const glm::vec3 Transform::RIGHT = { 1.0f, 0.0f, 0.0f };
+    const glm::vec3 Transform::LEFT = { -1.0f, 0.0f, 0.0f };
+    const glm::quat Transform::QUATERNION_IDENTITY = { 1.0f, 0.0f, 0.0f, 0.0f };
 
 }  // namespace se

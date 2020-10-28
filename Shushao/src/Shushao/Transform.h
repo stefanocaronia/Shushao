@@ -1,13 +1,17 @@
 #pragma once
 
+#include "LifeCycle.h"
 #include "Object.h"
 #include "Rect.h"
 #include "RectTransform.h"
 
 namespace Shushao {
 
-    class Transform : public Object
-    {
+    class Camera;
+    class Entity;
+
+    class Transform : public Object, public LifeCycle
+    { 
     public:
         enum class Origin
         {
@@ -24,38 +28,25 @@ namespace Shushao {
 
         Origin origin = Origin::LOCAL;
 
-        glm::vec3 localPosition = VEC3_ZERO;
-        glm::quat localRotation = QUATERNION_IDENTITY;
-        glm::vec3 localScale = VEC3_IDENTITY;
+        glm::vec3& GetLocalPosition() { return localPosition; }
+        glm::quat& GetLocalRotation() { return localRotation; }
+        glm::vec3& GetLocalScale() { return localScale; }
+        glm::vec3& GetPosition() { return position; }
+        glm::quat& GetRotation() { return rotation; }
+        glm::vec3& GetScale() { return scale; }
+        glm::vec3& GetPivot() { return pivot; }
+        glm::vec3& GetForward() { return forward; }
+        glm::vec3& GetRight() { return right; }
+        glm::vec3& GetUp() { return up; }
+        glm::vec3& GetVelocity() { return velocity; }
+        glm::mat4& GetModelMatrix() { return modelMatrix; }
 
-        // readonly properties
-        const glm::vec3& position = _position;
-        const glm::quat& rotation = _rotation;
-        const glm::vec3& scale = _scale;
-        const glm::vec3& pivot = _pivot;
-        const glm::mat4& MV = _MV;
-        const glm::mat4& VP = _VP;
-        const glm::mat4& MVP = _MVP;
-        const glm::mat4& M = _M;
-        const glm::mat4& V = _V;
-        const glm::mat4& P = _P;
-        const glm::vec3& forward = _forward;
-        const glm::vec3& right = _right;
-        const glm::vec3& up = _up;
-        const glm::vec3& velocity = _velocity;
-
-        const glm::mat4& localToWorldMatrix = _localToWorldMatrix;
-        const glm::mat4& localToParentMatrix = _localToParentMatrix;
-        const glm::mat4& worldToLocalMatrix = _worldToLocalMatrix;
-        const glm::mat4& rootMatrix = _rootMatrix;
-
-
-        float* uMVP();  // MVP Matrix for uniforms
-        float* uMV();  // Model-View Matrix for uniforms
-        float* uVP();  // Model-View Matrix for uniforms
-        float* uM();  // Model Matrix for uniforms
-        float* uP();  // Projection Matrix for uniforms
-        float* uV();  // View Matrix for uniforms
+        float* GetUniformMVP();  // MVP Matrix for uniforms
+        float* GetUniformMV();  // Model-View Matrix for uniforms
+        float* GetUniformVP();  // Model-View Matrix for uniforms
+        float* GetUniformModelMatrix();  // Model Matrix for uniforms
+        float* GetUniformP();  // Projection Matrix for uniforms
+        float* GetUniformV();  // View Matrix for uniforms
 
         glm::mat4 GetLocalToParentMatrix();
         glm::mat4 GetLocalToWorldMatrix();
@@ -67,11 +58,9 @@ namespace Shushao {
         glm::quat GetWorldOrientation();
 
         // lifecycle
-        void Awake();
-        void Update();
-        void Render();
-
-        //{ #region getter and setters
+        virtual void Awake() override;
+        virtual void Update() override;
+        virtual void Render() override;
 
         glm::vec3 GetEulerAngles();
         glm::vec3 GetLocalEulerAngles();
@@ -85,7 +74,17 @@ namespace Shushao {
         void SetRotation(glm::quat);
         void SetRotation(glm::vec3);
 
-        //}
+        void Invalidate();
+
+        void Copy(Transform* other);
+
+        inline RectTransform* GetRectTransform() { return rectTransform; }
+        inline void SetRectTransform(RectTransform* _rectTransform) { rectTransform = _rectTransform; }
+
+        inline void SetEntity(Entity* _entity) { entity = _entity; }
+        inline Entity* GetEntity() const { return entity; }
+
+        inline bool IsRectTransform() const { return isRectTransform; }
 
         static const glm::mat4 MAT4_IDENTITY;
         static const glm::vec3 VEC3_ZERO;
@@ -102,42 +101,36 @@ namespace Shushao {
         static const glm::vec3 AXIS_Y;
         static const glm::vec3 AXIS_Z;
 
-        void Invalidate();
-
-        RectTransform* RectTransform = nullptr;
-        bool isRectTransform = false;
-
-        void Copy(Transform* other);
-
     private:
         bool matrixInvalid = false;
         bool inverseMatrixInvalid = false;
+        bool isRectTransform = false;
 
-        glm::vec3 _position = VEC3_ZERO;
-        glm::quat _rotation = QUATERNION_IDENTITY;
-        glm::vec3 _scale = VEC3_IDENTITY2D;
-        glm::vec3 _velocity = VEC3_ZERO;
-        glm::vec3 _forward = FORWARD;
-        glm::vec3 _right = RIGHT;
-        glm::vec3 _up = UP;
-        glm::vec3 _pivot = VEC3_ZERO;
-        glm::mat4 _MVP = glm::mat4();
-        glm::mat4 _MV = glm::mat4();
-        glm::mat4 _VP = glm::mat4();
-        glm::mat4 _M = glm::mat4();
-        glm::mat4 _V = glm::mat4();
-        glm::mat4 _P = glm::mat4();
+        Entity* entity;
+        RectTransform* rectTransform = nullptr;
 
-        glm::mat4 _localToWorldMatrix = glm::mat4();
-        glm::mat4 _localToParentMatrix = glm::mat4();
-        glm::mat4 _worldToLocalMatrix = glm::mat4();
-        glm::mat4 _rootMatrix = glm::mat4();
+        glm::vec3 localPosition = VEC3_ZERO;
+        glm::quat localRotation = QUATERNION_IDENTITY;
+        glm::vec3 localScale = VEC3_IDENTITY;
+
+        glm::vec3 position = VEC3_ZERO;
+        glm::quat rotation = QUATERNION_IDENTITY;
+        glm::vec3 scale = VEC3_IDENTITY2D;
+        glm::vec3 velocity = VEC3_ZERO;
+        glm::vec3 forward = FORWARD;
+        glm::vec3 right = RIGHT;
+        glm::vec3 up = UP;
+        glm::vec3 pivot = VEC3_ZERO;
+        glm::mat4 modelMatrix = glm::mat4();
+
+        glm::mat4 localToWorldMatrix = glm::mat4();
+        glm::mat4 localToParentMatrix = glm::mat4();
+        glm::mat4 worldToLocalMatrix = glm::mat4();
+        glm::mat4 rootMatrix = glm::mat4();
 
         glm::vec3 lastPosition = VEC3_ZERO;
 
         void setupDirections();
-        void buildMVP();
-
         void updateRectTransforms();
     };
 

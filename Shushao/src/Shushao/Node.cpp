@@ -4,9 +4,9 @@
 
 namespace Shushao {
 
-	bool Node::isAtRoot()
+	bool Node::IsAtRoot()
 	{
-		return (parent == nullptr || isRoot || (parent != nullptr && parent->isRoot));
+		return (parent == nullptr || IsRoot() || (parent != nullptr && parent->IsRoot()));
 	}
 
 	void Node::SetParent(Node* newParent)
@@ -35,7 +35,7 @@ namespace Shushao {
 			return;
 		}
 		auto it = find(children.begin(), children.end(), child);
-		if (it == children.end()) children.push_back(t);
+		if (it == children.end()) children.push_back(child);
 	}
 
 	Node* Node::GetChild(unsigned int index)
@@ -47,7 +47,7 @@ namespace Shushao {
 	std::vector<Node*> Node::GetParents()
 	{
 		std::vector<Node*> parents;
-		if (isAtRoot()) return parents;
+		if (IsAtRoot()) return parents;
 
 		Node* p = parent;
 		while (p != nullptr && !p->isRoot) {
@@ -56,12 +56,5 @@ namespace Shushao {
 		}
 
 		return parents;
-	}
-
-	Node* Node::GetSpatialParent() const
-	{
-		/// TODO: Iterate parents and find the first with transform
-		/// if not fount get nullptr
-		return parent;
 	}
 }

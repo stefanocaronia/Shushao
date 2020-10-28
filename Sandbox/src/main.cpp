@@ -9,23 +9,34 @@ public:
     std::shared_ptr<VertexArray> squareVAO;
     std::shared_ptr<Shader> shader;
 
+    Camera* camera = new OrthographicCamera();
+    Entity* triangle = new Entity();
+    Entity* square = new Entity();
+    Node* root = new Node();
+
     TestLayer() : Shushao::Layer("Layer di test") {
+
+        root->SetRoot(true);
+        root->AddChild(triangle);
+        root->AddChild(square);
     
+        triangle->GetTransform()->SetPosition({ 4.3f, 0.6f, 0.1f });
+
         float positions[3 * 3] = {
-                -0.5f, -0.5f, 0.0f, // 0
-                 0.5f, -0.5f, 0.0f, // 1
-                 0.0f,  0.5f, 0.0f  // 2
+           -0.5f, -0.5f, 0.0f, // 0
+            0.5f, -0.5f, 0.0f, // 1
+            0.0f,  0.5f, 0.0f  // 2
         };
 
         unsigned int indices[3] = {
             0, 1, 2
         };
 
-        float squarePositions[7 * 4] = {
-            -0.7f, -0.7f, 0.0f,      0.4f, 0.8f, 0.2f, 1.0f,// 0
-             0.7f, -0.7f, 0.0f,      0.4f, 0.8f, 0.2f, 1.0f,// 1
-             0.7f,  0.7f, 0.0f,      0.4f, 0.8f, 0.2f, 1.0f,// 2
-            -0.7f,  0.7f, 0.0f,      0.4f, 0.8f, 0.2f, 1.0f // 3
+        float squarePositions[3 * 4] = {
+            -0.7f, -0.7f, 0.0f, // 0
+             0.7f, -0.7f, 0.0f, // 1
+             0.7f,  0.7f, 0.0f, // 2
+            -0.7f,  0.7f, 0.0f // 3
         };
 
         unsigned int squareIndices[6] = {
@@ -36,17 +47,13 @@ public:
         std::string vertexSrc = R"(
 			#version 330 core
 			
-			layout(location = 0) in vec3 a_Position;
-			layout(location = 1) in vec4 a_Color;
-
-			out vec3 v_Position;
-			out vec4 v_Color;
+			layout(location = 0) in vec3 vertex_coord;
+            uniform mat4 MVP;
 
 			void main()
 			{
-				v_Position = a_Position;
-                v_Color = a_Color;
-				gl_Position = vec4(a_Position, 1.0);	
+                gl_Position = MVP * vec4(vertex_coord, 1.0);
+                gl_Position = vec4(vertex_coord, 1.0);
 			}
 		)";
 
@@ -54,17 +61,11 @@ public:
 			#version 330 core
 			
 			layout(location = 0) out vec4 color;
-
-			in vec3 v_Position;
-			in vec4 v_Color;
+            uniform vec4 render_color;
 
 			void main()
 			{
-                if (v_Color[0] > 0.0) {
-                    color = vec4(v_Color);
-                } else {
-				    color = vec4(v_Position * 0.5 +0.5, 1.0);
-                }
+                color = vec4(render_color);
 			}
 		)";
                 
@@ -73,7 +74,7 @@ public:
         std::shared_ptr<VertexBuffer> triangleVBO;
         triangleVBO.reset(VertexBuffer::Create(positions, sizeof(positions)));
         triangleVBO->SetLayout({
-                { ShaderDataType::Float3, "a_Position" }
+                { ShaderDataType::Float3, "vertex_coord" }
             });
 
         std::shared_ptr<IndexBuffer> triangleIBO;
@@ -87,8 +88,7 @@ public:
         std::shared_ptr<VertexBuffer> squareVBO;
         squareVBO.reset(VertexBuffer::Create(squarePositions, sizeof(squarePositions)));
         squareVBO->SetLayout({
-                { ShaderDataType::Float3, "a_Position" },
-                { ShaderDataType::Float4, "a_Color" }
+                { ShaderDataType::Float3, "vertex_coord" }
             });
 
         std::shared_ptr<IndexBuffer> squareIBO;
@@ -99,9 +99,13 @@ public:
 
         shader.reset(new Shader());
         shader->LoadFromString(vertexSrc, fragmentSrc);
-        shader->Init();
+        shader->AddShaderUniform("render_color", Uniform::Type::COLOR);
+        shader->Init();   
 
         RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
+
+        square->GetTransform()->Awake();
+        triangle->GetTransform()->Awake();
     }
 
     void OnUpdate() override
@@ -112,8 +116,21 @@ public:
 
         Renderer::BeginScene();
         {
+            glm::mat4 VP = camera->GetProjectionMatrix() * camera->GetViewMatrix();
+            glm::mat4 MVP;
+
+            square->GetTransform()->Update();
+            triangle->GetTransform()->Update();
+
             shader->Bind();
+            MVP = VP * square->GetTransform()->GetModelMatrix();
+            shader->SetMVP(&MVP[0][0]);
+            shader->SetColor("render_color", color::green);
             Renderer::Submit(squareVAO);
+
+            MVP = VP * triangle->GetTransform()->GetModelMatrix();
+            shader->SetMVP(&MVP[0][0]);
+            shader->SetColor("render_color", color::magenta);
             Renderer::Submit(triangleVAO);
         }
         Renderer::EndScene();
