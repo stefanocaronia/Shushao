@@ -2,8 +2,8 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include "Platform/OpenGL/OpenGL.h"
 
+#include "Platform/OpenGL/OpenGL.h"
 #include "WindowsWindow.h"
 #include "Shushao/Events/ApplicationEvent.h"
 #include "Shushao/Events/KeyEvent.h"

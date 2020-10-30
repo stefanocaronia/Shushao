@@ -1,7 +1,8 @@
 #include "sepch.h"
-#include "OpenGLIndexBuffer.h"
 
 #include <glad/glad.h>
+
+#include "OpenGLIndexBuffer.h"
 
 namespace Shushao {
     OpenGLIndexBuffer::OpenGLIndexBuffer(uint32_t* vertices, uint32_t _count) : count(_count)

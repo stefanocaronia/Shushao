@@ -3,7 +3,7 @@
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
 
-#include "Shushao/Window.h"
+#include "Shushao/Core/Window.h"
 #include "OpenGLContext.h"
 
 namespace Shushao {
@@ -24,11 +24,11 @@ namespace Shushao {
         DEBUG_CORE_INFO("  Renderer: {0}", glGetString(GL_RENDERER));
         DEBUG_CORE_INFO("  Version: {0}", glGetString(GL_VERSION));
 
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        glClearDepth(1.0f);
-        glEnable(GL_DEPTH_TEST);
-        glDepthFunc(GL_ALWAYS);  // questo per il 2d        
+        //glEnable(GL_BLEND);
+        //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        //glClearDepth(1.0f);
+        //glEnable(GL_DEPTH_TEST);
+        //glDepthFunc(GL_ALWAYS);  // questo per il 2d        
     }
 
     void OpenGLContext::SwapBuffers()

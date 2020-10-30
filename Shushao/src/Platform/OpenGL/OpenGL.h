@@ -2,7 +2,7 @@
 
 #include <glad/glad.h>
 
-#include "Shushao/Debug.h"
+#include "Shushao/Core/Debug.h"
 
 namespace Shushao {
 

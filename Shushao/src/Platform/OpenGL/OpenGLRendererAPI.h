@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Shushao/renderer/RendererAPI.h"
+#include "Shushao/Renderer/RendererAPI.h"
 
 namespace Shushao {
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Shushao/Window.h"
+#include "Shushao/Core/Window.h"
 #include "Shushao/Renderer/RenderContext.h"
 
 namespace Shushao {

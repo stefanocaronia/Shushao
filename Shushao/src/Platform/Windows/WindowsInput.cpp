@@ -3,7 +3,7 @@
 #include <GLFW/glfw3.h>
 
 #include "WindowsInput.h"
-#include "Shushao/Application.h"
+#include "Shushao/Core/Application.h"
 
 namespace Shushao {
 

@@ -1,5 +1,8 @@
 #pragma once
 
+#include "Shushao/Core/Core.h"
+#include "Shushao/Core/Debug.h"
+
 namespace Shushao {
 
     enum class ShaderDataType

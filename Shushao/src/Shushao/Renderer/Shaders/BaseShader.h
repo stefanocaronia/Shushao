@@ -12,4 +12,4 @@ namespace Shushao {
         virtual void onAwake() override;
     };
 
-}  // namespace se
+}  // namespace Shushao

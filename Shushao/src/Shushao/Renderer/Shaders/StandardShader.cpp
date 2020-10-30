@@ -1,9 +1,9 @@
 #include "sepch.h"
 
-#include "StandardShader.h"
-#include "Shushao/Resources.h"
-
 #include <glad/glad.h>
+
+#include "StandardShader.h"
+#include "Shushao/Core/Resources.h"
 
 namespace Shushao {
 

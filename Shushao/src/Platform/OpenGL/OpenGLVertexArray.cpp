@@ -1,6 +1,7 @@
 #include "sepch.h"
 
 #include <glad/glad.h>
+
 #include "OpenGLVertexArray.h"
 
 namespace Shushao {

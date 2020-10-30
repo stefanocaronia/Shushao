@@ -9,18 +9,28 @@ public:
     std::shared_ptr<VertexArray> squareVAO;
     std::shared_ptr<Shader> shader;
 
-    Camera* camera = new OrthographicCamera();
+    OrthographicCamera* camera = new OrthographicCamera();
     Entity* triangle = new Entity();
     Entity* square = new Entity();
-    Node* root = new Node();
+    Entity* root = new Entity();
+    float cameraSpeed = 5.0f;
 
-    TestLayer() : Shushao::Layer("Layer di test") {
-
+    TestLayer() : Shushao::Layer("Layer di test")
+    {
         root->SetRoot(true);
+        root->AddChild(camera);
         root->AddChild(triangle);
         root->AddChild(square);
-    
-        triangle->GetTransform()->SetPosition({ 4.3f, 0.6f, 0.1f });
+
+        camera->SetNearClipPlane(0.05f);
+        camera->SetFarClipPlane(100.0f);
+        camera->SetOrthographicSize(5.0f);
+        camera->GetTransform()->SetLocalPosition({ 0.0f, 0.0f, -2.0f });
+        camera->GetTransform()->SetLocalRotation(Transform::QUATERNION_IDENTITY);
+
+        camera->Print();
+
+        triangle->GetTransform()->SetPosition({ 0.3f, 0.6f, 0.1f });
 
         float positions[3 * 3] = {
            -0.5f, -0.5f, 0.0f, // 0
@@ -45,22 +55,25 @@ public:
         };
 
         std::string vertexSrc = R"(
-			#version 330 core
+			#version 430 core
 			
 			layout(location = 0) in vec3 vertex_coord;
-            uniform mat4 MVP;
+
+            uniform mat4 VP;
+            uniform mat4 M;
 
 			void main()
 			{
-                gl_Position = MVP * vec4(vertex_coord, 1.0);
+                //gl_Position = VP * M * vec4(vertex_coord, 1.0);
                 gl_Position = vec4(vertex_coord, 1.0);
 			}
 		)";
 
         std::string fragmentSrc = R"(
-			#version 330 core
+			#version 430 core
 			
 			layout(location = 0) out vec4 color;
+
             uniform vec4 render_color;
 
 			void main()
@@ -68,7 +81,7 @@ public:
                 color = vec4(render_color);
 			}
 		)";
-                
+
         triangleVAO.reset(VertexArray::Create());
 
         std::shared_ptr<VertexBuffer> triangleVBO;
@@ -100,40 +113,56 @@ public:
         shader.reset(new Shader());
         shader->LoadFromString(vertexSrc, fragmentSrc);
         shader->AddShaderUniform("render_color", Uniform::Type::COLOR);
-        shader->Init();   
+        shader->Init();
 
         RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
 
-        square->GetTransform()->Awake();
-        triangle->GetTransform()->Awake();
     }
 
     void OnUpdate() override
     {
-        if (Input::IsKeyPressed(SE_KEY_A)) {
-            DEBUG_INFO("Hai premuto A!");
+        camera->GetTransform()->Update();
+        square->GetTransform()->Update();
+        triangle->GetTransform()->Update();
+
+        std::shared_ptr<Transform> cameraTransform = camera->GetTransform();
+        glm::vec3 cameraPosition = cameraTransform->GetLocalPosition();
+        glm::vec3 cameraRotation = cameraTransform->GetEulerAngles();
+
+        if (Input::IsKeyPressed(SE_KEY_LEFT)) {
+
+            cameraPosition.x -= cameraSpeed * Time::Delta;
+            DEBUG_INFO("Camera VP: {0},{1} ", cameraTransform->GetPosition().x, cameraTransform->GetPosition().y);
         }
 
-        Renderer::BeginScene();
-        {
-            glm::mat4 VP = camera->GetProjectionMatrix() * camera->GetViewMatrix();
-            glm::mat4 MVP;
-
-            square->GetTransform()->Update();
-            triangle->GetTransform()->Update();
-
-            shader->Bind();
-            MVP = VP * square->GetTransform()->GetModelMatrix();
-            shader->SetMVP(&MVP[0][0]);
-            shader->SetColor("render_color", color::green);
-            Renderer::Submit(squareVAO);
-
-            MVP = VP * triangle->GetTransform()->GetModelMatrix();
-            shader->SetMVP(&MVP[0][0]);
-            shader->SetColor("render_color", color::magenta);
-            Renderer::Submit(triangleVAO);
+        else if (Input::IsKeyPressed(SE_KEY_RIGHT)) {
+            cameraPosition.x += cameraSpeed * Time::Delta;
+            DEBUG_INFO("Camera VP: {0},{1} ", cameraTransform->GetPosition().x, cameraTransform->GetPosition().y);
         }
-        Renderer::EndScene();
+
+        if (Input::IsKeyPressed(SE_KEY_UP))
+            cameraPosition.y += cameraSpeed * Time::Delta;
+        else if (Input::IsKeyPressed(SE_KEY_DOWN))
+            cameraPosition.y -= cameraSpeed * Time::Delta;
+
+        if (Input::IsKeyPressed(SE_KEY_A))
+            cameraRotation.y += cameraSpeed * Time::Delta;
+
+        if (Input::IsKeyPressed(SE_KEY_D)) {
+            cameraRotation.y -= cameraSpeed * Time::Delta;
+        }
+
+        cameraTransform->SetLocalPosition(cameraPosition);
+        cameraTransform->SetLocalRotation(cameraRotation);
+
+        Renderer::SetActiveCamera(camera);
+
+        shader->Bind();
+        shader->SetColor("render_color", color::cyan);
+        Renderer::Submit(shader, squareVAO, square->GetTransform());
+
+        shader->SetColor("render_color", color::gray);
+        Renderer::Submit(shader, triangleVAO, triangle->GetTransform());
     }
 
     void OnEvent(Shushao::Event& event) override

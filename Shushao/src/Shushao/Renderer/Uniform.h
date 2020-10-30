@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Shushao/Color.h"
+#include "Color.h"
 
 namespace Shushao {
 

@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Shushao/Application.h"
-#include "Shushao/Layer.h"
-#include "Shushao/Logger.h"
+#include "Shushao/Core/Application.h"
+#include "Shushao/Core/Layer.h"
+#include "Shushao/Core/Logger.h"
 #include "Shushao/Input/Input.h"
 #include "Shushao/Input/InputCodes.h"
 
@@ -10,6 +10,6 @@
 #include "Shushao/Renderer/Shader.h"
 #include "Shushao/Renderer/Shaders/BaseShader.h"
 #include "Shushao/Renderer/VertexArray.h"
-#include "Shushao/OrthographicCamera.h"
+#include "Shushao/Nodes/OrthographicCamera.h"
 
 #include "Shushao/ImGui/ImGuiLayer.h"

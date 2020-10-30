@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Shushao/Color.h"
-//#include "Shushao/Light.h"
-#include "Shushao/Object.h"
+#include "Shushao/Core/Object.h"
+#include "Color.h"
 #include "Uniform.h"
+//#include "Shushao/Light.h"
 
 namespace Shushao {
 
@@ -31,10 +31,9 @@ namespace Shushao {
         bool Load(std::string);
         void LoadFromString(std::string vsc, std::string fsc, std::string gsc = "");
 
-        virtual void Init() final;
         void Bind();
         void Unbind();
-        virtual void Awake() final;
+        virtual void Init() final;
         virtual void Update() final;
 
         void AddUniform(std::string name_, std::string var_, Uniform::Type type_, unsigned int location_ = 0);

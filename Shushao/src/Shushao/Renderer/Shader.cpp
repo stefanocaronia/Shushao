@@ -91,12 +91,6 @@ namespace Shushao {
         return true;
     }
 
-    void Shader::Awake()
-    {
-        Bind();
-        onAwake();     
-        Unbind();
-    }
 
     void Shader::Update()
     {

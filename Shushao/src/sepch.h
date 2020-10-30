@@ -47,6 +47,7 @@
 #include <glm/gtx/quaternion.hpp>
 #include <glm/gtx/spline.hpp>
 #include <glm/gtx/transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 // ImgUi
 #include <imgui.h>
@@ -68,9 +69,9 @@
 #include "Include/spimpl/spimpl.h"
 
 // Core
-#include "Shushao/Debug.h"
-#include "Shushao/Logger.h"
-#include "Shushao/Time.h"
-#include "Shushao/Utility.h"
-#include "Shushao/Core.h"
-#include "Shushao/Globals.h"
+#include "Shushao/Core/Debug.h"
+#include "Shushao/Core/Logger.h"
+#include "Shushao/Core/Time.h"
+#include "Shushao/Core/Utility.h"
+#include "Shushao/Core/Core.h"
+#include "Shushao/Core/Globals.h"

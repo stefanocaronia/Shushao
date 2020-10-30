@@ -1,7 +1,7 @@
 #include "sepch.h"
 
 #include "BaseShader.h"
-#include "Shushao/Resources.h"
+#include "Shushao/Core/Resources.h"
 
 namespace Shushao {
 
@@ -18,4 +18,4 @@ namespace Shushao {
         AddShaderUniform("viewport", Uniform::Type::VECTOR);
         AddShaderUniform("enabled_viewport", Uniform::Type::INTEGER);
     }
-}  // namespace se
+}  // namespace Shushao

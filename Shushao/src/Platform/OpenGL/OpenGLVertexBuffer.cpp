@@ -1,8 +1,9 @@
 #include "sepch.h"
-#include "OpenGLVertexBuffer.h"
-#include "OpenGL.h"
 
 #include <glad/glad.h>
+
+#include "OpenGLVertexBuffer.h"
+#include "OpenGL.h"
 
 namespace Shushao {
     OpenGLVertexBuffer::OpenGLVertexBuffer(float* vertices, uint32_t _size) : size(_size)
