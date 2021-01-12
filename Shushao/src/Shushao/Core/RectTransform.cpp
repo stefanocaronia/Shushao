@@ -248,7 +248,7 @@ namespace Shushao {
 	}
 
 	void RectTransform::init() {
-		Entity* parent = transform->GetEntity()->GetParentEntity();
+		Entity* parent = transform->GetEntity()->GetSpatialParent();
 		if (parent != nullptr) {
 			parentRectTransform = parent->GetTransform()->GetRectTransform();
 			isRectTransformChild = parent->GetTransform()->IsRectTransform();

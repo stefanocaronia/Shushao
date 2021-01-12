@@ -14,7 +14,7 @@ namespace Shushao {
         std::shared_ptr<Transform> GetTransform() const { return transform; }
         void SetParent(Node* newParent, bool worldPositionStays = false);
 
-        Entity* GetParentEntity();
+        Entity* GetSpatialParent();
 
         virtual inline bool HasTransform() const override { return true; }
 

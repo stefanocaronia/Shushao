@@ -32,13 +32,13 @@ namespace Shushao {
 
     Transform::Transform()
     {
-        rectTransform = new RectTransform(this);
+        //rectTransform = new RectTransform(this);
     }
 
     Transform::~Transform()
     {
-        delete (rectTransform);
-        rectTransform = nullptr;
+        //delete (rectTransform);
+        //rectTransform = nullptr;
     }
 
     void Transform::Invalidate()
@@ -193,25 +193,25 @@ namespace Shushao {
 
         setupDirections();
 
-        velocity = (1 / Time::Delta) * (position - lastPosition);
+        velocity = (position - lastPosition) / Time::Delta;
         lastPosition = position;
     }
 
     glm::mat4 Transform::GetLocalToParentMatrix()
     {
-        Entity* parent = entity->GetParentEntity();
+        Entity* parent = entity->GetSpatialParent();
 
         if (isRectTransform && parent->GetTransform()->IsRectTransform()) {
             localToParentMatrix = rectTransform->GetLocalToParentMatrix();
         } else {
-            localToParentMatrix = glm::translate(glm::mat4(), localPosition) * glm::toMat4(localRotation) * glm::scale(glm::mat4(), localScale);
+            localToParentMatrix = glm::translate(glm::mat4(1.0f), localPosition) * glm::toMat4(localRotation) * glm::scale(glm::mat4(1.0f), localScale);
         }
         return localToParentMatrix;
     }
 
     glm::mat4 Transform::GetRootMatrix()
     {
-        return glm::translate(glm::mat4(), position) * glm::toMat4(rotation) * glm::scale(glm::mat4(), localScale);
+        return glm::translate(glm::mat4(1.0f), position) * glm::toMat4(rotation) * glm::scale(glm::mat4(1.0f), localScale);
     }
 
     glm::mat4 Transform::GetLocalToWorldMatrix()
@@ -222,7 +222,7 @@ namespace Shushao {
             } else if (entity->IsAtRoot()) {
                 localToWorldMatrix = GetLocalToParentMatrix();
             } else {
-                localToWorldMatrix = entity->GetParentEntity()->GetTransform()->GetLocalToWorldMatrix() * GetLocalToParentMatrix();
+                localToWorldMatrix = entity->GetSpatialParent()->GetTransform()->GetLocalToWorldMatrix() * GetLocalToParentMatrix();
             }
             matrixInvalid = false;
         }
@@ -238,7 +238,7 @@ namespace Shushao {
             return _worldToLocalMatrix;*/
 
         if (inverseMatrixInvalid) {
-            Entity* parent = entity->GetParentEntity();
+            Entity* parent = entity->GetSpatialParent();
             if (entity->IsAtRoot()) {
                 worldToLocalMatrix = glm::mat4();
             } else if (parent) {
@@ -265,7 +265,7 @@ namespace Shushao {
     glm::vec3 Transform::GetWorldScale()
     {
         if (!entity->IsAtRoot()) {
-            Entity* parent = entity->GetParentEntity();
+            Entity* parent = entity->GetSpatialParent();
             if (parent != nullptr) {
                 return localScale * parent->GetTransform()->GetWorldScale();
             }
@@ -277,7 +277,7 @@ namespace Shushao {
     glm::quat Transform::GetWorldOrientation()
     {
         if (!entity->IsAtRoot()) {
-            Entity* parent = entity->GetParentEntity();
+            Entity* parent = entity->GetSpatialParent();
             if (parent != nullptr) {
                 return localRotation * parent->GetTransform()->rotation;
             }

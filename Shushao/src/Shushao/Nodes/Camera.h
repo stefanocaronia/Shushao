@@ -8,9 +8,12 @@ namespace Shushao {
     class Camera : public Entity
     {
     public:
-        inline virtual void Init() { UpdateProjectionMatrix(); }
 
-        virtual void UpdateProjectionMatrix() = 0;
+        Camera();
+
+        inline virtual void Init() { UpdateProjectionMatrix(); UpdateViewMatrix();}
+
+        virtual void UpdateProjectionMatrix() {};
         virtual void UpdateViewMatrix();
 
         inline const glm::mat4& GetViewMatrix() const { return viewMatrix; }
@@ -25,8 +28,8 @@ namespace Shushao {
         //inline Rect GetRect() const { return rect; }
 
         void SetDepth(float _depth) { depth = _depth; }
-        void SetFarClipPlane(float _farClipPlane) { farClipPlane = _farClipPlane; UpdateProjectionMatrix(); InvalidateMatrix(); }
-        void SetNearClipPlane(float _nearClipPlane) { nearClipPlane = _nearClipPlane; UpdateProjectionMatrix(); InvalidateMatrix(); }
+        void SetFarClipPlane(float _farClipPlane) { farClipPlane = _farClipPlane; UpdateProjectionMatrix(); UpdateViewMatrix();  InvalidateMatrix(); }
+        void SetNearClipPlane(float _nearClipPlane) { nearClipPlane = _nearClipPlane; UpdateProjectionMatrix(); UpdateViewMatrix(); InvalidateMatrix(); }
         void SetBackgroundColor(const Color& _color) { backgroundColor = _color; }
         //inline void SetRect(const Rect& _rect) const { rect = _rect; }
 
@@ -41,6 +44,8 @@ namespace Shushao {
         }
 
         inline void InvalidateMatrix() { matrixInvalid = true; }
+
+        void Update();
 
     protected:
         glm::mat4 viewMatrix;

@@ -116,7 +116,8 @@ namespace Shushao {
         SE_ASSERT(rendererId > 0, "Render ID doesn't exists for Shader {0}", name);
 
         // base uniforms
-        AddShaderUniform("Model View Projection", "MVP", Uniform::Type::MATRIX, ShaderLocation::LOCATION_MVP);
+        AddShaderUniform("Model View Projection", "VP", Uniform::Type::MATRIX, ShaderLocation::LOCATION_VP);
+        AddShaderUniform("Model View Projection", "M", Uniform::Type::MATRIX, ShaderLocation::LOCATION_M);
         AddShaderUniform("Render Color", "render_color", Uniform::Type::COLOR, ShaderLocation::LOCATION_RENDER_COLOR);
 
         for (auto& it : uniforms) {

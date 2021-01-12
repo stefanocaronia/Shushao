@@ -24,13 +24,13 @@ public:
 
         camera->SetNearClipPlane(0.05f);
         camera->SetFarClipPlane(100.0f);
-        camera->SetOrthographicSize(5.0f);
-        camera->GetTransform()->SetLocalPosition({ 0.0f, 0.0f, -2.0f });
-        camera->GetTransform()->SetLocalRotation(Transform::QUATERNION_IDENTITY);
+        camera->SetOrthographicSize(10.0f);
+        //camera->GetTransform()->SetLocalPosition({ 0.0f, 0.0f, -3.0f });
+        //camera->GetTransform()->SetLocalRotation(Transform::QUATERNION_IDENTITY);
 
         camera->Print();
 
-        triangle->GetTransform()->SetPosition({ 0.3f, 0.6f, 0.1f });
+        //triangle->GetTransform()->SetPosition({ 0.3f, 0.6f, 0.1f });
 
         float positions[3 * 3] = {
            -0.5f, -0.5f, 0.0f, // 0
@@ -60,12 +60,12 @@ public:
 			layout(location = 0) in vec3 vertex_coord;
 
             uniform mat4 VP;
-            uniform mat4 M;
+            //uniform mat4 M;
 
 			void main()
 			{
-                //gl_Position = VP * M * vec4(vertex_coord, 1.0);
-                gl_Position = vec4(vertex_coord, 1.0);
+                gl_Position = VP * vec4(vertex_coord, 1.0);
+                //gl_Position = vec4(vertex_coord, 1.0);
 			}
 		)";
 
@@ -115,22 +115,18 @@ public:
         shader->AddShaderUniform("render_color", Uniform::Type::COLOR);
         shader->Init();
 
-        RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
+        Renderer::SetActiveCamera(camera);
 
+        RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1.0f });
     }
 
     void OnUpdate() override
     {
-        camera->GetTransform()->Update();
-        square->GetTransform()->Update();
-        triangle->GetTransform()->Update();
-
         std::shared_ptr<Transform> cameraTransform = camera->GetTransform();
         glm::vec3 cameraPosition = cameraTransform->GetLocalPosition();
         glm::vec3 cameraRotation = cameraTransform->GetEulerAngles();
 
         if (Input::IsKeyPressed(SE_KEY_LEFT)) {
-
             cameraPosition.x -= cameraSpeed * Time::Delta;
             DEBUG_INFO("Camera VP: {0},{1} ", cameraTransform->GetPosition().x, cameraTransform->GetPosition().y);
         }
@@ -155,7 +151,10 @@ public:
         cameraTransform->SetLocalPosition(cameraPosition);
         cameraTransform->SetLocalRotation(cameraRotation);
 
-        Renderer::SetActiveCamera(camera);
+        camera->GetTransform()->Update();
+        camera->Update();
+        square->GetTransform()->Update();
+        triangle->GetTransform()->Update();
 
         shader->Bind();
         shader->SetColor("render_color", color::cyan);

@@ -13,7 +13,7 @@ namespace Shushao {
 
 	Entity::~Entity()
 	{
-		transform = nullptr;
+		transform.reset();
 	}
 
 	void Entity::SetParent(Node* newParent, bool worldPositionStays)
@@ -32,7 +32,7 @@ namespace Shushao {
 
 			transform->GetRectTransform()->init();
 
-			Entity* parent = GetParentEntity();
+			Entity* parent = GetSpatialParent();
 
 			if (worldPositionStays && parent != nullptr) {
 				transform->SetLocalPosition(transform->GetWorldPosition() - parent->GetTransform()->GetWorldPosition());
@@ -44,7 +44,7 @@ namespace Shushao {
 		}
 	}
 
-	Entity* Entity::GetParentEntity() 
+	Entity* Entity::GetSpatialParent() 
 	{
 		Node* current = (Node*)this;
 		while (Node* parent = current->GetParent()) {

@@ -23,10 +23,10 @@ namespace Shushao {
         inline void Disable() { isEnabled = false; }
         inline void SetReady(bool _ready) { isReady = _ready; }
         inline void SetRoot(bool _root) { isRoot = _root; }
-        virtual inline bool HasTransform() const { return false; }
         inline bool IsRoot() const { return isRoot; }
         inline bool IsReady() const { return isReady; }
         bool IsEnabled() const;
+        virtual inline bool HasTransform() const { return false; }
 
         inline Node* GetParent() const { return parent; }
         Node* GetChild(unsigned int index);

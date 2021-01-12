@@ -21,7 +21,7 @@ namespace Shushao {
     void Scene::Init()
     {
         for (auto node : nodes) {
-            if (node != nullptr && !node->IsReady()) {
+            if (node != nullptr && node->IsEnabled() && !node->IsReady()) {
                 node->Init();
             }
         }
@@ -30,10 +30,10 @@ namespace Shushao {
     void Scene::Update()
     {
         for (auto& node : root->GetDescendants()) {
-            if (!node->IsReady()) {
+            if (node != nullptr && !node->IsReady()) {
                 node->Init();
             }
-            if (node->IsReady() && node->IsEnabled()) {
+            if (node != nullptr && node->IsEnabled() && node->IsReady()) {
                 node->Update();
             }
         }

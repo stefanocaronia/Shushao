@@ -8,11 +8,24 @@
 
 namespace Shushao {
 
+    Camera::Camera()
+    {
+        Init();
+    }
+
     void Camera::UpdateViewMatrix()
     {
-        //viewMatrix = glm::lookAt(transform->GetLocalPosition(), Transform::FORWARD, Transform::UP); // mia
+        //viewMatrix = glm::lookAt(transform->GetPosition(), Transform::FORWARD, Transform::UP); // mia
         viewMatrix = glm::inverse(transform->GetModelMatrix());
         viewProjectionMatrix = projectionMatrix * viewMatrix;
+    }
+
+    void Camera::Update()
+    {
+        if (matrixInvalid) {
+            UpdateProjectionMatrix();
+            UpdateViewMatrix();
+        }
     }
 
 }  // namespace Shushao

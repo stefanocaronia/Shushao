@@ -15,7 +15,9 @@ namespace Shushao {
         LOCATION_NORMAL = 4,
         LOCATION_MVP = 5,
         LOCATION_RENDER_COLOR = 6,
-        LOCATION_SIZE = 7
+        LOCATION_SIZE = 7,
+        LOCATION_M = 8,
+        LOCATION_VP = 9
     };
 
     class Shader : public Object
