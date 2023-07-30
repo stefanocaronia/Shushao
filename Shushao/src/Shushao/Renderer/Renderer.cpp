@@ -11,11 +11,11 @@ namespace Shushao {
     void Renderer::Submit(const std::shared_ptr<Shader>& shader, const std::shared_ptr<VertexArray>& vertexArray, const std::shared_ptr<Transform>& transform)
     {
         glm::mat4 VP = Renderer::data->camera->GetViewProjectionMatrix();
-        //glm::mat4 M = transform->GetModelMatrix();
+        glm::mat4 M = transform->GetModelMatrix();
 
         shader->Bind();
         shader->SetVP(glm::value_ptr(VP));
-        //shader->SetM(glm::value_ptr(M));
+        shader->SetM(glm::value_ptr(M));
 
         vertexArray->Bind();
 

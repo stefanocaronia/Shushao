@@ -20,9 +20,9 @@ namespace Shushao {
         SE_CORE_ASSERT(status, "Failed to initialize Glad!");
 
         DEBUG_CORE_INFO("> OpenGL Info:");
-        DEBUG_CORE_INFO("  Vendor: {0}", glGetString(GL_VENDOR));
-        DEBUG_CORE_INFO("  Renderer: {0}", glGetString(GL_RENDERER));
-        DEBUG_CORE_INFO("  Version: {0}", glGetString(GL_VERSION));
+        //DEBUG_CORE_INFO("  Vendor: {0}", glGetString(GL_VENDOR));
+        //DEBUG_CORE_INFO("  Renderer: {0}", glGetString(GL_RENDERER));
+        //DEBUG_CORE_INFO("  Version: {0}", glGetString(GL_VERSION));
 
         //glEnable(GL_BLEND);
         //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

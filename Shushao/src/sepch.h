@@ -50,6 +50,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 // ImgUi
+#define IMGUI_ENABLE_DOCKING
 #include <imgui.h>
 
 // windows
@@ -58,12 +59,13 @@
 #endif
 
 // spdlog
+#define SPDLOG_FMT_EXTERNAL
 #include <spdlog/fmt/ostr.h>
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 
 // Box2D
-// #include <Box2D/Box2D.h>
+#include <Box2D/Box2D.h>
 
 // Includes
 #include "Include/spimpl/spimpl.h"

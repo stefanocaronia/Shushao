@@ -1,0 +1,51 @@
+{
+  "name": "shushao-engine",
+  "version-string": "0.0.1",
+  "builtin-baseline": "8b04a7bd93bef991818fc372bb83ce00ec1c1c16",
+  "dependencies": [
+    {
+      "name": "freetype",
+      "version>=": "2.12.1"
+    },
+    {
+      "name": "glad",
+      "version>=": "0.1.36"
+    },
+    {
+      "name": "soil2",
+      "version>=": "1.3.0"
+    },
+    {
+      "name": "boost-config",
+      "version>=": "1.82.0"
+    },
+    {
+      "name": "boost-coroutine2",
+      "version>=": "1.82.0"
+    },
+    {
+      "name": "boost-variant",
+      "version>=": "1.82.0"
+    },
+    {
+      "name": "box2d",
+      "version>=": "2.4.1"
+    },
+    {
+      "name": "glfw3",
+      "version>=": "3.3.8"
+    },
+    {
+      "name": "glm",
+      "version>=": "0.9.9.8#2"
+    },
+    {
+      "name": "imgui",
+      "version>=": "1.89.7"
+    },
+    {
+      "name": "spdlog",
+      "version>=": "1.12.0"
+    }
+  ]
+}

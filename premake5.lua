@@ -15,26 +15,10 @@ workspace "Shushao"
     engine_bin = "../bin/" .. outputdir .. "/%{Engine}/"
 
     IncludeDir = {}
-    IncludeDir["GLFW"] = "%{Engine}/vendor/GLFW/include";
-    IncludeDir["Glad"] = "%{Engine}/vendor/Glad/include";
-    IncludeDir["SOIL"] = "%{Engine}/vendor/SOIL/include";
-    IncludeDir["spdlog"] = "%{Engine}/vendor/spdlog/include";
-    IncludeDir["freetype"] = "%{Engine}/vendor/freetype/include";
-    IncludeDir["glm"] = "%{Engine}/vendor/glm";
-    IncludeDir["boost"] = "%{Engine}/vendor/boost";
-    IncludeDir["Box2D"] = "%{Engine}/vendor/Box2D";
-    IncludeDir["ImGui"] = "%{Engine}/vendor/imgui";
+    IncludeDir["packages"] = "./vendor/vcpkg/installed/x64-windows/include";
 
-    group "Dependencies"
-        include "Shushao/vendor/Box2D.lua"
-        include "Shushao/vendor/boost.lua"
-        include "Shushao/vendor/freetype.lua"
-        include "Shushao/vendor/Glad.lua"
-        include "Shushao/vendor/GLFW.lua"
-        include "Shushao/vendor/SOIL.lua"
-        include "Shushao/vendor/spdlog.lua"
-        include "Shushao/vendor/imgui.lua"
-    group ""
+    LibDir = {}
+    LibDir["packages"] = "./vendor/vcpkg/installed/x64-windows/lib";
 
 project "Shushao"
 	location "Shushao"
@@ -59,15 +43,8 @@ project "Shushao"
 
     includedirs {
         "%{prj.name}/src",
-        "%{IncludeDir.Glad}",
-        "%{IncludeDir.GLFW}",
-        "%{IncludeDir.SOIL}",
-        "%{IncludeDir.spdlog}",
-        "%{IncludeDir.freetype}",
-        "%{IncludeDir.glm}",
-        "%{IncludeDir.boost}",
-        "%{IncludeDir.Box2D}",
-        "%{IncludeDir.ImGui}"
+        "%{prj.name}/vendor/external",
+        "%{IncludeDir.packages}"
     }
 
     -- defines {
@@ -153,19 +130,11 @@ project "Sandbox"
     includedirs {
         "%{prj.name}/src",
         "%{Engine}/src",
-        "%{IncludeDir.Glad}",
-        "%{IncludeDir.GLFW}",
-        "%{IncludeDir.SOIL}",
-        "%{IncludeDir.spdlog}",
-        "%{IncludeDir.freetype}",
-        "%{IncludeDir.glm}",
-        "%{IncludeDir.boost}",
-        "%{IncludeDir.Box2D}",
-        "%{IncludeDir.ImGui}"
+        "%{IncludeDir.packages}"
     }
 
     libdirs {
-        "%{Engine}/vendor/boost/stage/lib"
+        "%{LibDir.packages}"
     }
 
     links {
@@ -177,9 +146,7 @@ project "Sandbox"
         "freetype",
         "spdlog",
         "imgui",
-        "opengl32",
-        "libboost_context-vc142-mt-sgd-x64-1_71",
-        "libboost_coroutine-vc142-mt-sgd-x64-1_71"
+        "opengl32"
     }
 
     prelinkcommands {

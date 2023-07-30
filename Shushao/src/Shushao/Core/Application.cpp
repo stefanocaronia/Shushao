@@ -68,7 +68,7 @@ namespace Shushao {
         imGuiLayer->Begin();
         for (Layer* layer : layerStack) {
             layer->OnUpdate();
-            //layer->OnImGuiRender();
+            layer->OnImGuiRender();
         }
         imGuiLayer->End();
 
@@ -171,7 +171,7 @@ namespace Shushao {
     {
         //SE_CORE_ASSERT(SceneManager::activeScene != nullptr, "Active Scene not set");
 
-        //// init all entities
+        // init all entities
         //SceneManager::activeScene->ScanEntities();
         //SceneManager::activeScene->ScanActiveComponents();
         //SceneManager::activeScene->Init();  // vengono chiamati qui gli Init di tutti gli oggetti attivi
