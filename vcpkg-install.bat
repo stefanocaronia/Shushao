@@ -7,7 +7,7 @@ if not exist .\vendor\vcpkg\vcpkg.exe (
 cd .\vendor\vcpkg
 :: .\vcpkg x-update-baseline --add-initial-baseline
 .\vcpkg x-update-baseline
-.\vcpkg install --x-install-root=.\installed --triplet x64-windows
+.\vcpkg install --x-install-root=.\installed --triplet x64-windows-static
 cd ..\..
 
 :: ----------------------------------------------------------------------------

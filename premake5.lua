@@ -14,11 +14,17 @@ workspace "Shushao"
     sandbox_bin = "../bin/" .. outputdir .. "/%{Sandbox}/"
     engine_bin = "../bin/" .. outputdir .. "/%{Engine}/"
 
+    vcpkg_root = "../vendor/vcpkg"
+    vcpkg_triplet = "x64-windows-static"
+    vcpkg_manifest = "vcpkg.json"
+    vcpkg_use_static_libraries = true
+    vcpkg_installed_packages = "installed"
+
     IncludeDir = {}
-    IncludeDir["packages"] = "./vendor/vcpkg/installed/x64-windows/include";
+    -- IncludeDir["packages"] = "%{vcpkg_root}/installed/%{vcpkg_triplet}/include";
 
     LibDir = {}
-    LibDir["packages"] = "./vendor/vcpkg/installed/x64-windows/lib";
+    -- LibDir["packages"] = "%{vcpkg_root}/installed/%{vcpkg_triplet}/lib";
 
 project "Shushao"
 	location "Shushao"
@@ -44,7 +50,7 @@ project "Shushao"
     includedirs {
         "%{prj.name}/src",
         "%{prj.name}/vendor/external",
-        "%{IncludeDir.packages}"
+        -- "%{IncludeDir.packages}"
     }
 
     -- defines {
@@ -85,7 +91,7 @@ project "Shushao Resources"
     location "Shushao"
     kind "SharedLib"
     targetname "shushaores"
-    staticruntime "off"
+    staticruntime "on"
 
     targetdir ("bin/" .. outputdir .. "/Shushao")
     objdir ("obj/" .. outputdir .. "/Shushao")
@@ -130,23 +136,23 @@ project "Sandbox"
     includedirs {
         "%{prj.name}/src",
         "%{Engine}/src",
-        "%{IncludeDir.packages}"
+        -- "%{IncludeDir.packages}"
     }
 
-    libdirs {
-        "%{LibDir.packages}"
-    }
+    -- libdirs {
+        -- "%{LibDir.packages}"
+    -- }
 
     links {
         Engine,
-        "GLFW",
-        "Glad",
-        "SOIL2",
-        "Box2D",
-        "freetype",
-        "spdlog",
-        "imgui",
-        "opengl32"
+        -- "glfw3",
+        -- "Glad",
+        -- "SOIL2",
+        -- "Box2D",
+        -- "freetype",
+        -- "spdlog",
+        -- "imgui",
+        -- "opengl32"
     }
 
     prelinkcommands {

@@ -8,6 +8,8 @@ echo.
 @call vendor\premake5\bin\premake5.exe %target%
 echo.
 
+powershell -ExecutionPolicy Bypass -File .\vcpkg-integrate.ps1
+
 :: targets:
     : vs2019
     : codeblocks

@@ -7,10 +7,10 @@
         "**/.makefiles": true,
         "**/.vscode": true,
         "**/.vs": true,
-        ".gitignore": true,
+        ".gitignore": false,
         "makefile": true,
         "Makefile": true,
-        "*.bat": true
+        "*.bat": false
     },
     // WINDOWS CMD
     // "terminal.integrated.shell.windows": "C:\\WINDOWS\\System32\\cmd.exe",
